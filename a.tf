@@ -11,6 +11,7 @@ ingress {
 }
 
 resource "aws_redshift_cluster" "positive1" {
+  publicly_accessible = false
   cluster_identifier = "tf-redshift-cluster"
   database_name      = "mydb"
   master_username    = "foo"
