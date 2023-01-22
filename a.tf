@@ -28,3 +28,7 @@ resource "aws_redshift_cluster" "positive2" {
   cluster_type       = "singlt-node"
   encrypted          = false
 }
+
+
+
+
