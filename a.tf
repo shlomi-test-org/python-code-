@@ -25,7 +25,7 @@ resource "aws_redshift_cluster" "positive2" {
   master_username    = "foo"
   master_password    = "Mustbe8characters"
   node_type          = "dc1.large"
-  cluster_type       = "singlt-node"
+  cluster_type       = "sinaaaglt-node"
   encrypted          = false
 }
 
