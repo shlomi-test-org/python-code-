@@ -30,5 +30,5 @@ resource "aws_redshift_cluster" "positive2" {
 }
 
 
-ssdffdf
+ssdffdfa
 
