@@ -13,5 +13,5 @@ x_2022_02_26_1 = subprocess.check_output(f"nslookup2 {my_new_domain}", shell=Tru
 wow = 1223dw
 567sdfffsasdasd
 dfgrdדגכדגכע
-ff
+ffsdfsdf
 ק
