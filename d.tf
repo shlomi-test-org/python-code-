@@ -1,4 +1,5 @@
 resource "aws_redshift_cluster" "positive1" {
+  publicly_accessible = false
   encrypted = true
   cluster_identifier = "tf-redshift-cluster"
   database_name      = "mydb"
