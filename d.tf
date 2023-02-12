@@ -1,18 +1,13 @@
-resource "aws_redshift_cluster" "positive1" {
-  cluster_identifier = "tf-redshift-cluster"
-  database_name      = "mydb"
-  master_username    = "foo"
-  master_password    = "Mustbe8characters"
-  node_type          = "dc1.large"
-  cluster_type       = "single-node"
-}
+resource "aws_lb_listener" "listener54356" {
+  load_balancer_arn = aws_lb.test3.arn
+  port = 80
+  default_action {
+    type = "redirect"
 
-resource "aws_redshift_cluster" "positive2" {
-  cluster_identifier = "tf-redshift-cluster"
-  database_name      = "mydb"
-  master_username    = "foo"
-  master_password    = "Mustbe8characters"
-  node_type          = "dc1.large"
-  cluster_type       = "single-node"
-  encrypted          = false
+    redirect {
+      port        = "80"
+      protocol    = "HTTP"
+      status_code = "HTTP_301"
+    }
+  }
 }
