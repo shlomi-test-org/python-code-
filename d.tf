@@ -1,25 +1,19 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
-    }
-  }
-}
 resource "aws_s3_bucket" "positive1" {
-  bucket = "my-tf-test-bucket"
-  acl    = "public-read"
+  bucket = "example"
+}
 
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
+// comment
+resource "aws_s3_bucket_public_access_block" "positive2" {
+  bucket = aws_s3_bucket.example.id
 
-  versioning {
-    enabled = true
-  }
+  block_public_acls   = true
+  block_public_policy = true
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_public_access_block" "positive3" {
+  bucket = aws_s3_bucket.example.id
+
+  block_public_acls   = true
+  block_public_policy = true
 }
