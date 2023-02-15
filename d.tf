@@ -1,14 +1,25 @@
-resource "aws_lb_listener" "listener54356" {
-  load_balancer_arn = aws_lb.test3.arn
-  port = 80
-  default_action {
-    type = "redirect"
+provider "aws" {
+  region = "us-east-1"
+}
 
-    redirect {
-      port        = "80"
-      protocol    = "HTTP"
-      status_code = "HTTP_301"
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
     }
   }
 }
+resource "aws_s3_bucket" "positive1" {
+  bucket = "my-tf-test-bucket"
+  acl    = "public-read"
 
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+
+  versioning {
+    enabled = true
+  }
+}
