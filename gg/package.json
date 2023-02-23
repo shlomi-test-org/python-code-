@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "description": "Install serverless dependencies",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "serverless": "2.72.1",
+    "serverless-domain-manager": "^5.1.5",
+    "serverless-dotenv-plugin": "~3.9.0",
+    "serverless-functions-base-path": "~1.0.32",
+    "serverless-iam-roles-per-function": "^3.2.0",
+    "serverless-manifest-plugin": "~1.0.8",
+    "serverless-plugin-epsagon": "^1.12.2",
+    "serverless-plugin-ifelse": "^1.0.7",
+    "serverless-plugin-warmup": "^6.0.0",
+    "serverless-prune-plugin": "^1.6.1",
+    "serverless-pseudo-parameters": "~2.5.0",
+    "serverless-python-requirements": "~5.1.1",
+    "serverless-ssm-publish": "^1.4.1"
+  },
+  "devDependencies": {
+    "license-checker": "^25.0.1",
+    "serverless-localstack": "~0.4.35",
+    "serverless-step-functions": "~3.11.1"
+  }
+}
