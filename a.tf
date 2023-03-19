@@ -1,6 +1,7 @@
 resource "aws_security_group" "global-test" {
   name = "global-test"
   description = "global rule"
+  
 
 ingress {
     from_port   = 0
