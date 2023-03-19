@@ -30,3 +30,7 @@ resource "aws_redshift_cluster" "positive2" {
   encrypted          = false
 }
 
+
+
+
+
