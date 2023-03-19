@@ -8,6 +8,7 @@ ingress {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
 }
 
 resource "aws_redshift_cluster" "positive1" {
@@ -30,6 +31,9 @@ resource "aws_redshift_cluster" "positive2" {
   cluster_type       = "sinaaaglt-node"
   encrypted          = false
 }
+
+
+
 
 
 
