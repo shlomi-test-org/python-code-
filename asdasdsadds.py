@@ -1,1 +1,1 @@
-aws_secret = "AKIAIMNOJVGFDXXXE4OA"
+another_var = "a"
