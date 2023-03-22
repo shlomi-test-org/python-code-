@@ -1,17 +1,3 @@
-resource "aws_security_group" "global-test" {
-  name = "global-test"
-  description = "global rule"
-  
-
-ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    
-  }
-  
-}
 
 resource "aws_redshift_cluster" "positive1" {
   cluster_identifier = "tf-redshift-cluster"
