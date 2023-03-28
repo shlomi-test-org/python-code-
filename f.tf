@@ -1,12 +1,23 @@
 
-resource "aws_s3_bucket" "positive1" {
-  bucket = "example"
+
+resource "aws_redshift_cluster" "positive1" {
+  cluster_identifier = "tf-redshift-cluster"
+  database_name      = "mydb"
+  
+  master_username    = "foo"
+  master_password    = "Mustbe8characters"
+  node_type          = "dc1.large"
+  cluster_type       = "single-node"
 }
 
-resource "aws_s3_bucket_public_access_block" "positive3" {
-  bucket = aws_s3_bucket.example.id
 
-  block_public_policy = true
-  ignore_public_acls  = true
-  restrict_public_buckets = false
-}
+
+resource "aws_redshift_cluster" "positive2" {
+  cluster_identifier = "tf-redshift-cluster"
+  database_name      = "mydb"
+  master_username    = "foo"
+  master_password    = "Mustbe8characters"
+  node_type          = "dc1.large"
+  cluster_type       = "sinaaaglt-node"
+  encrypted          = true
+  
