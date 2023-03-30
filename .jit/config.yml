@@ -2,3 +2,6 @@ folders:
   - path: monorepostuff/
     exclude:
       - *
+  - path: monorepostuff2/
+    exclude:
+      - *
