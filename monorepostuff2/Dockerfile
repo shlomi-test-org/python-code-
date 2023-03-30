@@ -2,7 +2,7 @@ FROM python:3.9-alpine
 
 RUN apk add --no-cache git
 
-RUN pip install --no-cache-dir Flask==1.1.1
+RUN pip install --no-cache-dir Flask==1.1.0
 
 WORKDIR /app
 
