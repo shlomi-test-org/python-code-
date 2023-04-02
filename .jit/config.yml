@@ -3,5 +3,3 @@ folders:
     exclude:
       - '*'
   - path: monorepostuff2
-    exclude:
-      - '*'
