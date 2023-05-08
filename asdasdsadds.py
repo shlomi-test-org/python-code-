@@ -206,3 +206,4 @@ output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF
 
 
 aws_secret = "AKIAIMNOJVGFDXXXE4OA"
+
