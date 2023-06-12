@@ -15,3 +15,4 @@ COPY ./plugins/mapping.yml /opt/plugins/mapping.yml
 ADD --chown=prowler:prowler ./scripts /opt/plugins
 COPY ./scripts/run-trivy.sh /opt/run-trivy.sh
 RUN chmod +x /opt/run-trivy.sh
+
