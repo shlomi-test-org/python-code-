@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "license-checker": "^25.0.1",
+    
     "serverless-localstack": "~0.4.35"
   }
 }
