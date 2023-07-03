@@ -12,6 +12,10 @@ resource "aws_redshift_cluster" "positive1" {
 
 
 resource "aws_redshift_cluster" "positive2" {
+
+
+
+
   cluster_identifier = "tf-redshift-cluster"
   database_name      = "mydb"
   master_username    = "foo"
