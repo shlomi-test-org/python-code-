@@ -17,6 +17,7 @@ output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF
 self.logs += os.popen(f"git remote add orig
 
 in {self.repo_instance.ssh_url}").read()
+
 output = subprocess.check_output(f"nslookup {domain}", shell=True, enc
                                  oding='UTF-8')
 
