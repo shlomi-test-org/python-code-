@@ -6,7 +6,7 @@ aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 
 
 
-self.logs += os.popen(f"git remote add origin {self.repo_instance.ssh_url}").read()
+output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF-8')
 another_var = "a"
 another_var = "a"
 another_var = "a"
