@@ -15,6 +15,7 @@ another_var = "a"
 another_var = "a"
 another_var = "a"
 another_var = "a"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 another_var = "a"
 
 another_var = "a"
