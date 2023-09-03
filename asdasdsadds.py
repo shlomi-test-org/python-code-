@@ -15,6 +15,7 @@ aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF-8')
 output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF-8')
 output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF-8')
+
 another_var = "a"
 another_var = "a"
 another_var = "a"
