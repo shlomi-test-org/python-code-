@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "serverless": "3.34.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "2.0.0"
   },
   "devDependencies": {
     "license-checker": "^25.0.1",
