@@ -4,6 +4,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    
     "serverless": "2.72.3"
   },
   "devDependencies": {
