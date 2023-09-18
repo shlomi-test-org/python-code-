@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "react-scripts": "2.0.0"
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "license-checker": "^25.0.1",
