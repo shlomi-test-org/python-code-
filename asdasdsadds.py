@@ -3,7 +3,7 @@ aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 
 
 
-
+f
 
 
 output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF-8')
