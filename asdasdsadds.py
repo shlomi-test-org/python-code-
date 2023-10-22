@@ -1,4 +1,4 @@
-another_var = "a"
+wanother_var = "a"
 aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 
 
@@ -9,7 +9,7 @@ adsasdasd
 another_var = "a"
 another_var = "a"
 another_var = "a"דשגשדגשדגשדגשדגsadasdasdasdasdassasd
-another_var = "a"
+another_var = "a"dsadasdasd
 another_var = "a"
 
 
