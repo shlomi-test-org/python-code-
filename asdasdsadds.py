@@ -1,16 +1,16 @@
-another_var = "a"
+wanother_var = "a"
 aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 
 
 
-
+adsasdasd
 
 
 another_var = "a"
 another_var = "a"
+another_var = "a"דשגשדגשדגשדגשדגsadasdasdasdasdassasd
+another_var = "a"dsadasdasd
 another_var = "a"
-another_var = "a"
-another_var = "a"
 
 
 
@@ -18,7 +18,9 @@ another_var = "a"
 
 
 
-output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF-8')
+
+output = subprocess.check_output(f"nslookup {domain}", shell=True, encoding='UTF-8')dasdasdsad
+
 another_var = "a"
 another_var = "a"
 another_var = "a"
