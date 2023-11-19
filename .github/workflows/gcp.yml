@@ -1,0 +1,23 @@
+name: GCP
+
+on: workflow_dispatch
+
+jobs:
+  gcp:
+    runs-on: ubuntu-20.04
+    
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    
+    steps:
+    - id: auth
+      uses: google-github-actions/auth@v1
+      with:
+        workload_identity_provider: projects/334981059642/locations/global/workloadIdentityPools/github-oidc-pool/providers/github-oidc-provider
+        service_account: oidc-service-account@chrome-lambda-274721.iam.gserviceaccount.com
+
+    - id: usage
+      run: |-
+        gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
+        gcloud iam service-accounts list
