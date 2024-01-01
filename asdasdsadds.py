@@ -7,7 +7,7 @@ aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 
 
 
-another_var = "z"
+another_var = "Y"
 
 
 
