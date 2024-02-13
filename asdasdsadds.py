@@ -13,6 +13,7 @@ another_var = "a"
 \sldkjflkdajglksdlkjsdg
 
 
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 
 
 
