@@ -24,6 +24,18 @@ another_var = "a"
 
 
 
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+
+
+
+
+
+
+
+
+
+
+
 
 
 
