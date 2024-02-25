@@ -41,7 +41,9 @@ module.exports = cache => (req, res) => {
                 category,
                 tag
             ).then(data => {
-                const mrssXml = 1
+                const mrssXml = createMrssXml(data, ptt, host);
+                const encodedXml = escapeXML(mrssXml);
+                res.send(formatMrssXml(encodedXml, host));
             });
         });
     });
