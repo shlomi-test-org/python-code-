@@ -1,5 +1,5 @@
 another_var = "aaשa"
-aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OBr"
 
 
 
