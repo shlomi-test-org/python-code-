@@ -1,5 +1,5 @@
-another_var = "aa"
-aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+another_var = "aaשa"
+aws_secret = "AKIAIMNOJVGFDXXXE4OBsssr"
 
 
 
@@ -10,7 +10,7 @@ assert eyal == 1
 another_var = "a"
 
 
-\sldkjflkdajglksdlkjsdg
+\sldkjflkdajglksdlkjaasdg`
 
 
 
