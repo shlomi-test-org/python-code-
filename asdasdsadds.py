@@ -1,4 +1,4 @@
-another_var = "aaaaaa"
+another_var = "aaaaaaaaa"
 aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 
 
