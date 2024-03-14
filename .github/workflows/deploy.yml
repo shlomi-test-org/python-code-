@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   deploy:
-    environment: test
+    environment: nnnnn
     runs-on: ubuntu-20.04
     steps:
       - id: echo
