@@ -1,31 +1,16 @@
-fafasfasfasf
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-fasaf
-asf
-asf
-asd
-asd
-asd
-asd
-
-
-
-
-
-
-asdasdfasfasf
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+aws_secret = "AKIAIMNOJVGFDXXXE4OB"aws_secret = "AKIAIMNOJVGFDXXXE4OB"
+\aws_secret = "AKIAIMNOJVGFDXXXE4OB"
