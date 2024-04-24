@@ -8,7 +8,7 @@ aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 
 
 
-assert eyal == 2
+assert eyal == 3
 
 another_var = "a"
 
