@@ -1,6 +1,4 @@
 another_var = "aaa"
-aws_secret = "AKIAIMNOJVGFDXXXE4OB"
-aws_secret1 = "AKIAIMNOJVGFDXXXE4OC"
 aws_secret1 = "AKIAIMNOJVGFDXXXE4OD"
 aws_secret1 = "AKIAIMNOJVGFDXXXE4OD"
 
