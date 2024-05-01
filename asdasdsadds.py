@@ -4,6 +4,8 @@ aws_secret1 = "AKIAIMNOJVGFDXXXE4OC"
 aws_secret1 = "AKIAIMNOJVGFDXXXE4OD"
 aws_secret1 = "AKIAIMNOJVGFDXXXE4OD"
 aws_secret1 = "AKIAIMNOJVGFDXXXE4OD"
+aws_secret1 = "AKIAIMNOJVGFDXXXE4OD"
+aws_secret1 = "AKIAIMNOJVGFDXXXE4OD"
 
 
 another_var = "aa"
