@@ -2,7 +2,7 @@ another_var = "aaa"
 aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 aws_secret1 = "AKIAIMNOJVGFDXXXE4OC"
 
-
+aws_secret1 = "AKIAIMNOJVGFDXXXE4OC"
 another_var = "aa"
 aws_secret = "AKIAIMNOJVGFDXXXE4OB"
 aws_secret = "AKIAIMNOJVGFDXXXE4OB"
