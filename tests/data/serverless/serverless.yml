@@ -1,0 +1,129 @@
+service: trigger-service
+
+frameworkVersion: "2.72.3"
+
+package:
+  exclude:
+    - './**'
+  include:
+    - 'src/**'
+
+provider:
+  name: aws
+  deploymentBucket:
+    blockPublicAccess: true
+    serverSideEncryption: AES256
+  timeout: 30
+  stackName: trigger-service-${self:provider.stage}
+  stage: ${opt:stage, 'local'}
+  runtime: python3.8
+  region: us-east-1
+  apiGateway:
+    shouldStartNameWithService: true
+  eventBridge:
+    useCloudFormation: true
+  lambdaHashingVersion: 20201221
+  environment:
+    API_HOST: ${ssm:/${self:custom.env_name}/infra/api/host, 'api.local.jitdev.io'}
+
+  iamRoleStatements:
+    # This IAM-role (used by the warmup lambda) must be a global role, because the warmup lambda is being created automatically
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource:
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-translate-to-jit-event
+
+plugins: ${self:custom.plugins.${self:provider.stage}, self:custom.plugins.default}
+
+custom:
+  env_name: ${env:ENV_NAME, self:provider.stage}
+  app_name:
+    prod: app-${self:provider.stage}
+    staging: app-${self:provider.stage}
+    dev: app-${self:provider.stage}
+    custom_env: app-${self:custom.env_name}-${self:provider.stage}
+  basePath: trigger
+  plugins:
+    local:
+      - serverless-localstack
+    default:
+      - serverless-dotenv-plugin
+
+  # Temporary exclude custom authorizer in localstack -> https://github.com/localstack/localstack/issues/4159
+  localstack:
+    hostname:
+      local: http://localhost
+      test: ${self:provider.environment.testHost}
+      staging: remote
+    debug: true
+    stages:
+      - local
+      - test
+    host: ${self:custom.localstack.hostname.${self:provider.stage}, ''}
+    endpoints:
+      APIGateway: ${self:custom.localstack.host}:4566
+  pythonRequirements:
+    fileName: requirements.txt
+    dockerizePip: false
+  functionsBasePath: src/handlers
+  epsagon:
+    token: ${env:EPSAGON_TOKEN, ''}
+    appName: ${self:custom.app_name.${self:custom.env_name}, self:custom.app_name.custom_env}
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 10
+  dotenv:
+    path:
+      .env/.${self:provider.stage}
+  warmup:
+    workWeek:
+      enabled: true
+      events:
+        - schedule: cron(*/10 5-19 ? * SUN-FRI *)
+      concurrency: 3
+      prewarm: false
+      cleanFolder: false
+      role: IamRoleLambdaExecution
+    weekEnd:
+      enabled: true
+      events:
+        - schedule: cron(*/30 5-13 ? * SAT *)
+      concurrency: 1
+      prewarm: false
+      cleanFolder: false
+      role: IamRoleLambdaExecution
+  ssmPublish:
+    enabled: true
+    params:
+      - path: /${self:custom.env_name}/service-discovery/${self:service}
+        value: "https://${ssm:/${self:custom.env_name}/infra/api/host, 'api.local.jitdev.io'}/${self:custom.basePath}"
+        secure: false
+
+functions:
+  translate-to-jit-event:
+    timeout: 60
+    memorySize: 512
+    handler: translate_event.handler
+    description: Translates third party events to a Jit event with enriched data
+
+resources:
+  Resources:
+    Events:
+      Type: AWS::S3::Bucket
+      Properties:
+        # Set the CORS policy
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
