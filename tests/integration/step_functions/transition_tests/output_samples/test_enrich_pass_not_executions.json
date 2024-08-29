@@ -1,0 +1,66 @@
+[
+  {
+    "id": 3,
+    "previousEventId": 2,
+    "resource_type": null,
+    "stateExitedEventDetails": {
+      "name": "Has Enricher?",
+      "output": "{\"should_enrich\": false}",
+      "outputDetails": {
+        "truncated": false
+      }
+    },
+    "type": "ChoiceStateExited"
+  },
+  {
+    "id": 8,
+    "previousEventId": 7,
+    "resource_type": "lambda",
+    "stateExitedEventDetails": {
+      "name": "Prepare For Execution",
+      "output": "{\"tenant_id\": \"46db21b6-fb2a-4c5d-9148-37d2248a7c20\", \"jit_event_name\": \"pull_request_created\", \"executions\": []}",
+      "outputDetails": {
+        "truncated": false
+      }
+    },
+    "type": "TaskStateExited"
+  },
+  {
+    "type": "ChoiceStateExited",
+    "id": 10,
+    "previousEventId": 9,
+    "stateExitedEventDetails": {
+      "name": "Are There Executions To Trigger?",
+      "output": "{\"tenant_id\": \"46db21b6-fb2a-4c5d-9148-37d2248a7c20\", \"jit_event_name\": \"pull_request_created\", \"executions\": []}",
+      "outputDetails": {
+        "truncated": false
+      }
+    },
+    "resource_type": null
+  },
+  {
+    "id": 12,
+    "previousEventId": 11,
+    "resource_type": null,
+    "stateExitedEventDetails": {
+      "name": "Pass",
+      "output": "{\"tenant_id\": \"46db21b6-fb2a-4c5d-9148-37d2248a7c20\", \"jit_event_name\": \"pull_request_created\", \"executions\": []}",
+      "outputDetails": {
+        "truncated": false
+      }
+    },
+    "type": "PassStateExited"
+  },
+  {
+    "executionSucceededEventDetails": {
+      "output": "{\"tenant_id\":\"46db21b6-fb2a-4c5d-9148-37d2248a7c20\",\"jit_event_name\":\"pull_request_created\",\"executions\":[]}",
+      "outputDetails": {
+        "truncated": false
+      }
+    },
+    "id": 13,
+    "previousEventId": 12,
+    "resource_type": null,
+    "type": "ExecutionSucceeded"
+  }
+]

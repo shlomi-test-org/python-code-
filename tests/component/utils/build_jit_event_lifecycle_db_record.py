@@ -1,0 +1,60 @@
+from decimal import Decimal
+
+
+def build_jit_event_lifecycle_db_record(
+        tenant_id: str = '980d675e-22e0-4862-a77c-e196ce870a76',
+        jit_event_id: str = 'df01eb92-b157-460d-8e34-0d93038f3452',
+        created_at: str = '2021-01-01T00:00:00',
+        jit_evnet_name: str = 'pull_request_created',
+        status: str = 'started',
+        total_assets: int = 2,
+        remaining_assets: int = 2,
+        modified_at: str = '2021-01-01T00:00:00',
+        ttl_bucket_index: int = 2,
+        jit_event_kwargs: dict = {},
+        vendor: str = 'github',
+):
+    return {
+        'PK': f'TENANT#{tenant_id}',
+        'SK': f'JIT_EVENT#{jit_event_id}',
+        'GSI1PK_TENANT_ID': f'TENANT#{tenant_id}',
+        'GSI1SK_CREATED_AT': f'CREATED_AT#{created_at}',
+        'tenant_id': tenant_id,
+        'jit_event_id': jit_event_id,
+        'jit_event_name': jit_evnet_name,
+        'plan_item_slugs': ['another_plan_item_slug', 'item-branch-protection-scm'],
+        'created_at': created_at,
+        'jit_event': {
+            "app_id": "142441",
+            "asset_id": "417af812-002d-4330-a74f-0c7befa9fe2f",
+            "branch": "sc-24419-my-service",
+            "centralized_repo_asset_id": "a211a27b-c75b-41b2-b625-7f709c88d451",
+            "centralized_repo_asset_name": "Jit",
+            "commits": {
+                "base_sha": "322e83010188e476494412f1931770fa5719f8c9",
+                "head_sha": "f6429770b5cac5dd7013cab3ce10762446c926d1"
+            },
+            "event_signature": "...",
+            "installation_id": "36796309",
+            "jit_event_id": jit_event_id,
+            "jit_event_name": jit_evnet_name,
+            "languages": [
+            ],
+            "original_repository": "myservice-service",
+            "owner": "myorg",
+            "pull_request_number": "358",
+            "pull_request_title": "Added lambda to review stuck PRs",
+            "tenant_id": tenant_id,
+            "user_vendor_id": "99614870",
+            "user_vendor_name": "eyaliyahu",
+            "vendor": vendor,
+            **jit_event_kwargs,
+        },
+        'ttl': Decimal(1610056800),
+        'GSI2PK_TTL_BUCKET': f'TTL_BUCKET#{ttl_bucket_index}',
+        'GSI2SK_CREATED_AT': f'CREATED_AT#{created_at}',
+        'status': status,
+        'total_assets': Decimal(total_assets),
+        'remaining_assets': Decimal(remaining_assets),
+        'modified_at': modified_at,
+    }

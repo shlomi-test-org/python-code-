@@ -1,66 +1,72 @@
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Mapping
+from typing import Any, Dict
 
 import boto3
 from jit_utils.aws_clients.config.aws_config import get_aws_config
-from jit_utils.lambda_decorators import get_dynamodb_session_keys
-from jit_utils.lambda_decorators.core.tenant_isolation.tenant_isolation_context import get_general_session_keys
 from jit_utils.logger import logger
+from jit_utils.lambda_decorators import get_dynamodb_session_keys
+
+from src.lib.constants import PK, SK
 
 
 class DbTable:
-    def __init__(self, table):
-        aws_config = get_general_session_keys() or get_dynamodb_session_keys() or get_aws_config()
-        dynamodb = boto3.resource("dynamodb", **aws_config)
-        self.table = dynamodb.Table(table)
+    def __init__(self, table: str) -> None:
+        aws_config = get_dynamodb_session_keys() or get_aws_config()
+        self.dynamodb = boto3.resource("dynamodb", **aws_config)
+        self.table = self.dynamodb.Table(table)
         self.client = boto3.client("dynamodb", **aws_config)
-        logger.info("Initializing dynamodb client")
 
     @staticmethod
-    def get_key(**kwargs):
+    def get_key(**kwargs: Any) -> str:
         return '#'.join(f'{key.upper()}#{str(value).lower()}' for key, value in kwargs.items())
 
     @staticmethod
-    def parse_dynamodb_item_to_python_dict(item) -> Dict[str, Any]:
-        deserializer = boto3.dynamodb.types.TypeDeserializer()
-        return {k: deserializer.deserialize(v) for k, v in item.items()}
-
-    @staticmethod
-    def convert_python_dict_to_dynamodb_object(item: Mapping[str, Any]) -> Dict[str, Any]:
-        """
-        Converts python dict to dynamodb object.
-        """
-        serializer = boto3.dynamodb.types.TypeSerializer()
-        return {k: serializer.serialize(v) for k, v in item.items()}
-
-    @staticmethod
-    def _verify_response(response):
-        logger.debug(f'Validating response: {response=}')
+    def _verify_response(response: Dict[str, Any]) -> None:
         if "Error" in response:
             logger.error(response)
             raise Exception(f"HTTPStatusCode: {response['ResponseMetadata']['HTTPStatusCode']}"
                             f"message={response['Error']['Message']}")
 
-    def execute_transaction(self, transaction_items: List[Dict[str, Any]]) -> Any:
+    def delete_tenant_data(self, tenant_id: str) -> int:
         """
-        Executes a transaction.
+        Deletes all items for a given tenant.
         """
-        logger.info(f"Executing transaction: {transaction_items}")
-        if not transaction_items:
-            logger.info("No transaction items - skipping")
-            return
+        pk = self.get_key(tenant=tenant_id)
+        done = False
+        start_key = None
+        deleted_instances_amount = 0
 
-        try:
-            response = self.client.transact_write_items(
-                TransactItems=transaction_items
-            )
-        except Exception as e:
-            logger.error(f"Failed to execute transaction: {e}")
-            raise e
+        # Based on AWS docs step 4.3: Scan:
+        # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.Python.04.html
+        # We need to have convention of using pagination everywhere we use scan or query, so we
+        # won't have bugs related to amount of items.
+        query_kwargs = {
+            "KeyConditionExpression": "#pk = :pk",
+            "ExpressionAttributeNames": {"#pk": PK},
+            "ExpressionAttributeValues": {":pk": pk},
+            "Limit": 25  # Limit is 25 because this is the amount of items we can delete in batch_write
+        }
 
-        logger.info(f"Transaction response: {response}")
-        self._verify_response(response)
+        while not done:
+            if start_key:
+                query_kwargs['ExclusiveStartKey'] = start_key  # type: ignore
+            try:
+                response = self.table.query(**query_kwargs)  # type: ignore
+            except Exception as e:
+                logger.error(f"Failed to query the data: {e}")
+                raise e
 
-        return response
+            logger.info(f"Query response: {response}")
+            self._verify_response(response)  # type: ignore
+            items = response.get("Items", [])
+
+            with self.table.batch_writer() as batch:
+                for item in items:
+                    batch.delete_item(Key={PK: item[PK], SK: item[SK]})
+                    deleted_instances_amount += 1
+
+            start_key = response.get('LastEvaluatedKey', None)
+            done = start_key is None
+
+        logger.info(f"Deleted {deleted_instances_amount} items of tenant {tenant_id}")
+
+        return deleted_instances_amount

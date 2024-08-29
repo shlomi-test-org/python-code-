@@ -1,0 +1,1467 @@
+{
+  "jit_event": {
+    "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+    "jit_event_name": "pull_request_created",
+    "jit_event_id": "f5bdc1ba-4392-4521-a51e-12a187ebaffc",
+    "asset_id": "682f1ca9-08fd-46cd-84e4-f4b1c80809a5",
+    "workflows": null,
+    "app_id": "161076",
+    "installation_id": "31408834",
+    "original_repository": "python-code",
+    "vendor": "github",
+    "owner": "shlomi-test-org",
+    "branch": "adiattlan-patch-12",
+    "pull_request_number": "34",
+    "pull_request_title": "Update a.py",
+    "commits": {
+      "base_sha": "c802684877aae0e95aba9fdeda6d9f24746d8167",
+      "head_sha": "dd3ba9ce0e5f5ac05b40e7c3c0cb5a5a8a4be240"
+    },
+    "user_vendor_id": "104570236",
+    "user_vendor_name": "adiattlan",
+    "languages": [],
+    "event_signature": "github-shlomi-test-org-682f1ca9-08fd-46cd-84e4-f4b1c80809a5-dd3ba9ce0e5f5ac05b40e7c3c0cb5a5a8a4be240-c802684877aae0e95aba9fdeda6d9f24746d8167"
+  },
+  "trigger_filter_attributes": {
+    "plan_slugs": [],
+    "plan_item_slugs": [],
+    "workflow_slugs": [],
+    "job_names": [],
+    "asset_ids": [
+      "682f1ca9-08fd-46cd-84e4-f4b1c80809a5"
+    ],
+    "asset_envs": [],
+    "triggers": [
+      "pull_request_created"
+    ],
+    "create_trigger_event_from_jit_event": true
+  },
+  "asset": {
+    "aws_account_id": null,
+    "aws_stack_arn": null,
+    "aws_jit_role_name": null,
+    "aws_regions_to_scan": null,
+    "aws_jit_role_external_id": null,
+    "target_url": null,
+    "exclude_paths": null,
+    "authentication_mode": null,
+    "auth_header_name": null,
+    "auth_header_value": null,
+    "login_page_url": null,
+    "username": null,
+    "username_css_selector": null,
+    "password": null,
+    "password_css_selector": null,
+    "api_domain": null,
+    "external_id": "501173488",
+    "asset_id": "682f1ca9-08fd-46cd-84e4-f4b1c80809a5",
+    "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+    "asset_type": "repo",
+    "vendor": "github",
+    "owner": "shlomi-test-org",
+    "asset_name": "python-code",
+    "risk_status": null,
+    "risk_score": 0,
+    "is_active": true,
+    "is_covered": true,
+    "created_at": "2022-11-20T14:41:49.229143",
+    "modified_at": "2022-11-20T14:41:49.229143",
+    "environment": null,
+    "is_branch_protected_by_jit": false,
+    "status": null,
+    "status_details": null
+  },
+  "installations": [
+    {
+      "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+      "app_id": "161076",
+      "owner": "shlomi-test-org",
+      "installation_id": "31408834",
+      "status": "connected",
+      "is_active": true,
+      "creator": "shlomi-test-org",
+      "vendor": "github",
+      "name": "shlomi-test-org",
+      "created_at": "2022-11-20T14:41:45.612150",
+      "modified_at": "2023-01-16T10:23:26.666000",
+      "installation_type": null,
+      "vendor_response": {
+        "canPreviewItem": true,
+        "repository_selection": "all"
+      }
+    },
+    {
+      "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+      "app_id": "jit-aws",
+      "owner": "748560276420",
+      "installation_id": "748560276420",
+      "status": "error",
+      "is_active": true,
+      "creator": "748560276420",
+      "vendor": "aws",
+      "name": "748560276420",
+      "created_at": "2022-11-20T16:47:57.287998",
+      "modified_at": "2023-01-16T10:23:26.666000",
+      "installation_type": null,
+      "vendor_response": {
+        "deploy_region": null,
+        "integration_url": "https://Noneconsole.aws.amazon.com/cloudformation/home#/stacks/quickcreate?stackName=JitControlsStackbandit&templateURL=https://jit-aws-bandit.s3.amazonaws.com/template.json&param_ExternalId=787cff03bc988c50833408c89d94ae900220cd71e2fcd527df0221ec18a5c23c",
+        "regions": [
+          "us-east-1"
+        ]
+      }
+    }
+  ],
+  "filtered_jobs": [
+    {
+      "plan_item_slug": "item-code-vulnerability",
+      "workflow_slug": "workflow-sast",
+      "workflow_name": "SAST Workflow",
+      "job_name": "static-code-analysis-js",
+      "workflow_template": {
+        "slug": "workflow-sast",
+        "name": "SAST Workflow",
+        "type": "workflow",
+        "content": "name: SAST Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  static-code-analysis-python:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ python ]\n      frameworks: [ pulumi ]\n    tags:\n      languages:\n        - python\n    steps:\n      - name: Run Bandit\n        uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n        with:\n          args: -r \\${WORK_DIR:-.} -f json -q -lll -iii\n        tags:\n          security_tool: Bandit\n          links:\n            github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n            security_tool: https://github.com/PyCQA/bandit\n  static-code-analysis-js:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ javascript, typescript, JS, TS ]\n    tags:\n      languages:\n        - javascript\n        - typescript\n        - JS\n        - TS\n    steps:\n      - name: Run semgrep\n        uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest\n        with:\n          args: --json --config=/semgrep-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}\n        tags:\n          security_tool: Semgrep\n          links:\n            github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n            security_tool: https://github.com/returntocorp/semgrep\n  static-code-analysis-go:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ go ]\n    tags:\n      languages:\n        - go\n    steps:\n      - name: Run Go\n        uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:latest\n        with:\n          args: -fmt=json -severity=high \\${WORK_DIR:-.}/...\n        tags:\n          security_tool: Gosec\n          links:\n            github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n            security_tool: https://github.com/securego/gosec\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "SAST Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "static-code-analysis-python": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "python"
+                ],
+                "frameworks": [
+                  "pulumi"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run Bandit",
+                  "with": {
+                    "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                  "tags": {
+                    "security_tool": "Bandit",
+                    "links": {
+                      "security_tool": "https://github.com/PyCQA/bandit",
+                      "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "python"
+                ]
+              }
+            },
+            "static-code-analysis-go": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "go"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run Go",
+                  "with": {
+                    "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:latest",
+                  "tags": {
+                    "security_tool": "Gosec",
+                    "links": {
+                      "security_tool": "https://github.com/securego/gosec",
+                      "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "go"
+                ]
+              }
+            },
+            "static-code-analysis-js": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "javascript",
+                  "typescript",
+                  "JS",
+                  "TS"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run semgrep",
+                  "with": {
+                    "args": "--json --config=/semgrep-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest",
+                  "tags": {
+                    "security_tool": "Semgrep",
+                    "links": {
+                      "security_tool": "https://github.com/returntocorp/semgrep",
+                      "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "javascript",
+                  "typescript",
+                  "JS",
+                  "TS"
+                ]
+              }
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo",
+          "repo",
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "languages": [
+            "javascript",
+            "typescript",
+            "JS",
+            "TS"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run semgrep",
+            "with": {
+              "args": "--json --config=/semgrep-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+            },
+            "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest",
+            "tags": {
+              "security_tool": "Semgrep",
+              "links": {
+                "security_tool": "https://github.com/returntocorp/semgrep",
+                "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+              }
+            }
+          }
+        ],
+        "tags": {
+          "languages": [
+            "javascript",
+            "typescript",
+            "JS",
+            "TS"
+          ]
+        }
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    },
+    {
+      "plan_item_slug": "item-code-vulnerability",
+      "workflow_slug": "workflow-sast",
+      "workflow_name": "SAST Workflow",
+      "job_name": "static-code-analysis-go",
+      "workflow_template": {
+        "slug": "workflow-sast",
+        "name": "SAST Workflow",
+        "type": "workflow",
+        "content": "name: SAST Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  static-code-analysis-python:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ python ]\n      frameworks: [ pulumi ]\n    tags:\n      languages:\n        - python\n    steps:\n      - name: Run Bandit\n        uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n        with:\n          args: -r \\${WORK_DIR:-.} -f json -q -lll -iii\n        tags:\n          security_tool: Bandit\n          links:\n            github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n            security_tool: https://github.com/PyCQA/bandit\n  static-code-analysis-js:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ javascript, typescript, JS, TS ]\n    tags:\n      languages:\n        - javascript\n        - typescript\n        - JS\n        - TS\n    steps:\n      - name: Run semgrep\n        uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest\n        with:\n          args: --json --config=/semgrep-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}\n        tags:\n          security_tool: Semgrep\n          links:\n            github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n            security_tool: https://github.com/returntocorp/semgrep\n  static-code-analysis-go:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ go ]\n    tags:\n      languages:\n        - go\n    steps:\n      - name: Run Go\n        uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:latest\n        with:\n          args: -fmt=json -severity=high \\${WORK_DIR:-.}/...\n        tags:\n          security_tool: Gosec\n          links:\n            github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n            security_tool: https://github.com/securego/gosec\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "SAST Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "static-code-analysis-python": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "python"
+                ],
+                "frameworks": [
+                  "pulumi"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run Bandit",
+                  "with": {
+                    "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                  "tags": {
+                    "security_tool": "Bandit",
+                    "links": {
+                      "security_tool": "https://github.com/PyCQA/bandit",
+                      "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "python"
+                ]
+              }
+            },
+            "static-code-analysis-go": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "go"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run Go",
+                  "with": {
+                    "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:latest",
+                  "tags": {
+                    "security_tool": "Gosec",
+                    "links": {
+                      "security_tool": "https://github.com/securego/gosec",
+                      "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "go"
+                ]
+              }
+            },
+            "static-code-analysis-js": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "javascript",
+                  "typescript",
+                  "JS",
+                  "TS"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run semgrep",
+                  "with": {
+                    "args": "--json --config=/semgrep-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest",
+                  "tags": {
+                    "security_tool": "Semgrep",
+                    "links": {
+                      "security_tool": "https://github.com/returntocorp/semgrep",
+                      "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "javascript",
+                  "typescript",
+                  "JS",
+                  "TS"
+                ]
+              }
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo",
+          "repo",
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "languages": [
+            "go"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run Go",
+            "with": {
+              "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+            },
+            "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:latest",
+            "tags": {
+              "security_tool": "Gosec",
+              "links": {
+                "security_tool": "https://github.com/securego/gosec",
+                "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+              }
+            }
+          }
+        ],
+        "tags": {
+          "languages": [
+            "go"
+          ]
+        }
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    },
+    {
+      "plan_item_slug": "item-code-vulnerability",
+      "workflow_slug": "workflow-sast",
+      "workflow_name": "SAST Workflow",
+      "job_name": "static-code-analysis-python",
+      "workflow_template": {
+        "slug": "workflow-sast",
+        "name": "SAST Workflow",
+        "type": "workflow",
+        "content": "name: SAST Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  static-code-analysis-python:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ python ]\n      frameworks: [ pulumi ]\n    tags:\n      languages:\n        - python\n    steps:\n      - name: Run Bandit\n        uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n        with:\n          args: -r \\${WORK_DIR:-.} -f json -q -lll -iii\n        tags:\n          security_tool: Bandit\n          links:\n            github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n            security_tool: https://github.com/PyCQA/bandit\n  static-code-analysis-js:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ javascript, typescript, JS, TS ]\n    tags:\n      languages:\n        - javascript\n        - typescript\n        - JS\n        - TS\n    steps:\n      - name: Run semgrep\n        uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest\n        with:\n          args: --json --config=/semgrep-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}\n        tags:\n          security_tool: Semgrep\n          links:\n            github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n            security_tool: https://github.com/returntocorp/semgrep\n  static-code-analysis-go:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ go ]\n    tags:\n      languages:\n        - go\n    steps:\n      - name: Run Go\n        uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:latest\n        with:\n          args: -fmt=json -severity=high \\${WORK_DIR:-.}/...\n        tags:\n          security_tool: Gosec\n          links:\n            github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n            security_tool: https://github.com/securego/gosec\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "SAST Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "static-code-analysis-python": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "python"
+                ],
+                "frameworks": [
+                  "pulumi"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run Bandit",
+                  "with": {
+                    "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                  "tags": {
+                    "security_tool": "Bandit",
+                    "links": {
+                      "security_tool": "https://github.com/PyCQA/bandit",
+                      "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "python"
+                ]
+              }
+            },
+            "static-code-analysis-go": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "go"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run Go",
+                  "with": {
+                    "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:latest",
+                  "tags": {
+                    "security_tool": "Gosec",
+                    "links": {
+                      "security_tool": "https://github.com/securego/gosec",
+                      "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "go"
+                ]
+              }
+            },
+            "static-code-analysis-js": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "javascript",
+                  "typescript",
+                  "JS",
+                  "TS"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run semgrep",
+                  "with": {
+                    "args": "--json --config=/semgrep-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest",
+                  "tags": {
+                    "security_tool": "Semgrep",
+                    "links": {
+                      "security_tool": "https://github.com/returntocorp/semgrep",
+                      "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "javascript",
+                  "typescript",
+                  "JS",
+                  "TS"
+                ]
+              }
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo",
+          "repo",
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "languages": [
+            "python"
+          ],
+          "frameworks": [
+            "pulumi"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run Bandit",
+            "with": {
+              "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+            },
+            "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+            "tags": {
+              "security_tool": "Bandit",
+              "links": {
+                "security_tool": "https://github.com/PyCQA/bandit",
+                "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+              }
+            }
+          }
+        ],
+        "tags": {
+          "languages": [
+            "python"
+          ]
+        }
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    },
+    {
+      "plan_item_slug": "item-container-scan",
+      "workflow_slug": "workflow-docker-scan",
+      "workflow_name": "Docker Scan Workflow",
+      "job_name": "docker-scan",
+      "workflow_template": {
+        "slug": "workflow-docker-scan",
+        "name": "Docker Scan Workflow",
+        "type": "workflow",
+        "content": "name: Docker Scan Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  docker-scan:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ docker ]\n    tags:\n      languages:\n        - docker\n    steps:\n      - name: Run trivy\n        uses: ghcr.io/jitsecurity-controls/control-trivy-alpine:latest\n        with:\n          args: --quiet config --severity HIGH,CRITICAL -f json --ignorefile /opt/.trivyignore \\${WORK_DIR:-.}\n        tags:\n          security_tool: Trivy\n          links:\n            github: https://github.com/jitsecurity-controls/jit-trivy-dockerfile-scanner-control\n            security_tool: https://github.com/aquasecurity/trivy\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "Docker Scan Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "docker-scan": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "docker"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run trivy",
+                  "with": {
+                    "args": "--quiet config --severity HIGH,CRITICAL -f json --ignorefile /opt/.trivyignore \\${WORK_DIR:-.}"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-trivy-alpine:latest",
+                  "tags": {
+                    "security_tool": "Trivy",
+                    "links": {
+                      "security_tool": "https://github.com/aquasecurity/trivy",
+                      "github": "https://github.com/jitsecurity-controls/jit-trivy-dockerfile-scanner-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "docker"
+                ]
+              }
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "languages": [
+            "docker"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run trivy",
+            "with": {
+              "args": "--quiet config --severity HIGH,CRITICAL -f json --ignorefile /opt/.trivyignore \\${WORK_DIR:-.}"
+            },
+            "uses": "ghcr.io/jitsecurity-controls/control-trivy-alpine:latest",
+            "tags": {
+              "security_tool": "Trivy",
+              "links": {
+                "security_tool": "https://github.com/aquasecurity/trivy",
+                "github": "https://github.com/jitsecurity-controls/jit-trivy-dockerfile-scanner-control"
+              }
+            }
+          }
+        ],
+        "tags": {
+          "languages": [
+            "docker"
+          ]
+        }
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    },
+    {
+      "plan_item_slug": "item-dependency-check",
+      "workflow_slug": "workflow-sca",
+      "workflow_name": "SCA Workflow",
+      "job_name": "software-component-analysis-go",
+      "workflow_template": {
+        "slug": "workflow-sca",
+        "name": "SCA Workflow",
+        "type": "workflow",
+        "content": "name: SCA Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  software-component-analysis:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ python ]\n    tags:\n      languages:\n        - python\n    steps:\n      - name: Run osv-scanner\n        uses: ghcr.io/jitsecurity-controls/control-osv-scanner-alpine:latest\n        with:\n          args: --recursive \\${WORK_DIR:-.} \n        tags:\n          security_tool: OSV Scanner\n          links:\n            github: https://github.com/jitsecurity-controls/jit-osv-scanner-control\n            security_tool: https://github.com/google/osv-scanner\n  software-component-analysis-js:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ js_deps ]\n    tags:\n      languages:\n        - js_deps\n    steps:\n      - name: Run npm audit\n        uses: ghcr.io/jitsecurity-controls/control-npm-audit-slim:latest\n        with:\n          args: audit --json --production\n        tags:\n          security_tool: Npm-audit\n          links:\n            github: https://github.com/jitsecurity-controls/jit-dependency-check-node-control\n            security_tool: https://docs.npmjs.com/cli/v8/commands/npm-audit\n  software-component-analysis-go:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ go, go_deps ]\n    tags:\n      languages:\n        - go\n        - go_deps\n    steps:\n      - name: Run nancy\n        uses: ghcr.io/jitsecurity-controls/control-nancy-alpine:latest\n        tags:\n          security_tool: Nancy\n          links:\n            github: https://github.com/jitsecurity-controls/jit-nancy-control\n            security_tool: https://github.com/sonatype-nexus-community/nancy\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "SCA Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "software-component-analysis-js": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "js_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run npm audit",
+                  "with": {
+                    "args": "audit --json --production"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-npm-audit-slim:latest",
+                  "tags": {
+                    "security_tool": "Npm-audit",
+                    "links": {
+                      "security_tool": "https://docs.npmjs.com/cli/v8/commands/npm-audit",
+                      "github": "https://github.com/jitsecurity-controls/jit-dependency-check-node-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "js_deps"
+                ]
+              }
+            },
+            "software-component-analysis": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "python",
+                  "php_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run osv-scanner",
+                  "with": {
+                    "args": "--recursive \\${WORK_DIR:-.}",
+                    "output_file": "/tmp/report.json"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-osv-scanner-alpine:latest",
+                  "tags": {
+                    "security_tool": "OSV Scanner",
+                    "links": {
+                      "security_tool": "https://github.com/google/osv-scanner",
+                      "github": "https://github.com/jitsecurity-controls/jit-osv-scanner-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "python"
+                ]
+              }
+            },
+            "software-component-analysis-go": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "go",
+                  "go_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run nancy",
+                  "uses": "ghcr.io/jitsecurity-controls/control-nancy-alpine:latest",
+                  "tags": {
+                    "security_tool": "Nancy",
+                    "links": {
+                      "security_tool": "https://github.com/sonatype-nexus-community/nancy",
+                      "github": "https://github.com/jitsecurity-controls/jit-nancy-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "go",
+                  "go_deps"
+                ]
+              }
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo",
+          "repo",
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "languages": [
+            "go",
+            "go_deps"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run nancy",
+            "uses": "ghcr.io/jitsecurity-controls/control-nancy-alpine:latest",
+            "tags": {
+              "security_tool": "Nancy",
+              "links": {
+                "security_tool": "https://github.com/sonatype-nexus-community/nancy",
+                "github": "https://github.com/jitsecurity-controls/jit-nancy-control"
+              }
+            }
+          }
+        ],
+        "tags": {
+          "languages": [
+            "go",
+            "go_deps"
+          ]
+        }
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    },
+    {
+      "plan_item_slug": "item-dependency-check",
+      "workflow_slug": "workflow-sca",
+      "workflow_name": "SCA Workflow",
+      "job_name": "software-component-analysis",
+      "workflow_template": {
+        "slug": "workflow-sca",
+        "name": "SCA Workflow",
+        "type": "workflow",
+        "content": "name: SCA Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  software-component-analysis:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ python ]\n    tags:\n      languages:\n        - python\n    steps:\n      - name: Run osv-scanner\n        uses: ghcr.io/jitsecurity-controls/control-osv-scanner-alpine:latest\n        with:\n          args: --recursive \\${WORK_DIR:-.}\n        tags:\n          security_tool: OSV Scanner\n          links:\n            github: https://github.com/jitsecurity-controls/jit-osv-scanner-control\n            security_tool: https://github.com/google/osv-scanner\n  software-component-analysis-js:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ js_deps ]\n    tags:\n      languages:\n        - js_deps\n    steps:\n      - name: Run npm audit\n        uses: ghcr.io/jitsecurity-controls/control-npm-audit-slim:latest\n        with:\n          args: audit --json --production\n        tags:\n          security_tool: Npm-audit\n          links:\n            github: https://github.com/jitsecurity-controls/jit-dependency-check-node-control\n            security_tool: https://docs.npmjs.com/cli/v8/commands/npm-audit\n  software-component-analysis-go:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ go, go_deps ]\n    tags:\n      languages:\n        - go\n        - go_deps\n    steps:\n      - name: Run nancy\n        uses: ghcr.io/jitsecurity-controls/control-nancy-alpine:latest\n        tags:\n          security_tool: Nancy\n          links:\n            github: https://github.com/jitsecurity-controls/jit-nancy-control\n            security_tool: https://github.com/sonatype-nexus-community/nancy\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "SCA Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "software-component-analysis-js": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "js_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run npm audit",
+                  "with": {
+                    "args": "audit --json --production"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-npm-audit-slim:latest",
+                  "tags": {
+                    "security_tool": "Npm-audit",
+                    "links": {
+                      "security_tool": "https://docs.npmjs.com/cli/v8/commands/npm-audit",
+                      "github": "https://github.com/jitsecurity-controls/jit-dependency-check-node-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "js_deps"
+                ]
+              }
+            },
+            "software-component-analysis": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "python",
+                  "php_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run osv-scanner",
+                  "with": {
+                    "args": "--recursive \\${WORK_DIR:-.}",
+                    "output_file": "/tmp/report.json"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-osv-scanner-alpine:latest",
+                  "tags": {
+                    "security_tool": "OSV Scanner",
+                    "links": {
+                      "security_tool": "https://github.com/google/osv-scanner",
+                      "github": "https://github.com/jitsecurity-controls/jit-osv-scanner-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "python"
+                ]
+              }
+            },
+            "software-component-analysis-go": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "go",
+                  "go_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run nancy",
+                  "uses": "ghcr.io/jitsecurity-controls/control-nancy-alpine:latest",
+                  "tags": {
+                    "security_tool": "Nancy",
+                    "links": {
+                      "security_tool": "https://github.com/sonatype-nexus-community/nancy",
+                      "github": "https://github.com/jitsecurity-controls/jit-nancy-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "go",
+                  "go_deps"
+                ]
+              }
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo",
+          "repo",
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "languages": [
+            "python"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run osv-scanner",
+            "with": {
+              "args": "--recursive \\${WORK_DIR:-.}",
+              "output_file": "/tmp/report.json"
+            },
+            "uses": "ghcr.io/jitsecurity-controls/control-osv-scanner-alpine:latest",
+            "tags": {
+              "security_tool": "OSV Scanner",
+              "links": {
+                "security_tool": "https://github.com/google/osv-scanner",
+                "github": "https://github.com/jitsecurity-controls/jit-osv-scanner-control"
+              }
+            }
+          }
+        ],
+        "tags": {
+          "languages": [
+            "python"
+          ]
+        }
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    },
+    {
+      "plan_item_slug": "item-dependency-check",
+      "workflow_slug": "workflow-sca",
+      "workflow_name": "SCA Workflow",
+      "job_name": "software-component-analysis-js",
+      "workflow_template": {
+        "slug": "workflow-sca",
+        "name": "SCA Workflow",
+        "type": "workflow",
+        "content": "name: SCA Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  software-component-analysis:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ python ]\n    tags:\n      languages:\n        - python\n    steps:\n      - name: Run osv-scanner\n        uses: ghcr.io/jitsecurity-controls/control-osv-scanner-alpine:latest\n        with:\n          args: --recursive \\${WORK_DIR:-.}\n        tags:\n          security_tool: OSV Scanner\n          links:\n            github: https://github.com/jitsecurity-controls/jit-osv-scanner-control\n            security_tool: https://github.com/google/osv-scanner\n  software-component-analysis-js:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ js_deps ]\n    tags:\n      languages:\n        - js_deps\n    steps:\n      - name: Run npm audit\n        uses: ghcr.io/jitsecurity-controls/control-npm-audit-slim:latest\n        with:\n          args: audit --json --production\n        tags:\n          security_tool: Npm-audit\n          links:\n            github: https://github.com/jitsecurity-controls/jit-dependency-check-node-control\n            security_tool: https://docs.npmjs.com/cli/v8/commands/npm-audit\n  software-component-analysis-go:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ go, go_deps ]\n    tags:\n      languages:\n        - go\n        - go_deps\n    steps:\n      - name: Run nancy\n        uses: ghcr.io/jitsecurity-controls/control-nancy-alpine:latest\n        tags:\n          security_tool: Nancy\n          links:\n            github: https://github.com/jitsecurity-controls/jit-nancy-control\n            security_tool: https://github.com/sonatype-nexus-community/nancy\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "SCA Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "software-component-analysis-js": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "js_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run npm audit",
+                  "with": {
+                    "args": "audit --json --production"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-npm-audit-slim:latest",
+                  "tags": {
+                    "security_tool": "Npm-audit",
+                    "links": {
+                      "security_tool": "https://docs.npmjs.com/cli/v8/commands/npm-audit",
+                      "github": "https://github.com/jitsecurity-controls/jit-dependency-check-node-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "js_deps"
+                ]
+              }
+            },
+            "software-component-analysis": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "python",
+                  "php_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run osv-scanner",
+                  "with": {
+                    "args": "--recursive \\${WORK_DIR:-.}",
+                    "output_file": "/tmp/report.json"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-osv-scanner-alpine:latest",
+                  "tags": {
+                    "security_tool": "OSV Scanner",
+                    "links": {
+                      "security_tool": "https://github.com/google/osv-scanner",
+                      "github": "https://github.com/jitsecurity-controls/jit-osv-scanner-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "python"
+                ]
+              }
+            },
+            "software-component-analysis-go": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "go",
+                  "go_deps"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run nancy",
+                  "uses": "ghcr.io/jitsecurity-controls/control-nancy-alpine:latest",
+                  "tags": {
+                    "security_tool": "Nancy",
+                    "links": {
+                      "security_tool": "https://github.com/sonatype-nexus-community/nancy",
+                      "github": "https://github.com/jitsecurity-controls/jit-nancy-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "go",
+                  "go_deps"
+                ]
+              }
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo",
+          "repo",
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "languages": [
+            "js_deps"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run npm audit",
+            "with": {
+              "args": "audit --json --production"
+            },
+            "uses": "ghcr.io/jitsecurity-controls/control-npm-audit-slim:latest",
+            "tags": {
+              "security_tool": "Npm-audit",
+              "links": {
+                "security_tool": "https://docs.npmjs.com/cli/v8/commands/npm-audit",
+                "github": "https://github.com/jitsecurity-controls/jit-dependency-check-node-control"
+              }
+            }
+          }
+        ],
+        "tags": {
+          "languages": [
+            "js_deps"
+          ]
+        }
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    },
+    {
+      "plan_item_slug": "item-iac-misconfiguration-detection",
+      "workflow_slug": "workflow-iac-misconfiguration-detection",
+      "workflow_name": "IaC Misconfiguration Detection Workflow",
+      "job_name": "iac-misconfig-detection",
+      "workflow_template": {
+        "slug": "workflow-iac-misconfiguration-detection",
+        "name": "IaC Misconfiguration Detection Workflow",
+        "type": "workflow",
+        "content": "name: IaC Misconfiguration Detection Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  iac-misconfig-detection:\n    runner: github_actions\n    asset_type: repo\n    if:\n      languages: [ terraform, cloudformation, kubernetes ]\n    tags:\n      languages:\n        - terraform\n        - cloudformation\n        - serverless\n    steps:\n      - name: Run KICS\n        uses: ghcr.io/jitsecurity-controls/control-kics-alpine:latest\n        with:\n          args: scan -p \\${WORK_DIR:-.} -o \\$REPORT_FILE -f json --config \\$KICS_CONFIG_FILE_PATH --disable-secrets\n          output_file: /code/jit-report/results.json\n        tags:\n          security_tool: Kics\n          links:\n            github: https://github.com/jitsecurity-controls/jit-cloud-infrastructure-misconfiguration-control\n            security_tool: https://github.com/Checkmarx/kics\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "IaC Misconfiguration Detection Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "iac-misconfig-detection": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "languages": [
+                  "terraform",
+                  "cloudformation",
+                  "kubernetes"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run KICS",
+                  "with": {
+                    "args": "scan -p \\${WORK_DIR:-.} -o \\$REPORT_FILE -f json --config \\$KICS_CONFIG_FILE_PATH --disable-secrets",
+                    "output_file": "/code/jit-report/results.json"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-kics-alpine:latest",
+                  "tags": {
+                    "security_tool": "Kics",
+                    "links": {
+                      "security_tool": "https://github.com/Checkmarx/kics",
+                      "github": "https://github.com/jitsecurity-controls/jit-cloud-infrastructure-misconfiguration-control"
+                    }
+                  }
+                }
+              ],
+              "tags": {
+                "languages": [
+                  "terraform",
+                  "cloudformation",
+                  "serverless"
+                ]
+              }
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "languages": [
+            "terraform",
+            "cloudformation",
+            "kubernetes"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run KICS",
+            "with": {
+              "args": "scan -p \\${WORK_DIR:-.} -o \\$REPORT_FILE -f json --config \\$KICS_CONFIG_FILE_PATH --disable-secrets",
+              "output_file": "/code/jit-report/results.json"
+            },
+            "uses": "ghcr.io/jitsecurity-controls/control-kics-alpine:latest",
+            "tags": {
+              "security_tool": "Kics",
+              "links": {
+                "security_tool": "https://github.com/Checkmarx/kics",
+                "github": "https://github.com/jitsecurity-controls/jit-cloud-infrastructure-misconfiguration-control"
+              }
+            }
+          }
+        ],
+        "tags": {
+          "languages": [
+            "terraform",
+            "cloudformation",
+            "serverless"
+          ]
+        }
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    },
+    {
+      "plan_item_slug": "item-secret-detection",
+      "workflow_slug": "workflow-secret-detection",
+      "workflow_name": "Secret Detection Workflow",
+      "job_name": "secret-detection",
+      "workflow_template": {
+        "slug": "workflow-secret-detection",
+        "name": "Secret Detection Workflow",
+        "type": "workflow",
+        "content": "name: Secret Detection Workflow\ntrigger:\n  on:\n    - item_activated\n    - resource_added\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  secret-detection:\n    runner: github_actions\n    asset_type: repo\n    if:\n      mime_types: [ text ]\n    steps:\n      - name: Run Gitleaks\n        uses: ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest\n        with:\n          args: detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source \\${WORK_DIR:-.} -v --report-format json --report-path \\$REPORT_FILE --redact --no-git --exit-code 0\n          output_file: /tmp/report.json\n        tags:\n          security_tool: Gitleaks\n          links:\n            github: https://github.com/jitsecurity-controls/jit-secrets-detection-control\n            security_tool: https://github.com/zricethezav/gitleaks\n",
+        "depends_on": [
+          "workflow-enrichment-code"
+        ],
+        "parsed_content": {
+          "name": "Secret Detection Workflow",
+          "trigger": {
+            "true": [
+              "item_activated",
+              "resource_added",
+              "pull_request_created",
+              "pull_request_updated",
+              "merge_default_branch"
+            ],
+            "depends_on": [
+              "workflow-enrichment-code"
+            ]
+          },
+          "jobs": {
+            "secret-detection": {
+              "asset_type": "repo",
+              "runner": "github_actions",
+              "if": {
+                "mime_types": [
+                  "text"
+                ]
+              },
+              "steps": [
+                {
+                  "name": "Run Gitleaks",
+                  "with": {
+                    "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source \\${WORK_DIR:-.} -v --report-format json --report-path \\$REPORT_FILE --redact --no-git --exit-code 0",
+                    "output_file": "/tmp/report.json"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest",
+                  "tags": {
+                    "security_tool": "Gitleaks",
+                    "links": {
+                      "security_tool": "https://github.com/zricethezav/gitleaks",
+                      "github": "https://github.com/jitsecurity-controls/jit-secrets-detection-control"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo"
+        ]
+      },
+      "raw_job_template": {
+        "asset_type": "repo",
+        "runner": "github_actions",
+        "if": {
+          "mime_types": [
+            "text"
+          ]
+        },
+        "steps": [
+          {
+            "name": "Run Gitleaks",
+            "with": {
+              "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source \\${WORK_DIR:-.} -v --report-format json --report-path \\$REPORT_FILE --redact --no-git --exit-code 0",
+              "output_file": "/tmp/report.json"
+            },
+            "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest",
+            "tags": {
+              "security_tool": "Gitleaks",
+              "links": {
+                "security_tool": "https://github.com/zricethezav/gitleaks",
+                "github": "https://github.com/jitsecurity-controls/jit-secrets-detection-control"
+              }
+            }
+          }
+        ]
+      },
+      "depends_on_slugs": [
+        "workflow-enrichment-code"
+      ]
+    }
+  ],
+  "should_enrich": true,
+  "depends_on_workflows_templates": [
+    {
+      "slug": "workflow-enrichment-code",
+      "name": "Code Enrichment Workflow",
+      "depends_on": [],
+      "content": "jobs:\n  enrich:\n    asset_type: repo\n    runner: github_actions\n    steps:\n    - name: Run code enrichment\n      uses: ghcr.io/jitsecurity-controls/control-enrichment-slim:latest\n      with:\n        args: --path \\${WORK_DIR:-.}\nname: Code Enrichment Workflow",
+      "parsed_content": {
+        "name": "Code Enrichment Workflow",
+        "jobs": {
+          "enrich": {
+            "runner": "github_actions",
+            "asset_type": "repo",
+            "steps": [
+              {
+                "name": "Run code enrichment",
+                "with": {
+                  "args": "--path \\${WORK_DIR:-.}"
+                },
+                "uses": "ghcr.io/jitsecurity-controls/control-enrichment-slim:latest"
+              }
+            ]
+          }
+        }
+      },
+      "params": null,
+      "plan_item_template_slug": null,
+      "asset_types": [
+        "repo"
+      ]
+    }
+  ],
+  "enriched_data": {},
+  "Epsagon": {
+    "id": "2beb6bed-0280-487f-b1f3-b10340a6af2e",
+    "step_num": -1
+  }
+}

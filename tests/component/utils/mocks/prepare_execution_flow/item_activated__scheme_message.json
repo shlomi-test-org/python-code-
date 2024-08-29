@@ -1,0 +1,67 @@
+{
+  "tenant_id": "0e21c6af-5305-40a4-a021-a4f0ae019db1",
+  "jit_event_name": "item_activated",
+  "trigger_schemes": [
+      {
+          "jit_event": {
+              "tenant_id": "0e21c6af-5305-40a4-a021-a4f0ae019db1",
+              "jit_event_name": "item_activated",
+              "jit_event_id": "c29cbb28-46c1-4070-8019-6feebc5a4ad9",
+              "asset_id": null,
+              "workflows": null,
+              "activated_plan_slug": "jit-plan",
+              "activated_plan_item_slugs": [
+                  "item-code-vulnerability"
+              ]
+          },
+          "event_execution_scheme": {
+              "workflow_trigger_schemes": {
+                  "workflow-sast": {
+                      "workflow_slug": "workflow-sast",
+                      "workflow_name": "SAST Workflow",
+                      "asset_trigger_schemes": {
+                          "1ad9e22d-7342-4b51-af94-4d7f8a54ce22": {
+                              "asset_id": "1ad9e22d-7342-4b51-af94-4d7f8a54ce22",
+                              "asset_name": "e2e-test-repository",
+                              "asset_type": "repo",
+                              "owner": "guy-bandit",
+                              "vendor": "github",
+                              "installation_id": "33261239",
+                              "environment": null,
+                              "job_trigger_schemes": {
+                                  "static-code-analysis-go": {
+                                      "job_name": "static-code-analysis-go",
+                                      "runner": "github_actions",
+                                      "security_tool": "Gosec"
+                                  },
+                                  "static-code-analysis-python": {
+                                      "job_name": "static-code-analysis-python",
+                                      "runner": "github_actions",
+                                      "security_tool": "Bandit"
+                                  },
+                                  "static-code-analysis-js": {
+                                      "job_name": "static-code-analysis-js",
+                                      "runner": "github_actions",
+                                      "security_tool": "Semgrep"
+                                  },
+                                  "static-code-analysis-scala": {
+                                      "job_name": "static-code-analysis-scala",
+                                      "runner": "github_actions",
+                                      "security_tool": "Semgrep"
+                                  },
+                                  "static-code-analysis-java": {
+                                      "job_name": "static-code-analysis-java",
+                                      "runner": "github_actions",
+                                      "security_tool": "Semgrep"
+                                  }
+                              }
+                          }
+                      },
+                      "plan_item_slug": "item-code-vulnerability"
+                  }
+              }
+          },
+          "source_asset": null
+      }
+  ]
+}

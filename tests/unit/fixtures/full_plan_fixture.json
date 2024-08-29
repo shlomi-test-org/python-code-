@@ -1,0 +1,706 @@
+{
+    "item-account-deletion": {
+        "item_template": {
+            "slug": "item-account-deletion",
+            "name": "Allow account direct deletion",
+            "type": "plan_item",
+            "content": "namespace: jit.data\nname: Allow account direct deletion\ndescription: |\n  Application should provide users with a way to delete their account, without having to email or call a support\n  person.\nsummary: |\n  Jit will ask for your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-account-deletion.yml@latest\ntags:\n  layer: data\n  risk_category: data_protection\n  compliance:soc2: P4.3\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-account-deletion.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-account-services-sharing": {
+        "item_template": {
+            "slug": "item-account-services-sharing",
+            "name": "Do not share account services accross applications",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Do not share account services accross applications\ndescription: |\n  Applications should not share service accounts such as email or database services to manage your SaaS service.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-account-services-sharing.yml@latest\ntags:\n  layer: third_party_app\n  risk_category: authentication\n  compliance:soc2: CC6.3\n  compliance:iso-27001: A.9.2.3\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-account-services-sharing.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-admin-privilege": {
+        "item_template": {
+            "slug": "item-admin-privilege",
+            "name": "Grant access to production only to engineers and employees with admin duties",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Grant access to production only to engineers and employees with admin duties\ndescription: |\n  Admin privilege access to the production hosting infrastructure should only be given to engineers and employees\n  with administrative duties.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-admin-privilege.yml@latest\ntags:\n  layer: third_party_app\n  risk_category: access_control\n  compliance:soc2: CC6.3\n  compliance:iso-27001: A.9.2.3\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-admin-privilege.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-api-security": {
+        "item_template": {
+            "slug": "item-api-security",
+            "name": "Ensure your API is secure",
+            "type": "plan_item",
+            "content": "namespace: jit.runtime\nname: Ensure your API is secure\ndescription: |\n  As APIs increasingly connect our most intimate and sensitive data they rise in value. Today’s applications might \n  expose hundreds of highly valuable endpoints that are very appealing to hackers. Ensuring your APIs are secure \n  before, during, and after production is becoming table stakes.\nsummary: |\n    Run an API Security Scanner on schedule.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-api-security@latest\ntags:\n  layer: runtime\n  risk_category: code_vulnerability\n",
+            "plan_template_slugs": [
+                "plan-mvs-for-cloud-app"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-api-security",
+                "name": "API Security Workflow",
+                "type": "workflow",
+                "content": "name: API Security Workflow\ntrigger:\n  on:\n    - schedule(\"0 8 * * *\")\njobs:\n  api-security-detection:\n    runner: jit\n    asset_type: application\n    steps:\n      - name: Run ZAP\n        uses: ghcr.io/jitsecurity-controls/control-zap-alpine:latest",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-app-credentials-storage": {
+        "item_template": {
+            "slug": "item-app-credentials-storage",
+            "name": "Store application client ID and secret securely",
+            "type": "plan_item",
+            "content": "namespace: jit.data\nname: Store application client ID and secret securely\ndescription: |\n  Application should store client ID and client secret keys securely. We recommend storing them as [environmental \n  variables](https://en.wikipedia.org/wiki/Environment_variable#Getting_and_setting_environment_variables).\nsummary: |\n  Jit will ask for your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-app-credentials-storage.yml@latest\ntags:\n  layer: data\n  risk_category: data_protection\n  compliance:soc2: CC6.1\n  compliance:iso-27001: A.10.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-app-credentials-storage.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-ask-third-party-password": {
+        "item_template": {
+            "slug": "item-ask-third-party-password",
+            "name": "Don't ask for the user Github password",
+            "type": "plan_item",
+            "content": "namespace: jit.data\nname: Don't ask for the user Github password\ndescription: |\n  Applications should not require the user to provide their GitHub password.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-ask-third-party-password.yml@latest\ntags:\n  layer: third_party_app\n  risk_category: access_control\n",
+            "plan_template_slugs": [
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-ask-third-party-password.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-code-vulnerability": {
+        "item_template": {
+            "slug": "item-code-vulnerability",
+            "name": "Scan code for vulnerabilities",
+            "type": "plan_item",
+            "content": "namespace: jit.code\nname: Scan code for vulnerabilities\ndescription: |\n  Static code analysis tools can discover vulnerabilities inside your code before they make their way to production.\nsummary: |\n  Integrate SAST into CI/CD so it automatically runs for every new PR\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-sast@latest\ntags:\n  layer: code\n  risk_category: code_vulnerability\n  compliance:soc2: CC7.1\n  compliance:iso-27001: A.12.6.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-mvs-for-cloud-app",
+                "plan-iso-27001"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-sast",
+                "name": "SAST Workflow",
+                "type": "workflow",
+                "content": "name: SAST Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\njobs:\n  static-code-analysis-python:\n    runner: github_actions\n    asset_type: repo\n    steps:\n      - name: Run Bandit\n        uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n        if: \"python in ${{ context.languages }}\"\n        with:\n          args: -r /code -f json -q -ll -iii\n  static-code-analysis-golang:\n    runner: github_actions\n    asset_type: repo\n    steps:\n      - name: Run GoSec\n        uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:latest\n        if: \"go in ${{ context.languages }}\"\n",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-container-scan": {
+        "item_template": {
+            "slug": "item-container-scan",
+            "name": "Scan container images",
+            "type": "plan_item",
+            "content": "namespace: jit.infrastructure\nname: Scan container images\ndescription: |\n  Scanning containers and their components can help you identify potential security threats.\nsummary: |\n  Integrate container scanner into CI/CD so it automatically runs for every new PR.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-docker-scan@latest\ntags:\n  layer: infrastructure\n  risk_category: supply_chain_attack\n",
+            "plan_template_slugs": [
+                "plan-mvs-for-cloud-app"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-docker-scan",
+                "name": "Docker Scan Workflow",
+                "type": "workflow",
+                "content": "name: Docker Scan Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\njobs:\n  docker-scan:\n    runner: jit\n    asset_type: repo\n    steps:\n      - name: Run docker scan\n        uses: ghcr.io/jitsecurity-controls/control-docker-scan-alpine:latest\n        with:\n          image_url: ${{ image_url }}\n          registry_token: ${{ registry_token }}\n",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-dedicated-app-per-device-type": {
+        "item_template": {
+            "slug": "item-dedicated-app-per-device-type",
+            "name": "Use dedicated Github App for each device type (desktop/mobile)",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Use dedicated Github App for each device type (desktop/mobile)\ndescription: |\n  Apps should not share tokens between different implementations of the app. For example, a desktop app should have\n  a separate token from a web-based app. Individual tokens allow each app to request the access needed for GitHub\n  resources separately.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-dedicated-app-per-device-type.yml@latest\ntags:\n  layer: third_party_app\n  risk_category: authentication",
+            "plan_template_slugs": [
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-dedicated-app-per-device-type.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-dependency-check": {
+        "item_template": {
+            "slug": "item-dependency-check",
+            "name": "Scan code dependencies for vulnerabilities",
+            "type": "plan_item",
+            "content": "namespace: jit.code\nname: Scan code dependencies for vulnerabilities\ndescription: |\n  Code dependencies should be scanned for vulnerabilities, as vulnerable dependencies can cause a range of problems \n  for your project or the people who use it.\nsummary: |\n  Integrate SCA tool into CI/CD so it automatically runs for every new PR.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-sca@latest\ntags:\n  layer: code\n  risk_category: supply_chain_attack\n  compliance:soc2: CC7.1\n  compliance:iso-27001: A.12.6.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-mvs-for-cloud-app",
+                "plan-iso-27001"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-sca",
+                "name": "SCA Workflow",
+                "type": "workflow",
+                "content": "name: SCA Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\njobs:\n  software-component-analysis:\n    runner: github_actions\n    asset_type: repo\n    steps:\n      - name: Run osv-scanner\n        uses: ghcr.io/jitsecurity-controls/control-osv-scanner-alpine:latest\n        if: \"python in ${{ context.languages }}\"\n        with:\n          args: --recursive \\${WORK_DIR:-.}\n      - name: Run npm audit\n        uses: ghcr.io/jitsecurity-controls/control-npm-audit-slim:latest\n        if: \"javascript in ${{ context.languages }}\"\n        with:\n          args: audit --json --production\n",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-github-api-access": {
+        "item_template": {
+            "slug": "item-github-api-access",
+            "name": "Use Github OAuth or Github App token to communicate with Github API",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Use Github OAuth or Github App token to communicate with Github API\ndescription: |\n  Apps should not use personal access tokens to authenticate and should authenticate as an [OAuth App]\n  (https://docs.github.com/en/apps/about-apps/#about-oauth-apps) using an OAuth token or a [GitHub App]\n  (https://docs.github.com/en/apps/about-apps/#about-github-apps) using either a JSON Web Token (JWT), OAuth token,\n  or installation access token.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-github-api-access.yml@latest\ntags:\n  layer: third_party_app\n  risk_category: authentication",
+            "plan_template_slugs": [
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-github-api-access.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-github-app-type": {
+        "item_template": {
+            "slug": "item-github-app-type",
+            "name": "Use Github App instead of Github OAuth app",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Use Github App instead of Github OAuth app\ndescription: |\n  Github recommends creating a Github App rather than an OAuth App. Github apps are the officially recommended way\n  to integrate with Github because they offer much more granual permissions to access data. See [Differences between\n  Github Apps and OAuth Apps](https://docs.github.com/en/apps/differences-between-apps).\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-github-app-type.yml@latest\nrefs:\n  - url:https://docs.github.com/en/developers/github-marketplace/creating-apps-for-github-marketplace/security-best-practices-for-apps\ntags:\n  layer: third_party_app\n  risk_category: access_control",
+            "plan_template_slugs": [
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-github-app-type.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-iac-misconfiguration-detection": {
+        "item_template": {
+            "slug": "item-iac-misconfiguration-detection",
+            "name": "Scan IaC for static misconfigurations",
+            "type": "plan_item",
+            "content": "namespace: jit.infrastructure\nname: Scan IaC for static misconfigurations\ndescription: |\n  Cloud misconfigurations occur when resources have not been constructed properly, leaving your systems vulnerable \n  to attack. Cloud environment misconfigurations can cause system outages, unwanted downtime, or security risks.\n  Causes can include overly complex environments, insufficient security practice knowledge, and human error due to\n  manual processes.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-iac-misconfiguration-detection@latest\ntags:\n  layer: infrastructure\n  risk_category: supply_chain_attack\n  compliance:soc2: CC7.1\n  compliance:iso-27001: A.12.6.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-mvs-for-cloud-app",
+                "plan-iso-27001"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-iac-misconfiguration-detection",
+                "name": "IaC Misconfiguration Detection Workflow",
+                "type": "workflow",
+                "content": "name: IaC Misconfiguration Detection Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\njobs:\n  iac-misconfig-detection:\n    runner: github_actions\n    asset_type: repo\n    steps:\n      - name: Run KICS\n        uses: ghcr.io/jitsecurity-controls/control-kics-alpine:latest\n        if: \"python in ${{ context.languages }}\"\n        with:\n          args: scan -p /code -o /code/jit-report -f json --exclude-severities INFO,MEDIUM,LOW\n          output_file: /code/jit-report/results.json",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-incident-response-plan": {
+        "item_template": {
+            "slug": "item-incident-response-plan",
+            "name": "Create Incident Response plan",
+            "type": "plan_item",
+            "content": "namespace: jit.operations\nname: Create Incident Response plan\ndescription: |\n  You should have a clear incident response plan in place before listing your GitHub app in the marketplace. \n  You should have the capability to notify GitHub within 24 hours of a confirmed incident.\n  For an example of an incident response workflow, see the \"Data Breach Response Policy\" on the SANS Institute \n  website. A short document with clear steps to take in the event of an incident is more valuable than a lengthy \n  policy template.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-incident-response-plan.yml@latest\ntags:\n  layer: operations\n  risk_category: security_incident\n  compliance:soc2: CC7.4\n  compliance:iso-27001: A.16.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-incident-response-plan.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-least-privilege-principle": {
+        "item_template": {
+            "slug": "item-least-privilege-principle",
+            "name": "Follow Least Privilege Principle",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Follow Least Privilege Principle\ndescription: |\n  Apps should use the principle of least privilege and show only request the Oauth scopes and Github App permissions\n  that the app needs to perform its intended functionality. For more information, see [Principle of least privilege]\n  (https://en.wikipedia.org/wiki/Principle_of_least_privilege).\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-least-privilege-principle.yml@latest\ntags:\n  layer: third_party_app\n  risk_category: access_control\n  compliance:soc2: CC6.3\n  compliance:iso-27001: A.9.2.3\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-least-privilege-principle.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-least-privileged-iam": {
+        "item_template": {
+            "slug": "item-least-privileged-iam",
+            "name": "Ensure IAM roles adhere to the least privilege principle",
+            "type": "plan_item",
+            "content": "namespace: jit.infrastructure\nname: Ensure IAM roles adhere to the least privilege principle\ndescription: |\n  When you create IAM policies, follow the least privilege principle and grant only the permissions required to perform a task. This will curb the impact \n  of potential breach to the limited permissions that the component really needs and make your cloud environment more resilient to security threats.\nsummary: |\n  Jit will check whether your IAM roles adhere to the least privilege principle.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-least-privileged-iam@latest\ntags:\n  layer: infrastructure\n  risk_category: supply_chain_attack\n",
+            "plan_template_slugs": [
+                "plan-mvs-for-cloud-app"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-least-privileged-iam",
+                "name": "Least Privileged IAM Checker Workflow",
+                "type": "workflow",
+                "content": "name: Least Privileged IAM Checker Workflow\ntrigger:\n  on:\n    - schedule(\"0 8 * * *\")\njobs:\n  iam-least-privileged-checker:\n    runner: jit\n    asset_type: aws_account\n    steps:\n      - name: Run Least Privileged IAM Checker\n        uses: ghcr.io/jitsecurity-controls/control-iam-least-privileged-alpine:latest",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-logging": {
+        "item_template": {
+            "slug": "item-logging",
+            "name": "Add logging capability for your app",
+            "type": "plan_item",
+            "content": "namespace: jit.operations\nname: Add logging capability for your app\ndescription: |\n  Apps should have logging and monitoring capabilities.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-checker-infra-audit-log.yml@latest\ntags:\n  layer: operations\n  risk_category: monitoring\n  compliance:soc2: PI1.3\n  compliance:iso-27001: A.12.4.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-checker-infra-audit-log",
+                "name": "Check if infrastructure audit log is enabled",
+                "type": "workflow",
+                "content": "name: Check if infrastructure audit log is enabled\ntrigger:\n  on:\n    - schedule(\"0 8 * * *\")\njobs:\n  checker-cloudtrail:\n    runner: jit\n    asset_type: aws_account\n    steps:\n      - name: Run Cloudtrail checker\n        uses: ghcr.io/jitsecurity-controls/jit-plans/control-cloudtrail-checker-alpine:latest\n        with:\n          args: account_ids=\"$AWS_ACCOUNT_IDS\"",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-logging-retention": {
+        "item_template": {
+            "slug": "item-logging-retention",
+            "name": "Ensure log retention for 30 days",
+            "type": "plan_item",
+            "content": "namespace: jit.operations\nname: Ensure log retention for 30 days\ndescription: | \n  App logs should be retained for at least 30 days and archived for at least one year.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-logging-retention.yml@latest\ntags:\n  layer: operations\n  risk_category: monitoring\n  compliance:soc2: PI1.3\n  compliance:iso-27001: A.12.4.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-logging-retention.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-logs-format": {
+        "item_template": {
+            "slug": "item-logs-format",
+            "name": "Ensure log format includes critical fields",
+            "type": "plan_item",
+            "content": "namespace: jit.operations\nname: Ensure log format includes critical fields\ndescription: |\n  A security log should include authentication and authorization events, service configuration changes, object reads\n  and writes, all user and group permission changes, elevation of role to admin, consistent timestamping for each\n  event, source users, IP addresses, and/or hostnames for all logged actions.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-logs-format.yml@latest\ntags:\n  layer: operations\n  risk_category: monitoring\n  compliance:soc2: PI1.3\n  compliance:iso-27001: A.12.4.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-logs-format.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-mfa-cloud-providers": {
+        "item_template": {
+            "slug": "item-mfa-cloud-providers",
+            "name": "Require MFA for cloud providers",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Require MFA for cloud providers\ndescription: |\n  Your employees should all use multi factor authentication. By adding MFA, you add an extra layer of security. Should \n  your employee’s password get stolen, the attacker would still be locked out unless they have access to the second \n  factor (e.g. phone app or text) as well.\nsummary: |\n  Ensure you have MFA enabled for all your users\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-mfa-aws-checker@latest\ntags:\n  layer: third_party_app\n  risk_category: access_control\n",
+            "plan_template_slugs": [
+                "plan-mvs-for-cloud-app"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-mfa-aws-checker",
+                "name": "MFA Checker on AWS Workflow",
+                "type": "workflow",
+                "content": "name: MFA Checker on AWS Workflow\ntrigger:\n  on:\n    - schedule(\"0 8 * * *\")\njobs:\n  mfa-aws-checker:\n    runner: jit\n    asset_type: aws_account\n    steps:\n      - name: Run MFA checker\n        uses: ghcr.io/jitsecurity-controls/control-mfa-aws-alpine:latest",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-mfa-scm": {
+        "item_template": {
+            "slug": "item-mfa-scm",
+            "name": "Require MFA for SCM",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Require MFA for SCM\ndescription: |\n  Your employees should all use multi factor authentication. By adding MFA, you add an extra layer of security. Should \n  your employee’s password get stolen, the attacker would still be locked out unless they have access to the second \n  factor (e.g. phone app or text) as well.\nsummary: |\n  Ensure you have MFA enabled for all your users\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-mfa-github-checker@latest\ntags:\n  layer: third_party_app\n  risk_category: access_control\n",
+            "plan_template_slugs": [
+                "plan-mvs-for-cloud-app"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-mfa-github-checker",
+                "name": "MFA Checker on Github Workflow",
+                "type": "workflow",
+                "content": "name: MFA Checker on Github Workflow\ntrigger:\n  on:\n    - schedule(\"0 8 * * *\")\njobs:\n  mfa-github-checker:\n    runner: jit\n    asset_type: org\n    steps:\n      - name: Run MFA checker\n        uses: ghcr.io/jitsecurity-controls/control-mfa-github-alpine:latest",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-rbac": {
+        "item_template": {
+            "slug": "item-rbac",
+            "name": "Implement RBAC in your app",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: Implement RBAC in your app\ndescription: |\n  Design your app with different user roles, depending on the functionality needed by each type of user. For example,\n  a standard user should not have access to admin functionality, and billing managers might not need push access to\n  repository code.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-rbac.yml@latest\ntags:\n  layer: third_party_app\n  risk_category: authorization\n  compliance:soc2: CC6.3\n  compliance:iso-27001: A.9.2.3\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-rbac.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-runtime-misconfiguration-detection": {
+        "item_template": {
+            "slug": "item-runtime-misconfiguration-detection",
+            "name": "Scan infrastructure for runtime misconfigurations",
+            "type": "plan_item",
+            "content": "namespace: jit.infrastructure\nname: Scan infrastructure for runtime misconfigurations\ndescription: |\n  Cloud misconfigurations occur when resources have not been constructed properly, leaving your systems vulnerable \n  to attack. Cloud environment misconfigurations can cause system outages, unwanted downtime, or security risks. \n  Causes may include overly complex environments, insufficient security practice knowledge, and human error due to \n  manual processes.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-runtime-misconfiguration-detection@latest\ntags:\n  layer: infrastructure\n  risk_category: supply_chain_attack\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-mvs-for-cloud-app",
+                "plan-iso-27001"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-runtime-misconfiguration-detection",
+                "name": "Infrastructure Runtime Misconfiguration Detection Workflow",
+                "type": "workflow",
+                "content": "name: Infrastructure Runtime Misconfiguration Detection Workflow\ntrigger:\n  on:\n    - schedule(\"0 8 * * *\")\njobs:\n  runtime-misconfig-detection:\n    runner: jit\n    asset_type: aws_account\n    steps:\n      - name: Run Prowler\n        uses: ghcr.io/jitsecurity-controls/control-prowler-alpine:latest\n        with:\n          args: account_ids=\"$AWS_ACCOUNT_IDS\"\n",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-secret-detection": {
+        "item_template": {
+            "slug": "item-secret-detection",
+            "name": "Scan code for hard-coded secrets",
+            "type": "plan_item",
+            "content": "namespace: jit.code\nname: Scan code for hard-coded secrets\ndescription: |\n  Hard-coded secrets can be exploited by attackers to gain unauthorized access to the password-protected asset.\nsummary: |\n  Integrate secret scanner into CI/CD so automatically runs for every new PR.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-secret-detection@latest\ntags:\n  layer: code\n  risk_category: secret_leaks\n  compliance:soc2: CC7.1\n  compliance:iso-27001: A.12.6.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-mvs-for-cloud-app",
+                "plan-iso-27001"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-secret-detection",
+                "name": "Secret Detection Workflow",
+                "type": "workflow",
+                "content": "name: Secret Detection Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\njobs:\n  secret-detection:\n    runner: github_actions\n    asset_type: repo\n    steps:\n      - name: Run Gitleaks\n        uses: ghcr.io/jitsecurity-controls/jit-plans/control-gitleaks-alpine:latest\n        with:\n          args: detect --config /config/gitleaks.toml --source /code -v --report-format json --report-path /tmp/report.json --redact --log-opts \"-1\"\n          output_file: /tmp/report.json",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-secret-encryption": {
+        "item_template": {
+            "slug": "item-secret-encryption",
+            "name": "Encrypt any secret data",
+            "type": "plan_item",
+            "content": "namespace: jit.data\nname: Encrypt any secret data\ndescription: |\n  Apps should encrypt tokens, client IDs, and client secrets.\nsummary: |\n  Jit will ask for your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-secret-encryption.yml@latest\ntags:\n  layer: data\n  risk_category: data_protection\n  compliance:soc2: CC6.1\n  compliance:iso-27001: A.10.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-secret-encryption.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-third-party-account-sharing": {
+        "item_template": {
+            "slug": "item-third-party-account-sharing",
+            "name": "All services should have unique login and credentials",
+            "type": "plan_item",
+            "content": "namespace: jit.third_party_app\nname: All services should have unique login and credentials\ndescription: |\n  All services used in your app should have unique login and password credentials.\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-third-party-account-sharing.yml@latest\ntags:\n  layer: third_party_app\n  risk_category: access_control\n  compliance:soc2: CC6.1\n  compliance:iso-27001: A.9.2.4\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-third-party-account-sharing.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-traffic-encryption": {
+        "item_template": {
+            "slug": "item-traffic-encryption",
+            "name": "Encrypt traffic in transit",
+            "type": "plan_item",
+            "content": "namespace: jit.data\nname: Encrypt traffic in transit\ndescription: |\n  Apps should encrypt data transferred over the public internet using HTTPS, with a valid TLS certificate, or SSH\n  for Git.\nsummary: |\n  Jit will ask for your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-traffic-encryption.yml@latest\ntags:\n  layer: data\n  risk_category: data_protection\n  compliance:soc2: CC6.7\n  compliance:iso-27001: A.10.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-traffic-encryption.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-user-data-deletion": {
+        "item_template": {
+            "slug": "item-user-data-deletion",
+            "name": "Delete Github user data within 30 days of deletion request",
+            "type": "plan_item",
+            "content": "namespace: jit.data\nname: Delete Github user data within 30 days of deletion request\ndescription: |\n  Application should delete all GitHub user data within 30 days of receiving a request from the user, or within 30 days of\n  the end of the user's legal relationship with GitHub.\nsummary: |\n  Jit will ask for your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-user-data-deletion.yml@latest\ntags:\n  layer: data\n  risk_category: data_protection\n  compliance:soc2: P4.3\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-user-data-deletion.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-vulnerability-scan": {
+        "item_template": {
+            "slug": "item-vulnerability-scan",
+            "name": "Conduct periodic vulnerability scans",
+            "type": "plan_item",
+            "content": "namespace: jit.infrastructure\nname: Conduct periodic vulnerability scans\ndescription: |\n  You should conduct regular vulnerability scans of production infrastructure. You should triage the results of \n  vulnerability scans and define a period of time in which you agree to remediate the vulnerability. If you are not\n  ready to set up a full vulnerability management program, it's useful to start by creating a patching process. For \n  guidance in creating a patch management policy, see this TechRepublic article [Establish a patch management \n  policy](https://www.techrepublic.com/blog/it-security/establish-a-patch-management-policy-87756/)\nsummary: |\n  Jit will ask your input to determine compliance with this item.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-manual-checker@latest\n    with:\n      template: jitsecurity-controls/jit-plans/templates/manual/template-vulnerability-scan.yml@latest\ntags:\n  layer: infrastructure\n  risk_category: vulnerability\n  compliance:soc2: CC7.1\n  compliance:iso-27001: A.12.6.1\n",
+            "plan_template_slugs": [
+                "plan-soc2",
+                "plan-iso-27001",
+                "plan-github-marketplace"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-manual-checker",
+                "name": "Manual Control Workflow",
+                "type": "workflow",
+                "content": "name: Manual Control Workflow\ntrigger:\n  on:\n    - on_plan_input_change\njobs:\n  manual-check:\n    runner: jit\n    asset_type: null\n    steps:\n      - name: Run manual check\n        uses: jitsecurity-controls/jit-plans/manual-check-control@latest\n        with:\n          template: \"${{ item.inputs.template }}\"\n",
+                "params": {
+                    "template": "jitsecurity-controls/jit-plans/templates/manual/template-vulnerability-scan.yml@latest"
+                },
+                "plan_item_template_slug": null
+            }
+        ]
+    },
+    "item-web-app-scanner": {
+        "item_template": {
+            "slug": "item-web-app-scanner",
+            "name": "Run a Web Application Scanner",
+            "type": "plan_item",
+            "content": "namespace: jit.runtime\nname: Run a Web Application Scanner\ndescription: |\n  Web application scanning, also referred to as web application vulnerability scanning or web application security \n  scanning, crawls a website for vulnerabilities within web applications. Scanning software is called web application \n  scanners or vulnerability scanners.\nsummary: |\n    Run a Web Application Scanner on schedule.\nworkflows:\n  - uses: jitsecurity-controls/jit-plans/workflows/workflow-web-app-scanner@latest\ntags:\n  layer: runtime\n  risk_category: code_vulnerability\n",
+            "plan_template_slugs": [
+                "plan-mvs-for-cloud-app"
+            ]
+        },
+        "workflow_templates": [
+            {
+                "slug": "workflow-web-app-scanner",
+                "name": "Web App Security Workflow",
+                "type": "workflow",
+                "content": "name: Web App Security Workflow\ntrigger:\n  on:\n    - schedule(\"0 8 * * *\")\njobs:\n  api-security-detection:\n    runner: jit\n    asset_type: application\n    steps:\n      - name: Run ZAP\n        uses: ghcr.io/jitsecurity-controls/control-zap-alpine:latest",
+                "params": null,
+                "plan_item_template_slug": null
+            }
+        ]
+    }
+}

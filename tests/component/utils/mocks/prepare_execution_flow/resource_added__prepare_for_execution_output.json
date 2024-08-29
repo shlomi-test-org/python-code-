@@ -1,0 +1,581 @@
+{
+  "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+  "jit_event_name": "resource_added",
+  "executions": [
+    {
+      "jit_event": {
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "jit_event_name": "resource_added",
+        "jit_event_id": "8b2246b2-19ba-4645-aed3-92fdf88483a2",
+        "asset_id": "57b6f168-8f2a-4b99-848f-f9c439ddac44",
+        "workflows": null,
+        "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+        "centralized_repo_asset_name": ".jit",
+        "centralized_repo_files_location": "",
+        "ci_workflow_files_path": [
+          ".github/workflows/security.yml"
+        ],
+        "app_id": "161076",
+        "installation_id": "33985869",
+        "original_repository": "moshiko",
+        "vendor": "github",
+        "owner": "shlomi-test-org",
+        "branch": null,
+        "pull_request_number": null,
+        "pull_request_title": null,
+        "commits": {
+          "base_sha": null,
+          "head_sha": ""
+        },
+        "user_vendor_id": null,
+        "user_vendor_name": null,
+        "languages": [
+          "python",
+          "docker",
+          "js_deps",
+          "JS",
+          "TS",
+          "go",
+          "go_deps",
+          "terraform",
+          "java",
+          "bash",
+          "serverless",
+          "php_deps"
+        ],
+        "event_signature": "github-shlomi-test-org-57b6f168-8f2a-4b99-848f-f9c439ddac44--None"
+      },
+      "job_name": "branch-protection-github-checker",
+      "steps": [
+        {
+          "name": "Run Branch Protection checker",
+          "uses": "ghcr.io/jitsecurity-controls/control-branch-protection-github-alpine:latest",
+          "params": {}
+        }
+      ],
+      "context": {
+        "jit_event": {
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "jit_event_name": "resource_added",
+          "jit_event_id": "8b2246b2-19ba-4645-aed3-92fdf88483a2",
+          "asset_id": null,
+          "workflows": null,
+          "created_asset_ids": [
+            "57b6f168-8f2a-4b99-848f-f9c439ddac44"
+          ]
+        },
+        "asset": {
+          "aws_account_id": null,
+          "aws_stack_arn": null,
+          "aws_jit_role_name": null,
+          "aws_regions_to_scan": null,
+          "aws_jit_role_external_id": null,
+          "target_url": null,
+          "exclude_paths": null,
+          "authentication_mode": null,
+          "auth_header_name": null,
+          "auth_header_value": null,
+          "login_page_url": null,
+          "username": null,
+          "username_css_selector": null,
+          "password": null,
+          "password_css_selector": null,
+          "api_domain": null,
+          "external_id": "614020004",
+          "asset_id": "57b6f168-8f2a-4b99-848f-f9c439ddac44",
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "shlomi-test-org",
+          "asset_name": "moshiko",
+          "risk_status": null,
+          "risk_score": 0,
+          "is_active": true,
+          "is_covered": true,
+          "created_at": "2023-03-14T18:23:53.924735",
+          "modified_at": "2023-03-14T18:23:53.924735",
+          "environment": null,
+          "is_branch_protected_by_jit": false,
+          "status": null,
+          "status_details": null
+        },
+        "installation": {
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "app_id": "161076",
+          "owner": "shlomi-test-org",
+          "installation_id": "33985869",
+          "is_active": true,
+          "creator": "shlomi-test-org",
+          "vendor": "github",
+          "name": "shlomi-test-org",
+          "created_at": "2023-02-08T12:34:37.864980",
+          "modified_at": "2023-02-08T12:34:37.864980",
+          "status": "connected",
+          "status_details": null,
+          "installation_type": null,
+          "vendor_response": {
+            "canPreviewItem": true,
+            "repository_selection": "selected"
+          },
+          "external_id": null,
+          "aws_regions_to_monitor": null,
+          "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+          "centralized_repo_asset": {
+            "aws_account_id": null,
+            "aws_stack_arn": null,
+            "aws_jit_role_name": null,
+            "aws_regions_to_scan": null,
+            "target_url": null,
+            "exclude_paths": null,
+            "authentication_mode": null,
+            "auth_header_name": null,
+            "auth_header_value": null,
+            "login_page_url": null,
+            "username": null,
+            "username_css_selector": null,
+            "password": null,
+            "password_css_selector": null,
+            "api_domain": null,
+            "external_id": "568439579",
+            "asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+            "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+            "asset_type": "repo",
+            "vendor": "github",
+            "owner": "shlomi-test-org",
+            "asset_name": ".jit",
+            "risk_status": null,
+            "risk_score": 0,
+            "is_active": true,
+            "is_covered": true,
+            "created_at": "2022-11-20T14:41:49.229143",
+            "modified_at": "2023-02-08T12:34:42.325014",
+            "environment": null,
+            "is_branch_protected_by_jit": false,
+            "status": null,
+            "status_details": null
+          }
+        },
+        "secrets": {},
+        "config": {},
+        "job": {
+          "runner": {
+            "type": "jit",
+            "setup": null
+          },
+          "job_name": "branch-protection-github-checker",
+          "condition": null,
+          "steps": [
+            {
+              "name": "Run Branch Protection checker",
+              "uses": "ghcr.io/jitsecurity-controls/control-branch-protection-github-alpine:latest",
+              "params": {}
+            }
+          ]
+        },
+        "centralized": {
+          "centralized_repo_files_location": "",
+          "ci_workflow_files_path": [
+            ".github/workflows/security.yml"
+          ]
+        }
+      },
+      "plan_slug": "jit-plan",
+      "plan_item_slug": "item-branch-protection-scm",
+      "workflow_slug": "workflow-branch-protection-github-checker",
+      "created_at": "2023-03-14T18:25:09.680869",
+      "job_runner": "jit",
+      "inputs": {},
+      "source_asset_id": null
+    },
+    {
+      "jit_event": {
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "jit_event_name": "resource_added",
+        "jit_event_id": "8b2246b2-19ba-4645-aed3-92fdf88483a2",
+        "asset_id": "57b6f168-8f2a-4b99-848f-f9c439ddac44",
+        "workflows": null,
+        "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+        "centralized_repo_asset_name": ".jit",
+        "centralized_repo_files_location": "",
+        "ci_workflow_files_path": [
+          ".github/workflows/security.yml"
+        ],
+        "app_id": "161076",
+        "installation_id": "33985869",
+        "original_repository": "moshiko",
+        "vendor": "github",
+        "owner": "shlomi-test-org",
+        "branch": null,
+        "pull_request_number": null,
+        "pull_request_title": null,
+        "commits": {
+          "base_sha": null,
+          "head_sha": ""
+        },
+        "user_vendor_id": null,
+        "user_vendor_name": null,
+        "languages": [
+          "python",
+          "docker",
+          "js_deps",
+          "JS",
+          "TS",
+          "go",
+          "go_deps",
+          "terraform",
+          "java",
+          "bash",
+          "serverless",
+          "php_deps"
+        ],
+        "event_signature": "github-shlomi-test-org-57b6f168-8f2a-4b99-848f-f9c439ddac44--None"
+      },
+      "job_name": "secret-detection",
+      "steps": [
+        {
+          "name": "Run Gitleaks",
+          "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:main",
+          "params": {
+            "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source \\${WORK_DIR:-.} -v --report-format json --report-path \\$REPORT_FILE --redact --no-git --exit-code 0",
+            "output_file": "/tmp/report.json"
+          }
+        }
+      ],
+      "context": {
+        "jit_event": {
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "jit_event_name": "resource_added",
+          "jit_event_id": "8b2246b2-19ba-4645-aed3-92fdf88483a2",
+          "asset_id": null,
+          "workflows": null,
+          "created_asset_ids": [
+            "57b6f168-8f2a-4b99-848f-f9c439ddac44"
+          ]
+        },
+        "asset": {
+          "aws_account_id": null,
+          "aws_stack_arn": null,
+          "aws_jit_role_name": null,
+          "aws_regions_to_scan": null,
+          "aws_jit_role_external_id": null,
+          "target_url": null,
+          "exclude_paths": null,
+          "authentication_mode": null,
+          "auth_header_name": null,
+          "auth_header_value": null,
+          "login_page_url": null,
+          "username": null,
+          "username_css_selector": null,
+          "password": null,
+          "password_css_selector": null,
+          "api_domain": null,
+          "external_id": "614020004",
+          "asset_id": "57b6f168-8f2a-4b99-848f-f9c439ddac44",
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "shlomi-test-org",
+          "asset_name": "moshiko",
+          "risk_status": null,
+          "risk_score": 0,
+          "is_active": true,
+          "is_covered": true,
+          "created_at": "2023-03-14T18:23:53.924735",
+          "modified_at": "2023-03-14T18:23:53.924735",
+          "environment": null,
+          "is_branch_protected_by_jit": false,
+          "status": null,
+          "status_details": null
+        },
+        "installation": {
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "app_id": "161076",
+          "owner": "shlomi-test-org",
+          "installation_id": "33985869",
+          "is_active": true,
+          "creator": "shlomi-test-org",
+          "vendor": "github",
+          "name": "shlomi-test-org",
+          "created_at": "2023-02-08T12:34:37.864980",
+          "modified_at": "2023-02-08T12:34:37.864980",
+          "status": "connected",
+          "status_details": null,
+          "installation_type": null,
+          "vendor_response": {
+            "canPreviewItem": true,
+            "repository_selection": "selected"
+          },
+          "external_id": null,
+          "aws_regions_to_monitor": null,
+          "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+          "centralized_repo_asset": {
+            "aws_account_id": null,
+            "aws_stack_arn": null,
+            "aws_jit_role_name": null,
+            "aws_regions_to_scan": null,
+            "target_url": null,
+            "exclude_paths": null,
+            "authentication_mode": null,
+            "auth_header_name": null,
+            "auth_header_value": null,
+            "login_page_url": null,
+            "username": null,
+            "username_css_selector": null,
+            "password": null,
+            "password_css_selector": null,
+            "api_domain": null,
+            "external_id": "568439579",
+            "asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+            "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+            "asset_type": "repo",
+            "vendor": "github",
+            "owner": "shlomi-test-org",
+            "asset_name": ".jit",
+            "risk_status": null,
+            "risk_score": 0,
+            "is_active": true,
+            "is_covered": true,
+            "created_at": "2022-11-20T14:41:49.229143",
+            "modified_at": "2023-02-08T12:34:42.325014",
+            "environment": null,
+            "is_branch_protected_by_jit": false,
+            "status": null,
+            "status_details": null
+          }
+        },
+        "secrets": {},
+        "config": {},
+        "job": {
+          "runner": {
+            "type": "github_actions",
+            "setup": null
+          },
+          "job_name": "secret-detection",
+          "condition": {
+            "mime_types": [
+              "text"
+            ]
+          },
+          "steps": [
+            {
+              "name": "Run Gitleaks",
+              "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:main",
+              "params": {
+                "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source \\${WORK_DIR:-.} -v --report-format json --report-path \\$REPORT_FILE --redact --no-git --exit-code 0",
+                "output_file": "/tmp/report.json"
+              }
+            }
+          ]
+        },
+        "centralized": {
+          "centralized_repo_files_location": "",
+          "ci_workflow_files_path": [
+            ".github/workflows/security.yml"
+          ]
+        }
+      },
+      "plan_slug": "jit-plan",
+      "plan_item_slug": "item-secret-detection",
+      "workflow_slug": "workflow-secret-detection",
+      "created_at": "2023-03-14T18:25:09.967842",
+      "job_runner": "github_actions",
+      "inputs": {},
+      "source_asset_id": null
+    },
+    {
+      "jit_event": {
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "jit_event_name": "resource_added",
+        "jit_event_id": "8b2246b2-19ba-4645-aed3-92fdf88483a2",
+        "asset_id": "57b6f168-8f2a-4b99-848f-f9c439ddac44",
+        "workflows": null,
+        "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+        "centralized_repo_asset_name": ".jit",
+        "centralized_repo_files_location": "",
+        "ci_workflow_files_path": [
+          ".github/workflows/security.yml"
+        ],
+        "app_id": "161076",
+        "installation_id": "33985869",
+        "original_repository": "moshiko",
+        "vendor": "github",
+        "owner": "shlomi-test-org",
+        "branch": null,
+        "pull_request_number": null,
+        "pull_request_title": null,
+        "commits": {
+          "base_sha": null,
+          "head_sha": ""
+        },
+        "user_vendor_id": null,
+        "user_vendor_name": null,
+        "languages": [
+          "python",
+          "docker",
+          "js_deps",
+          "JS",
+          "TS",
+          "go",
+          "go_deps",
+          "terraform",
+          "java",
+          "bash",
+          "serverless",
+          "php_deps"
+        ],
+        "event_signature": "github-shlomi-test-org-57b6f168-8f2a-4b99-848f-f9c439ddac44--None"
+      },
+      "job_name": "secret-detection2",
+      "steps": [
+        {
+          "name": "Run Detect Secrets",
+          "uses": "ghcr.io/jitsecurity-controls/control-detect-secrets-slim:main",
+          "params": {
+            "args": "scan \\${WORK_DIR:-.}",
+            "output_file": "/tmp/report.json"
+          }
+        }
+      ],
+      "context": {
+        "jit_event": {
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "jit_event_name": "resource_added",
+          "jit_event_id": "8b2246b2-19ba-4645-aed3-92fdf88483a2",
+          "asset_id": null,
+          "workflows": null,
+          "created_asset_ids": [
+            "57b6f168-8f2a-4b99-848f-f9c439ddac44"
+          ]
+        },
+        "asset": {
+          "aws_account_id": null,
+          "aws_stack_arn": null,
+          "aws_jit_role_name": null,
+          "aws_regions_to_scan": null,
+          "aws_jit_role_external_id": null,
+          "target_url": null,
+          "exclude_paths": null,
+          "authentication_mode": null,
+          "auth_header_name": null,
+          "auth_header_value": null,
+          "login_page_url": null,
+          "username": null,
+          "username_css_selector": null,
+          "password": null,
+          "password_css_selector": null,
+          "api_domain": null,
+          "external_id": "614020004",
+          "asset_id": "57b6f168-8f2a-4b99-848f-f9c439ddac44",
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "shlomi-test-org",
+          "asset_name": "moshiko",
+          "risk_status": null,
+          "risk_score": 0,
+          "is_active": true,
+          "is_covered": true,
+          "created_at": "2023-03-14T18:23:53.924735",
+          "modified_at": "2023-03-14T18:23:53.924735",
+          "environment": null,
+          "is_branch_protected_by_jit": false,
+          "status": null,
+          "status_details": null
+        },
+        "installation": {
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "app_id": "161076",
+          "owner": "shlomi-test-org",
+          "installation_id": "33985869",
+          "is_active": true,
+          "creator": "shlomi-test-org",
+          "vendor": "github",
+          "name": "shlomi-test-org",
+          "created_at": "2023-02-08T12:34:37.864980",
+          "modified_at": "2023-02-08T12:34:37.864980",
+          "status": "connected",
+          "status_details": null,
+          "installation_type": null,
+          "vendor_response": {
+            "canPreviewItem": true,
+            "repository_selection": "selected"
+          },
+          "external_id": null,
+          "aws_regions_to_monitor": null,
+          "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+          "centralized_repo_asset": {
+            "aws_account_id": null,
+            "aws_stack_arn": null,
+            "aws_jit_role_name": null,
+            "aws_regions_to_scan": null,
+            "target_url": null,
+            "exclude_paths": null,
+            "authentication_mode": null,
+            "auth_header_name": null,
+            "auth_header_value": null,
+            "login_page_url": null,
+            "username": null,
+            "username_css_selector": null,
+            "password": null,
+            "password_css_selector": null,
+            "api_domain": null,
+            "external_id": "568439579",
+            "asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+            "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+            "asset_type": "repo",
+            "vendor": "github",
+            "owner": "shlomi-test-org",
+            "asset_name": ".jit",
+            "risk_status": null,
+            "risk_score": 0,
+            "is_active": true,
+            "is_covered": true,
+            "created_at": "2022-11-20T14:41:49.229143",
+            "modified_at": "2023-02-08T12:34:42.325014",
+            "environment": null,
+            "is_branch_protected_by_jit": false,
+            "status": null,
+            "status_details": null
+          }
+        },
+        "secrets": {},
+        "config": {},
+        "job": {
+          "runner": {
+            "type": "github_actions",
+            "setup": null
+          },
+          "job_name": "secret-detection2",
+          "condition": {
+            "mime_types": [
+              "text"
+            ]
+          },
+          "steps": [
+            {
+              "name": "Run Detect Secrets",
+              "uses": "ghcr.io/jitsecurity-controls/control-detect-secrets-slim:main",
+              "params": {
+                "args": "scan \\${WORK_DIR:-.}",
+                "output_file": "/tmp/report.json"
+              }
+            }
+          ]
+        },
+        "centralized": {
+          "centralized_repo_files_location": "",
+          "ci_workflow_files_path": [
+            ".github/workflows/security.yml"
+          ]
+        }
+      },
+      "plan_slug": "jit-plan",
+      "plan_item_slug": "item-secret-detection",
+      "workflow_slug": "workflow-secret-detection2",
+      "created_at": "2023-03-14T18:25:10.261557",
+      "job_runner": "github_actions",
+      "inputs": {},
+      "source_asset_id": null
+    }
+  ]
+}

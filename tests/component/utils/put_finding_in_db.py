@@ -1,0 +1,95 @@
+import boto3
+
+
+def put_finding_in_db(
+        tenant_id="my_tenant_id",
+        fingerprint="fingerprint",
+        asset_id="my_asset_id",
+        finding_id="finding_id",
+        control_name="prowler",
+        jit_event_id="bbd6230a-56fc-46a9-ba56-ea49212300e7",
+        execution_id="0a9301cc-f2e3-4ce7-b73e-5c8375979a4c",
+        created_at="2022-08-04T08:04:43.479879",
+        backlog=False,
+):
+    db = boto3.resource("dynamodb", region_name="us-east-1")
+    table = db.Table("Findings")
+    finding = {
+        "workflow_suite_id": "bbd6230a-56fc-46a9-ba56-ea49212300e7",
+        "GSI5SK": f"ASSET_ID#{asset_id}#CONTROL_ID#{control_name}",
+        "ended_at": None,
+        "tenant_id": tenant_id,
+        "location": "859714222729/eu-central-1/guardduty/",
+        "GSI1SK": f"CREATED_AT#{created_at}",
+        "app_attributes": None,
+        "vulnerability_type": "runtime_vulnerability",
+        "status": "PASS",
+        "plan_layer": "infrastructure",
+        "asset_type": "aws_account",
+        "resolution": "OPEN",
+        "id": finding_id,
+        "GSI6SK": f"ASSET_ID#{asset_id}#FINGERPRINT#{fingerprint}",
+        "GSI6PK": f"TENANT#{tenant_id}",
+        "GSI4PK": f"TENANT#{tenant_id}",
+        "first_jit_event_name": "first_db_event_name",
+        "first_workflow_id": "0a9301cc-f2e3-4ce7-b73e-5c8375979a4c",
+        "code_attributes": None,
+        "GSI9SK": f"FINDING#{finding_id}",
+        "GSI2PK": f"TENANT#{tenant_id}",
+        "fixed_at_execution_id": None,
+        "GSI2SK": f"ASSET_ID#{asset_id}##CONTROL_ID#{control_name}",
+        "control_name": control_name,
+        "GSI5PK": f"TENANT#{tenant_id}",
+        "LSI1SK": f"WORKFLOW_SUITE_ID#{jit_event_id}#WORKFLOW_ID#"
+                  f"{execution_id}#JOB_NAME#runtime-misconfig-detection-guardduty",
+        "GSI9PK": f"TENANT#{tenant_id}",
+        "issue_severity": "HIGH",
+        "jit_event_id": jit_event_id,
+        "created_at": created_at,
+        "first_workflow_suite_id": "d30c038a-0300-4667-8032-70b8cb0815fe",
+        "fixed_at_jit_event_id": None,
+        "GSI4SK": f"BACKLOG#{backlog}",
+        "location_text": "859714222729/eu-central-1/guardduty/",
+        "jit_event_name": "trigger_scheduled_task",
+        "responsible": None,
+        "workflow_id": execution_id,
+        "cloud_attributes": {
+            "region": "eu-central-1",
+            "cloud_service_name": "guardduty",
+            "account_id": "859714222729",
+            "account_name": "859714222729",
+        },
+        "fix_suggestion": None,
+        "asset_id": asset_id,
+        "vendor": "aws",
+        "GSI7SK": f"JIT_EVENT_ID#{jit_event_id}#EXECUTION_ID#{execution_id}",
+        "fingerprint": fingerprint,
+        "last_detected_at": "2023-01-23T11:32:00.040179",
+        "issue_text": "\neu-central-1: GuardDuty detector not configured!\n\nRisk: Amazon GuardDuty is a "
+                      "continuous security monitoring service that analyzes and processes several datasources."
+                      "\n\nRemediation: Enable GuardDuty and analyze its findings.",
+        "test_id": "extra713",
+        "modified_at": "2023-01-23T11:32:00.040179",
+        "GSI3PK": f"TENANT#{tenant_id}",
+        "GSI3SK": f"CREATED_AT#{created_at}",
+        "job_name": "runtime-misconfig-detection-guardduty",
+        "GSI1PK": f"TENANT#{tenant_id}",
+        "asset_domain": "859714222729",
+        "issue_confidence": "UNDEFINED",
+        "execution_id": execution_id,
+        "GSI7PK": f"TENANT#{tenant_id}",
+        "SK": f"ASSET#{asset_id}#FINDING#{finding_id}",
+        "test_name": "Check if GuardDuty is enabled",
+        "backlog": backlog,
+        "asset_name": "859714222729",
+        "plan_item": "mock_plan_item",
+        "references": [
+            {
+                "name": "https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_settingup.html",
+                "url": "https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_settingup.html",
+            }
+        ],
+        "PK": f"TENANT#{tenant_id}",
+    }
+    table.put_item(Item=finding)
+    return finding

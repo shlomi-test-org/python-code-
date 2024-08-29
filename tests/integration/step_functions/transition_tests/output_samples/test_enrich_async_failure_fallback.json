@@ -1,0 +1,25 @@
+[
+  {
+    "type": "ChoiceStateExited",
+    "id": 3,
+    "previousEventId": 2,
+    "stateExitedEventDetails": {
+      "name": "Has Enricher?",
+      "output": "{\"should_enrich\": true}",
+      "outputDetails": {
+        "truncated": false
+      }
+    },
+    "resource_type": null
+  },
+  {
+    "type": "ExecutionFailed",
+    "id": 8,
+    "previousEventId": 7,
+    "executionFailedEventDetails": {
+      "error": "States.TaskFailed",
+      "cause": "Lambda Exception."
+    },
+    "resource_type": null
+  }
+]

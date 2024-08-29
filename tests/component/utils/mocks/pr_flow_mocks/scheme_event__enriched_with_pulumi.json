@@ -1,0 +1,118 @@
+{
+  "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+  "jit_event_name": "pull_request_created",
+  "trigger_schemes": [
+    {
+      "jit_event": {
+        "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+        "jit_event_name": "pull_request_created",
+        "jit_event_id": "d0c3f527-198d-4e41-8f1f-402820cf0791",
+        "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+        "workflows": null,
+        "app_id": "161076",
+        "installation_id": "28265461",
+        "original_repository": "new-test",
+        "vendor": "github",
+        "owner": "liad-dev-org",
+        "branch": "liadperetz-patch-121",
+        "pull_request_number": "122",
+        "pull_request_title": "Create main.js",
+        "centralized_repo_asset_id": "fa139901-1be5-40a2-932b-78e45dcbe0c3",
+        "centralized_repo_asset_name": "not-dot-jit",
+        "commits": {
+          "base_sha": "391ca13155e0b835879948104d6ea6a2afbcf948",
+          "head_sha": "9c089a84d77d945cb199741ecc959e2454afc009"
+        },
+        "user_vendor_id": "62614083",
+        "user_vendor_name": "liadperetz",
+        "languages": [
+          "JS",
+          "any"
+        ],
+        "centralized_repo_files_location": "centralized_repo_files_location",
+        "ci_workflow_files_path": ["ci_workflow_files_path"],
+        "event_signature": "github-liad-dev-org-d2d70176-266d-4073-98b0-1a1d362ef61b-9c089a84d77d945cb199741ecc959e2454afc009-391ca13155e0b835879948104d6ea6a2afbcf948"
+      },
+      "event_execution_scheme": {
+        "workflow_trigger_schemes": {
+          "workflow-sast": {
+            "workflow_slug": "workflow-sast",
+            "workflow_name": "SAST Workflow",
+            "asset_trigger_schemes": {
+              "d2d70176-266d-4073-98b0-1a1d362ef61b": {
+                "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+                "asset_name": "new-test",
+                "asset_type": "repo",
+                "owner": "liad-dev-org",
+                "vendor": "github",
+                "installation_id": "28265461",
+                "environment": null,
+                "job_trigger_schemes": {
+                  "static-code-analysis-js": {
+                    "job_name": "static-code-analysis-js",
+                    "runner": "github_actions",
+                    "security_tool": "Semgrep"
+                  }
+                }
+              }
+            },
+            "plan_item_slug": "item-code-vulnerability"
+          },
+          "workflow-iac-misconfiguration-detection": {
+            "workflow_slug": "workflow-iac-misconfiguration-detection",
+            "workflow_name": "IaC Misconfiguration Detection Workflow",
+            "asset_trigger_schemes": {
+              "d2d70176-266d-4073-98b0-1a1d362ef61b": {
+                "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+                "asset_name": "new-test",
+                "asset_type": "repo",
+                "owner": "liad-dev-org",
+                "vendor": "github",
+                "installation_id": "28265461",
+                "environment": null,
+                "job_trigger_schemes": {
+                  "iac-misconfig-detection": {
+                    "job_name": "iac-misconfig-detection",
+                    "runner": "github_actions",
+                    "security_tool": "Kics"
+                  }
+                }
+              }
+            },
+            "plan_item_slug": "item-iac-misconfiguration-detection"
+          },
+          "workflow-secret-detection": {
+            "workflow_slug": "workflow-secret-detection",
+            "workflow_name": "Secret Detection Workflow",
+            "asset_trigger_schemes": {
+              "d2d70176-266d-4073-98b0-1a1d362ef61b": {
+                "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+                "asset_name": "new-test",
+                "asset_type": "repo",
+                "owner": "liad-dev-org",
+                "vendor": "github",
+                "installation_id": "28265461",
+                "environment": null,
+                "job_trigger_schemes": {
+                  "secret-detection": {
+                    "job_name": "secret-detection",
+                    "runner": "github_actions",
+                    "security_tool": "Gitleaks"
+                  }
+                }
+              }
+            },
+            "plan_item_slug": "item-secret-detection"
+          }
+        }
+      },
+      "source_asset": {
+        "source_asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+        "source_asset_name": "new-test",
+        "source_asset_type": "repo",
+        "source_asset_vendor": "github",
+        "source_asset_owner": "liad-dev-org"
+      }
+    }
+  ]
+}

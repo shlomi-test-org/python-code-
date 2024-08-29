@@ -1,0 +1,32 @@
+{
+  "tenant_id": "2c799663-2852-4038-a261-b208611f5e2b",
+  "workflow_suite_id": "6ccf22ad537d41559a2d7fba497a99a7",
+  "workflow_id": "bc1f35379b734e9b84766499398becfd",
+  "app_and_installation_id": "142441/20328614",
+  "job_name": "checker-cloudtrail",
+  "asset_type": "aws_account",
+  "vendor": "aws",
+  "workflow_name": "6ccf22ad537d41559a2d7fba497a99a7",
+  "jit_event_id": "jit-event-id",
+  "execution_id": "execution-id",
+  "payload": {
+    "created_at": "2021-07-15T14:36:42Z",
+    "event_type": "control_results",
+    "control_name": "control-cloudtrail-checker",
+    "status": "FAIL",
+    "plan_layer": "operations",
+    "vulnerability_type": "cloud_infrastructure_misconfiguration",
+    "findings": [
+      {
+        "test_name": "cloudtrail with s3",
+        "fingerprint": "dummy-fingerprint",
+        "test_id": "B105",
+        "issue_text": "Cloudtrail with S3 for archiving is not defined",
+        "issue_confidence": "HIGH",
+        "issue_severity": "HIGH",
+        "location": "https://us-east-1.console.aws.amazon.com/cloudtrail/home?region=us-east-1#/dashboard",
+        "location_text": "aws/cloud-trail"
+      }
+    ]
+  }
+}

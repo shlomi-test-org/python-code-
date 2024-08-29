@@ -1,129 +1,95 @@
-from contextvars import Context
-from typing import Dict
-from uuid import uuid4
+import uuid
+from http import HTTPStatus
 
-import pytest
-from jit_utils.aws_clients.s3 import S3Client
-from test_utils.lambdas.delete_tenant_data import get_matching_tenant_data
-from test_utils.lambdas.delete_tenant_data import TenantDataResponse
+from jit_utils.models.findings.entities import Resolution
 
 from src.handlers.delete_tenant_data import handler
-from src.lib.constants import S3_EXECUTION_OUTPUTS_BUCKET_NAME
-from src.lib.data.executions_manager import ExecutionsManager
-from src.lib.data.resources_manager import ResourcesManager
-from tests.mocks.execution_mocks import MOCK_EXECUTION_CODE_EVENT
-from tests.mocks.resources_mocks import generate_mock_resources
-
-_S3_CLIENT = None
-_EXECUTIONS_MANAGER = None
-_RESOURCES_MANAGER = None
+from tests.component.utils.findings_dict_to_mongo_record import finding_dict_to_mongo_record
+from tests.component.utils.get_handler_event import get_handler_event
+from tests.component.utils.mock_mongo_driver import mock_mongo_driver
+from tests.component.utils.put_finding_in_db import put_finding_in_db
+from tests.component.utils.put_upload_findings_record_in_db import put_upload_findings_record_in_db
+from tests.fixtures import build_finding_dict, build_ignore_rule_dict
 
 
-def _get_s3_client() -> S3Client:
-    global _S3_CLIENT
-    if _S3_CLIENT is None:
-        _S3_CLIENT = S3Client()
-    return _S3_CLIENT
-
-
-def _get_executions_manager() -> ExecutionsManager:
-    global _EXECUTIONS_MANAGER
-    if _EXECUTIONS_MANAGER is None:
-        _EXECUTIONS_MANAGER = ExecutionsManager()
-    return _EXECUTIONS_MANAGER
-
-
-def _get_resources_manager() -> ResourcesManager:
-    global _RESOURCES_MANAGER
-    if _RESOURCES_MANAGER is None:
-        _RESOURCES_MANAGER = ResourcesManager()
-    return _RESOURCES_MANAGER
-
-
-def _create_mock_tenant_delete_event(tenant_id: str) -> Dict:
-    return {
-        'detail': {
-            'tenant_id': tenant_id
-        }
-    }
-
-
-def _create_mock_tenant_s3_file(tenant_id: str) -> None:
-    key_name = str(uuid4())
-    content = str(uuid4())
-
-    key = f'{tenant_id}/{key_name}'
-
-    _get_s3_client().put_object(bucket_name=S3_EXECUTION_OUTPUTS_BUCKET_NAME, key=key, body=content)
-
-
-def _create_execution_for_tenant(tenant_id: str) -> None:
-    e = MOCK_EXECUTION_CODE_EVENT.copy()
-    e.tenant_id = tenant_id
-    e.jit_event_id = str(uuid4())
-    e.execution_id = str(uuid4())
-    _get_executions_manager().create_execution(e)
-
-
-def _create_resource_for_tenant(tenant_id: str) -> None:
-    r = generate_mock_resources(tenant_id)[0]
-    _get_resources_manager().create_resource(r)
-
-
-def _asset_matching_data(should_match: bool, tenant_data: TenantDataResponse) -> None:
-    for data_type in tenant_data.values():
-        if should_match:
-            assert len(data_type['matching']) > 0
-        else:
-            assert len(data_type['matching']) == 0
-        assert len(data_type['not_matching']) > 0
-
-
-@pytest.mark.parametrize('should_delete', [True, False])
-def test_delete_tenant_data_handler(should_delete, mocked_tables, mocked_s3_executions_outputs_bucket):
+def test_delete_tenant_data__happy_flow(mocked_tables, mocker):
     """
-    Test that delete_tenant_data deletes all tenant data from S3 and DynamoDB
-
     Setup:
-        - Create 10 random tenant items
-        - Create 10 tenant items
-
+        - A tenant with data in the DB
     Test:
-        - Call delete_tenant_data with a random tenant id
-
+        - Call the handler with the correct tenant id
     Assert:
-        - 10 random tenant items are still in S3 and DynamoDB
-        - 10 tenant items are still in S3 and DynamoDB if should_delete is False
+        - All data is deleted
     """
+    # Setup - Mocked tables and insert tenant data
+    tenant_id = str(uuid.uuid4())
 
-    amount = 10
-
-    tenant_id = str(uuid4())
-    random_tenant_id = str(uuid4())
-
-    for _ in range(amount):
-        _create_execution_for_tenant(tenant_id)
-        _create_execution_for_tenant(random_tenant_id)
-
-        _create_resource_for_tenant(tenant_id)
-        _create_resource_for_tenant(random_tenant_id)
-
-        _create_mock_tenant_s3_file(tenant_id)
-        _create_mock_tenant_s3_file(random_tenant_id)
-
-    matching_data = get_matching_tenant_data(
-        tenant_id,
-        [mocked_tables['executions'], mocked_tables['resources']],
-        [S3_EXECUTION_OUTPUTS_BUCKET_NAME],
+    # Mock mongo driver
+    mongo_finding_record = finding_dict_to_mongo_record(
+        build_finding_dict(tenant_id=tenant_id, resolution=Resolution.OPEN)
     )
-    _asset_matching_data(True, matching_data)
+    mongo_ignore_rule_record = build_ignore_rule_dict(tenant_id=tenant_id)
 
-    handler(_create_mock_tenant_delete_event(tenant_id=tenant_id if should_delete else str(uuid4())), Context())
+    mongo_client = mock_mongo_driver(mocker)
+    mocked_findings_collection = mongo_client.findings
+    mocked_ignore_rules_collection = mongo_client.ignore_rules
+    mocked_findings_collection.insert_one(mongo_finding_record)
+    mocked_ignore_rules_collection.insert_one(mongo_ignore_rule_record)
 
-    matching_data = get_matching_tenant_data(
-        tenant_id,
-        [mocked_tables['resources']],
-        [S3_EXECUTION_OUTPUTS_BUCKET_NAME],
+    # Mock dynamo tables
+    findings_table, upload_findings_status_table = mocked_tables
+    put_finding_in_db(tenant_id=tenant_id)
+    put_upload_findings_record_in_db(upload_findings_status_table, tenant_id=tenant_id)
+
+    # Test - Call delete tenant data with correct tenant id
+    event = get_handler_event(tenant_id=tenant_id, body={})
+    response = handler(event, {})
+
+    # Assert - All data has deleted
+    assert response['statusCode'] == HTTPStatus.OK
+    assert findings_table.scan()['Count'] == 0
+    assert upload_findings_status_table.scan()['Count'] == 0
+    assert list(mocked_findings_collection.find()) == []
+    assert list(mocked_ignore_rules_collection.find()) == []
+
+
+def test_delete_tenant_data__different_tenant_id(mocked_tables, mocker):
+    """
+    Setup:
+        - A tenant with data in the DB
+    Test:
+        - Call the handler with tenant id that differs from your own
+    Assert:
+        - No data has deleted
+    """
+    # Setup - Mocked tables and insert tenant data
+    tenant_id = str(uuid.uuid4())
+
+    # Mock mongo driver
+    mongo_finding_record = finding_dict_to_mongo_record(
+        build_finding_dict(tenant_id=tenant_id, resolution=Resolution.OPEN)
     )
+    mongo_ignore_rule_record = build_ignore_rule_dict(tenant_id=tenant_id)
 
-    _asset_matching_data(not should_delete, matching_data)
+    mongo_client = mock_mongo_driver(mocker)
+    mocked_findings_collection = mongo_client.findings
+    mocked_ignore_rules_collection = mongo_client.ignore_rules
+    mocked_findings_collection.insert_one(mongo_finding_record)
+    mocked_ignore_rules_collection.insert_one(mongo_ignore_rule_record)
+
+    # Mock dynamo tables
+    findings_table, upload_findings_status_table = mocked_tables
+    put_finding_in_db(tenant_id=tenant_id)
+    put_upload_findings_record_in_db(upload_findings_status_table, tenant_id=tenant_id)
+
+    # Test - Call delete tenant data with correct tenant id
+    different_tenant_id = str(uuid.uuid4())
+    event = get_handler_event(tenant_id=different_tenant_id, body={})
+    response = handler(event, {})
+
+    # Assert - All data has deleted
+    assert response['statusCode'] == HTTPStatus.OK
+    assert findings_table.scan()['Count'] == 1
+    assert upload_findings_status_table.scan()['Count'] == 1
+    assert len(list(mocked_findings_collection.find())) == 1
+    assert len(list(mocked_ignore_rules_collection.find())) == 1

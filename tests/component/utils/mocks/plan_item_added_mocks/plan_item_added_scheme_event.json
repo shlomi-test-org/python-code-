@@ -1,0 +1,47 @@
+{
+  "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+  "jit_event_name": "item_activated",
+  "trigger_schemes": [
+    {
+      "jit_event": {
+        "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+        "jit_event_name": "item_activated",
+        "jit_event_id": "8b8e7236-2290-4c75-b1db-d44f2cf3e3ae",
+        "asset_id": null,
+        "workflows": null,
+        "activated_plan_slug": "jit-plan",
+        "activated_plan_item_slugs": [
+          "item-secret-detection"
+        ]
+      },
+      "event_execution_scheme": {
+        "workflow_trigger_schemes": {
+          "workflow-secret-detection": {
+            "workflow_slug": "workflow-secret-detection",
+            "workflow_name": "Secret Detection Workflow",
+            "asset_trigger_schemes": {
+              "d2d70176-266d-4073-98b0-1a1d362ef61b": {
+                "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+                "asset_name": "new-test",
+                "asset_type": "repo",
+                "owner": "liad-dev-org",
+                "vendor": "github",
+                "installation_id": "28265461",
+                "environment": null,
+                "job_trigger_schemes": {
+                  "secret-detection": {
+                    "job_name": "secret-detection",
+                    "runner": "github_actions",
+                    "security_tool": "Gitleaks"
+                  }
+                }
+              }
+            },
+            "plan_item_slug": "item-secret-detection"
+          }
+        }
+      },
+      "source_asset": null
+    }
+  ]
+}
