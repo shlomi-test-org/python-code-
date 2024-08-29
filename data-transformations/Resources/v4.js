@@ -1,0 +1,91 @@
+const {utils} = require('dynamo-data-transform');
+const {ScanCommand} = require('@aws-sdk/lib-dynamodb');
+
+const TableName = 'Resources';
+
+const getResourceItems = async (ddb, lastEvalKey) => {
+    const params = {
+        TableName: TableName,
+        ExclusiveStartKey: lastEvalKey,
+        FilterExpression: 'begins_with(#SK, :SK_prefix)',
+        ExpressionAttributeNames: {
+            '#SK': 'SK',
+        },
+        ExpressionAttributeValues: {
+            ':SK_prefix': 'RUNNER#',
+        }
+    }
+
+    const scanCommand = new ScanCommand(params);
+    return await ddb.send(scanCommand);
+};
+
+const getResourceItemsToDelete = async (ddb, lastEvalKey) => {
+    const params = {
+        TableName: TableName,
+        ExclusiveStartKey: lastEvalKey,
+        FilterExpression: 'begins_with(#SK, :SK_prefix)',
+        ExpressionAttributeNames: {
+            '#SK': 'SK',
+        },
+        ExpressionAttributeValues: {
+            ':SK_prefix': 'RESOURCE_TYPE#',
+        }
+    }
+
+    const scanCommand = new ScanCommand(params);
+    return await ddb.send(scanCommand);
+};
+
+const up = (item) => {
+    const updatedItem = {...item, "SK": `RESOURCE_TYPE#${item.resource_type}`, "resources_in_use": 0};
+    delete updatedItem.runner;
+    return updatedItem;
+}
+
+const transformUp = async ({ddb, isDryRun}) => {
+    let lastEvalKey = undefined;
+    let transformed = 0;
+    do {
+        const {Items, LastEvaluatedKey} = await getResourceItems(ddb, lastEvalKey);
+        lastEvalKey = LastEvaluatedKey;
+
+        const updatedItems = Items.map(item => up(item));
+        if (isDryRun) {
+            console.log(updatedItems);
+            await utils.insertItems(ddb, TableName, updatedItems, isDryRun);
+            transformed += updatedItems.length;
+        } else {
+            const {transformed: itemsTransformed} = await utils.insertItems(ddb, TableName, updatedItems, isDryRun);
+            transformed += itemsTransformed;
+        }
+    } while (lastEvalKey);
+
+    return {transformed};
+};
+
+const transformDown = async ({ddb, isDryRun}) => {
+    let lastEvalKey = undefined;
+    let transformed = 0;
+    do {
+        const {Items, LastEvaluatedKey} = await getResourceItemsToDelete(ddb, lastEvalKey);
+        lastEvalKey = LastEvaluatedKey;
+
+        if (isDryRun) {
+            console.log(Items);
+            await utils.deleteItems(ddb, TableName, Items, isDryRun);
+            transformed += Items.length;
+        } else {
+            const {transformed: itemsTransformed} = await utils.deleteItems(ddb, TableName, Items, isDryRun);
+            transformed += itemsTransformed;
+        }
+    } while (lastEvalKey);
+
+    return {transformed};
+};
+
+module.exports = {
+    transformUp,
+    transformDown,
+    transformationNumber: 4
+};

@@ -1,0 +1,8 @@
+AUTH_SERVICE_GENERATE_LAMBDA_API_TOKEN = "{authentication_service}/token/internal"
+GITHUB_SERVICE_DISPATCH = "{github_service}/dispatch"
+GET_FINDING_SCHEMA_BY_VERSION_CALLBACK_URL = "{base}/schema/{schema_type}/version/{schema_version}"
+IGNORES_CALLBACK_URL = "{base}/asset/{asset_id}/control/{control_name}/ignore/new"
+PRESIGNED_LOGS_UPLOAD_URL = "https://s3.aws.com"
+EXECUTION_CALLBACK_URL = "{base}"
+ACTIONS_CALLBACK_URL = "{base}/action/{action_id}/finding/{finding_id}"
+UPDATE_FINDING_CALLBACK_URL = "{base}/{finding_id}"

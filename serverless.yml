@@ -1,0 +1,1762 @@
+service: execution-service
+
+frameworkVersion: "3"
+
+package:
+  exclude:
+    - './**'
+  include:
+    - 'src/**'
+
+provider:
+  tags:
+    LUMIGO_LOG_COLLECTION: "true"
+    lumigo:auto-trace: true
+    environment: ${env:ENV_NAME, self:provider.stage}
+    LUMIGO_TAG: ${self:service}
+  name: aws
+  deploymentBucket:
+    blockPublicAccess: true
+    serverSideEncryption: AES256
+  timeout: 30
+  stackName: execution-service-${self:provider.stage}
+  stage: ${opt:stage, 'local'}
+  runtime: python3.11
+  region: us-east-1
+  apiGateway:
+    shouldStartNameWithService: true
+  eventBridge:
+    useCloudFormation: true
+  lambdaHashingVersion: 20201221
+  environment:
+    API_HOST: ${ssm:/${self:custom.env_name}/infra/api/host, 'api.local.jitdev.io'}
+    ENV_NAME: ${env:ENV_NAME, self:provider.stage}
+    DEPLOYMENT_STAGE: ${self:provider.stage}
+    testHost: http://localhost
+    SERVICE_NAME: ${self:service}
+    AWS_REGION_NAME: us-east-1
+    LAUNCH_DARKLY_SDK_KEY: ${ssm:/${self:custom.env_name}/infra/launch-darkly/sdk-key, true} #~true is used for a Secure String SSM Parameter
+    SLACK_NOTIFICATIONS_BOT_TOKEN: ${ssm:/${self:custom.env_name}/infra/slack/tokens/notifications-bot, true} #~true is used for a Secure String SSM Parameter
+    DYNAMODB_ISOLATION_ROLE: ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+    S3_ISOLATION_ROLE: ${ssm:/${self:custom.env_name}/infra/iam-role/s3-bucket-all-access-iam-role}
+    S3_EXECUTION_LOGS_BUCKET_ARN: arn:aws:s3:::jit-execution-logs-${self:custom.env_name}
+    S3_EXECUTION_LOGS_BUCKET_NAME: jit-execution-logs-${self:custom.env_name}
+    EXECUTIONS_TABLE_ARN: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+    RESOURCES_TABLE_ARN: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Resources
+    AWS_ACCOUNT_ID: "#{AWS::AccountId}"
+    S3_RUNNER_DISPATCH_EVENT_BUCKET_NAME: jit-runner-dispatch-event-${self:custom.env_name}
+    LOG_LEVEL: ${param:loglevel, 'INFO'}
+    ECS_TASK_KMS_ARN: ${ssm:/${self:custom.env_name}/infra/kms/ecs-cluster-encryption-key, ''}
+    GENERAL_ROLE_TO_ASSUME_ARN: ${ssm:/${self:custom.env_name}/infra/iam-role/general-tenant-isolation-iam-role}
+    S3_EXECUTION_OUTPUTS_BUCKET_NAME: ${ssm:/${self:custom.env_name}/infra/s3/jit-execution-outputs/name, 'integration-tests-bucket'}
+  logs:
+    restApi:
+      level: ERROR
+      roleManagedExternally: true # Role was already created in terraform
+      accessLogging: false # Do not log only access to APIs
+      fullExecutionData: true # Log request/response data
+
+
+  iamRoleStatements:
+    # This IAM-role (used by the warmup lambda) must be a global role, because the warmup lambda is being created automatically
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource:
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-register-execution
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-dispatched-execution
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-update-control-status
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-get-executions-by-filters
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-get-execution-by-id
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-dispatch-execution
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-trigger-execution
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-allocate-runner-resource
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-get-execution-log
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-log-orchestrator-events
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-create-resources-for-tenant
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-handle-enrichment-completed
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-get-execution-data
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-validate-dispatched-execution
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-update-vendor-job-started
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-update-upload-findings-status
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-complete-execution
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-upload-control-output-files
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-get-control-output-files-archive
+        - arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-retry-execution
+
+plugins: ${self:custom.plugins.${self:provider.stage}, self:custom.plugins.default}
+
+custom:
+  env_name: ${env:ENV_NAME, self:provider.stage}
+  api_host: ${ssm:/${self:custom.env_name}/infra/api/host, 'api.local.jitdev.io'}
+  app_name:
+    prod: app-${self:provider.stage}
+    staging: app-${self:provider.stage}
+    dev: app-${self:provider.stage}
+    custom_env: app-${self:custom.env_name}-${self:provider.stage}
+  documentation:
+    version: "1"
+    title: "Execution Service"
+    description: "API for the execution service"
+    termsOfService: https://jit.io
+    externalDocumentation:
+      url: https://docs.jit.io/docs
+      description: A link to the docs
+    servers:
+      url: https://${self:custom.api_host}/{basePath}
+      description: "Server at ${self:custom.env_name} environment"
+      variables:
+        basePath:
+          default: /execution
+    securitySchemes:
+      bearerAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+    security:
+      - bearerAuth: [ ]
+
+  basePath: "execution"
+  plugins:
+    local:
+      - serverless-openapi-documenter
+      - serverless-localstack
+      - serverless-dotenv-plugin
+      - serverless-functions-base-path
+      - serverless-manifest-plugin
+      - serverless-prune-plugin
+      - serverless-pseudo-parameters
+      - serverless-python-requirements
+      - dynamo-data-transform
+      - serverless-plugin-ifelse
+    default:
+      - serverless-domain-manager
+      - serverless-dotenv-plugin
+      - serverless-functions-base-path
+      - serverless-iam-roles-per-function
+      - serverless-manifest-plugin
+      - serverless-plugin-warmup
+      - serverless-prune-plugin
+      - serverless-pseudo-parameters
+      - serverless-python-requirements
+      - serverless-ssm-publish
+      - dynamo-data-transform
+      - serverless-plugin-ifelse
+  serverlessIfElse:
+    - If: '"${self:provider.stage}" == "local" || "${self:provider.stage}" == "test"'
+      Exclude:
+        - functions.print-execution-logs-from-s3.events.0.s3.existing
+        - resources.Resources.ResourceMetricsEventRule
+        - resources.Resources.ExecutionMetricsEventRule
+        - resources.Resources.NewRelicLogsRole
+        - functions.resources-watchdog.events.0.schedule
+        - functions.allocate-runner-resource.events.0.stream
+  localstack:
+    hostname:
+      local: http://localhost
+      test: ${self:provider.environment.testHost}
+      staging: remote
+    debug: true
+    stages:
+      - local
+      - test
+    host: ${self:custom.localstack.hostname.${self:provider.stage}, ''}
+    endpoints:
+      APIGateway: ${self:custom.localstack.host}:4566
+      S3: ${self:custom.localstack.host}:4566
+      DynamoDB: ${self:custom.localstack.host}:4566
+      CloudFormation: ${self:custom.localstack.host}:4566
+      Elasticsearch: ${self:custom.localstack.host}:4566
+      ES: ${self:custom.localstack.host}:4566
+      SNS: ${self:custom.localstack.host}:4566
+      SQS: ${self:custom.localstack.host}:4566
+      SSM: ${self:custom.localstack.host}:4566
+      Lambda: ${self:custom.localstack.host}:4566
+  pythonRequirements:
+    dockerizePip: non-linux
+    dockerImage: ghcr.io/jitsecurity/python-lambda-build/python:3.11-x86_64
+    dockerRunCmdExtraArgs: [ "--platform", "linux/amd64" ]
+    dockerSsh: true
+  functionsBasePath: src/handlers
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 3
+  dotenv:
+    path:
+      .env/.${self:provider.stage}
+  warmup:
+    workWeek:
+      enabled: false
+      timeout: 30
+      events:
+        - schedule: cron(*/10 5-19 ? * SUN-FRI *)
+      concurrency: 3
+      prewarm: false
+      cleanFolder: false
+      role: IamRoleLambdaExecution
+      logRetentionInDays: 14
+    weekEnd:
+      enabled: false
+      timeout: 30
+      events:
+        - schedule: cron(*/30 5-13 ? * SAT *)
+      concurrency: 1
+      prewarm: false
+      cleanFolder: false
+      role: IamRoleLambdaExecution
+      logRetentionInDays: 14
+  customDomain:
+    type: rest
+    domainName: ${ssm:/${self:custom.env_name}/infra/api/host, 'api.local.jitdev.io'}
+    basePath: ${self:custom.basePath}
+    certificateName: ${ssm:/${self:custom.env_name}/infra/api/host, 'api.local.jitdev.io'}
+    stage: ${self:provider.stage}
+    endpointType: 'edge'
+    securityPolicy: tls_1_2
+    createRoute53Record: true
+  ssmPublish:
+    enabled: true
+    params:
+      - path: /${self:custom.env_name}/service-discovery/${self:service}
+        value: "https://${ssm:/${self:custom.env_name}/infra/api/host, 'api.local.jitdev.io'}/${self:custom.basePath}"
+        secure: false
+      - path: /${self:custom.env_name}/execution/lambda/validate-dispatched-execution
+        value: arn:aws:lambda:${self:provider.region}:${aws:accountId}:function:${self:service}-${self:provider.stage}-validate-dispatched-execution
+        secure: false
+anchors:
+  iamRoleStatements:
+    idempotencyPolicy: &idempotencyPolicy
+      # Ref: https://awslabs.github.io/aws-lambda-powertools-python/2.15.0/utilities/idempotency/#iam-permissions
+      Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/IdempotencyTable
+    getAndUpdateExecutionPolicy: &getAndUpdateExecutionPolicy
+      Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+    assumeGeneralTenantIsolationRole: &assumeGeneralTenantIsolationRole
+      Effect: Allow
+      Action:
+        - sts:AssumeRole
+      Resource:
+        - ${ssm:/${self:custom.env_name}/infra/iam-role/general-tenant-isolation-iam-role}
+    deleteFromTenantDataBucket: &deleteFromTenantDataBucket
+      Effect: Allow
+      Resource:
+        - arn:aws:s3:::${ssm:/${self:custom.env_name}/infra/s3/jit-execution-outputs/name, 'integration-tests-bucket'}/*
+      Action:
+        - s3:DeleteObject
+    listTenantDataBucket: &listTenantDataBucket
+      Effect: Allow
+      Resource:
+        - arn:aws:s3:::${ssm:/${self:custom.env_name}/infra/s3/jit-execution-outputs/name, 'integration-tests-bucket'}
+      Action:
+        - s3:ListBucket
+    getSSMParameterServiceDiscovery: &getSSMParameterServiceDiscovery
+      Effect: Allow
+      Action: ssm:GetParameter
+      Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/service-discovery/*-service
+    getInternalToken: &getInternalToken
+      Effect: Allow
+      Action: execute-api:Invoke
+      Resource:
+        # authentication-service
+        - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/token/internal
+
+  events:
+    userFacingHttp: &userFacingHttp
+      # This anchor is used to define the common properties for all the user facing http events that are not internal
+      authorizer:
+        arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-authorizer, 'default'}
+        type: request
+        # if 0 caching is disabled / max value is 3600 for caching results
+        resultTtlInSeconds: 0
+      cors:
+        origin: "*"
+        headers:
+          - Content-Type
+          - Authorization
+          - Tenant
+          - tenant
+        allowCredentials: false
+
+  warmup: &warmup
+    workWeek:
+      enabled:
+        - staging
+        - prod
+    weekEnd:
+      enabled:
+        - staging
+        - prod
+
+functions:
+  register-execution:
+    handler: update_execution.register_handler
+    memorySize: 512
+    description: Register an execution
+    events:
+      - http:
+          authorizer:
+            arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-authorizer, 'default'}
+            type: request
+            # if 0 caching is disabled / max value is 3600 for caching results
+            resultTtlInSeconds: 0
+          method: post
+          path: /register
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - Tenant
+              - tenant
+            allowCredentials: false
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-register-execution-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action: ssm:GetParameter
+        Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/service-discovery/*-service
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource:
+          # authentication-service
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/token/internal
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+
+  update-vendor-job-started:
+    handler: update_execution.vendor_job_start_handler
+    memorySize: 512
+    description: Updates execution with vendor job ID once it started running
+    events:
+      - http:
+          <<: *userFacingHttp
+          method: post
+          path: /start
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-update-vendor-job-started-role
+    iamRoleStatements:
+      - *assumeGeneralTenantIsolationRole
+      - *getSSMParameterServiceDiscovery
+      - *getInternalToken
+
+  dispatched-execution:
+    handler: dispatched_execution.handler
+    memorySize: 512
+    description: Update the execution status to dispatched.
+    events:
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+          pattern:
+            source:
+              - "execution-service"
+            detail-type:
+              - "dispatch-execution-status"
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-dispatched-execution-role
+    iamRoleStatements:
+      - *getInternalToken
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action: ssm:GetParameter
+        Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/service-discovery/*-service
+      - *getAndUpdateExecutionPolicy
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource: ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+
+  update-control-status:
+    handler: update_execution.update_control_status_handler
+    memorySize: 512
+    description: Updating the status of the control run for an execution
+    events:
+      - http:
+          authorizer:
+            arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-authorizer, 'default'}
+            type: request
+            # if 0 caching is disabled / max value is 3600 for caching results
+            resultTtlInSeconds: 0
+          method: post
+          path: /completed
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - Tenant
+              - tenant
+            allowCredentials: false
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-update-control-status-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action: ssm:GetParameter
+        Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/service-discovery/*-service
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource:
+          # authentication-service
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/token/internal
+      - *getAndUpdateExecutionPolicy
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Resources
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+
+  update-upload-findings-status:
+    handler: handle_update_upload_findings_status.handler
+    memorySize: 512
+    description: Updating the upload findings status of an execution
+    events:
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/findings, 'default'}
+          pattern:
+            source:
+              - "finding-service"
+            detail-type:
+              - "execution-findings-uploaded"
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-update-findings-status-role
+    iamRoleStatements:
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+      - Effect: Allow
+        Action: lambda:InvokeFunction
+        Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-handle-execution-failure
+    destinations:
+      onFailure: handle-execution-failure
+
+  execution-table-changes:
+    handler: table_changes.execution_record_changed
+    memorySize: 512
+    description: execution record changed event
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - Executions
+              - StreamArn
+          batchSize: 100
+          filterPatterns:
+            - eventName: [ INSERT, MODIFY ]
+              dynamodb:
+                NewImage:
+                  execution_data_json:
+                    S:
+                      - exists: false
+    iamRoleStatementsName: execution-service-executions-table-changes-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/execution-changes, 'default'}
+
+  resource-table-changes:
+    handler: table_changes.resource_changed
+    memorySize: 512
+    description: resource changed event
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - Resources
+              - StreamArn
+          batchSize: 100
+          filterPatterns:
+            - eventName: [ INSERT, MODIFY ]
+    iamRoleStatementsName: execution-service-resource-table-changes-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/resource-changes, 'default'}
+
+  complete-execution:
+    handler: complete_execution.complete_execution_handler
+    memorySize: 512
+    description: Complete an execution after findings are uploaded
+    events:
+      - stream:
+          # Here is the stream rule
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - Executions
+              - StreamArn
+          batchSize: 1
+          filterPatterns:
+            - eventName: [ MODIFY ]
+              dynamodb:
+                NewImage:
+                  control_type:
+                    S: [ detection ]
+                  control_status:
+                    S: [ completed, failed, watchdog_timeout ]
+                  upload_findings_status:
+                    S: [ completed, failed ]
+                  status:
+                    S: [ running ]
+            # if control_type remediation, background or enrichment don't wait on findings results as opposed to detection
+            - eventName: [ MODIFY ]
+              dynamodb:
+                NewImage:
+                  control_type:
+                    S: [ remediation, background, enrichment ]
+                  control_status:
+                    S: [ completed, failed, control_timeout, watchdog_timeout ]
+                  status:
+                    S: [ running ]
+            # If the control failed in validation, or we receive control timeout, or any other error during the control run the update-execution-status will be updated
+            - eventName: [ MODIFY ]
+              dynamodb:
+                NewImage:
+                  has_findings:
+                    BOOL: [ false ]
+                  control_status:
+                    S: [ failed, control_timeout ]
+                  status:
+                    S: [ running, dispatching, dispatched ]  # failed control run might not complete the "register" operation, so it's not strictly for "running" status
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+          pattern:
+            source:
+              - "execution-service"
+            detail-type:
+              - "execution-deprovisioned"
+    environment:
+      RETRY_EXECUTION_LAMBDA_ARN: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-retry-execution
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-complete-execution-role
+    iamRoleStatements:
+      - *getInternalToken
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action:
+          - cloudwatch:GetMetricData
+        Resource: "*"
+      - *getAndUpdateExecutionPolicy
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Resources
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+      - Effect: Allow
+        Action: lambda:InvokeFunction
+        Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-retry-execution
+
+  handle-enrichment-completed:
+    handler: handle_enrichment_completed.handler
+    memorySize: 512
+    description: Handles completion of enrichment execution
+    events:
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+          pattern:
+            source:
+              - execution-service
+            detail-type:
+              - execution-completed
+            detail:
+              control_type:
+                - enrichment
+              status:
+                - completed
+                - failed
+                - control_timeout
+                - watchdog_timeout
+                - canceled
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-handle-enrichment-completed-role
+    iamRoleStatements:
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action:
+          - states:SendTaskFailure
+          - states:SendTaskSuccess
+        Resource: arn:aws:states:#{AWS::Region}:#{AWS::AccountId}:stateMachine:${self:custom.env_name}-handle-enrichment-process
+      - *getAndUpdateExecutionPolicy
+
+  get-executions-by-filters:
+    handler: get_executions.handler
+    memorySize: 512
+    description: Get executions by filter
+    events:
+      - http:
+          authorizer:
+            arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-authorizer, 'default'}
+            type: request
+            # if 0 caching is disabled / max value is 3600 for caching results
+            resultTtlInSeconds: 0
+          method: get
+          path: /
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - Tenant
+              - tenant
+            allowCredentials: false
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-get-executions-by-filters-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+
+  get-execution-by-id:
+    handler: get_execution.handler
+    memorySize: 512
+    description: Get execution by jit_event_id and execution_id
+    events:
+      - http:
+          authorizer:
+            arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-authorizer, 'default'}
+            type: request
+            # if 0 caching is disabled / max value is 3600 for caching results
+            resultTtlInSeconds: 0
+          method: get
+          path: /execution
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - Tenant
+              - tenant
+            allowCredentials: false
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-get-execution-by-id-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+
+  dispatch-execution:
+    handler: dispatch_execution.handler
+    memorySize: 512
+    timeout: 120
+    description: Enrich and dispatch an execution
+    events:
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+          pattern:
+            source:
+              - "execution-service"
+            detail-type:
+              - "enrich-execution"
+    environment:
+      GCP_PROJECT_ID: ${ssm:/${self:custom.env_name}/infra/gcp-batch/project-id, 'default'}
+      GCP_REGION: ${ssm:/${self:custom.env_name}/infra/gcp-batch/region, 'default'}
+      GCP_KMS_KEY_NAME: ${ssm:/${self:custom.env_name}/infra/gcp-batch/controls-kms-key-name, 'default'}
+      GCP_BATCH_JOB_SERVICE_ACCOUNT_EMAIL: ${ssm:/${self:custom.env_name}/infra/gcp-batch/control-batch-job-sa-email, 'default'}
+      GCP_BATCH_VPC_NETWORK_NAME: ${ssm:/${self:custom.env_name}/infra/gcp/vpc/${self:custom.env_name}, 'default'}
+      GCP_BATCH_VPC_SUBNETWORK_NAME: ${ssm:/${self:custom.env_name}/infra/gcp/vpc/${self:custom.env_name}/subnets/${self:custom.env_name}-private, 'default'}
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-dispatch-execution-role
+    iamRoleStatements:
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+          - dynamodb:GetItem
+          - dynamodb:BatchGetItem
+          - dynamodb:BatchWriteItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource:
+          # authentication-service
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/token/internal
+          # github-service
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/dispatch
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/GET/app/*/installation/*/token
+          # gitlab-service
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/pipelines/dispatch
+          # secret-service `decrypt` endpoint
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/decrypt
+      - Effect: Allow
+        Action: ssm:GetParameter
+        Resource:
+          - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/service-discovery/*-service
+          - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/infra/gcp-batch/dispatch-gcp-credentials
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource:
+          - "arn:aws:s3:::${self:service}-${self:custom.env_name}-upload-findings-bucket/*"
+          - "arn:aws:s3:::jit-execution-logs-${self:custom.env_name}/*"
+          - "arn:aws:s3:::jit-runner-dispatch-event-${self:custom.env_name}/*"
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+        Resource:
+          - "arn:aws:s3:::jit-runner-dispatch-event-${self:custom.env_name}/*" # for presigned url permissions
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - arn:aws:iam::*:role/*JitRole*
+      - Effect: "Allow"
+        Resource: "*"
+        Action:
+          - batch:SubmitJob
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/installations, 'default'}
+      - Effect: Allow
+        Action: ssm:GetParameter
+        Resource:
+          - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/data/*
+      - Effect: Allow
+        Action:
+          - kms:Decrypt
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/kms/tenant-secrets-key, 'default'}
+      - Effect: Allow
+        Action: KMS:Encrypt
+        Resource: ${self:provider.environment.ECS_TASK_KMS_ARN}
+
+  trigger-execution:
+    handler: trigger_execution.handler
+    memorySize: 512
+    description: Receives the trigger execution event from the trigger service and add it to the DB
+    events:
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/trigger-execution, 'default'}
+          pattern:
+            source:
+              - "trigger-service"
+              - "execution-service"
+            detail-type:
+              - "trigger-execution"
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-trigger-execution-role
+    iamRoleStatements:
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource:
+          # authentication-service
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/token/internal
+      - Effect: Allow
+        Action: ssm:GetParameter
+        Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/service-discovery/*-service
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+      - Effect: Allow
+        Action: lambda:InvokeFunction
+        Resource: arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${opt:stage}-handle-execution-failure
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+    destinations:
+      onFailure: handle-execution-failure
+
+  silent-invocation:
+    handler: silent_invocation.handler
+    memorySize: 512
+    description: Silent invocation of control
+    # No `events` section here, this function is internal and should not be invoked by API Gateway
+    iamRoleStatementsName: execution-service-silent-invocation-role
+    iamRoleStatements:
+      - *getInternalToken
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - arn:aws:iam::*:role/*JitRole*
+      - Effect: Allow
+        Action:
+          - ssm:GetParameter
+        Resource:
+            - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/data/*/gcp_credentials
+            - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/data/*/azure_client_id
+            - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/data/*/azure_client_secret
+            - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/data/*/azure_subscription_ids
+      - Effect: Allow
+        Action:
+          - kms:Decrypt
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/kms/tenant-secrets-key, 'default'}
+      - Effect: Allow
+        Action:
+          - batch:SubmitJob
+        Resource: "*"
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource:
+          - "arn:aws:s3:::jit-silent-invocation-findings-${self:custom.env_name}/*"
+          - "arn:aws:s3:::jit-silent-invocation-logs-${self:custom.env_name}/*"
+
+  allocate-runner-resource:
+    handler: allocate_runner_resource.handler
+    memorySize: 512
+    description: Allocate a runner resource for the execution and send it to the enrich lambda
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt:
+              - Executions
+              - StreamArn
+          batchSize: 1
+          filterPatterns:
+            - eventName: [ INSERT ]
+              dynamodb:
+                NewImage:
+                  registered_at:
+                    S:
+                      - exists: false
+                  entity_type:
+                    S: [ job ]
+                  status:
+                    S: [ pending ]
+            - eventName: [ MODIFY ]
+              dynamodb:
+                NewImage:
+                  completed_at:
+                    S:
+                      - exists: true
+                  entity_type:
+                    S: [ job ]
+                  status:
+                    S: [ completed, failed, control_timeout, watchdog_timeout ]
+                  priority:
+                    N: [ "2", "3" ]
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-allocate-runner-resource-role
+    iamRoleStatements:
+      - *getInternalToken
+      - Effect: Allow
+        Action:
+          - cloudwatch:GetMetricData
+        Resource: "*"
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action: ssm:GetParameter
+        Resource: arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/service-discovery/*-service
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+          - dynamodb:GetItem
+        Resource:
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions/*
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+          - dynamodb:PutItem
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Resources
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+
+  get-execution-data:
+    handler: get_execution_data.handler
+    description: Fetch and return the execution data of a specific execution.
+    memorySize: 512
+    events:
+      - http:
+          authorizer:
+            # We use the authorizer that verifies an internal token is used
+            name: jwt-internal-authorizer
+            arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-internal-authorizer, 'default'}
+            type: request
+            resultTtlInSeconds: 0
+          method: get
+          path: /execution-data/{execution_id}
+    warmup: *warmup
+    iamRoleStatementsName: get-execution-data-role
+    iamRoleStatements:
+      - *getInternalToken
+      - *assumeGeneralTenantIsolationRole
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource: arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/GET/app/*/installation/*/token
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - arn:aws:iam::*:role/*JitRole*
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/installations, 'default'}
+
+  validate-dispatched-execution:
+    handler: validate_dispatched_execution.handler
+    description: Verifies according to execution_id and jit_event_id that the event is in status dispatched/ing
+    memorySize: 512
+    warmup: *warmup
+    iamRoleStatementsName: validate-dispatched-execution-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource:
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+
+  get-execution-log:
+    handler: get_execution_log.handler
+    description: Fetch and return the execution log of a specific execution.
+    memorySize: 512
+    events:
+      - http:
+          authorizer:
+            arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-authorizer, 'default'}
+            type: request
+            # if 0 caching is disabled / max value is 3600 for caching results
+            resultTtlInSeconds: 0
+          method: get
+          path: /{jit_event_id}/{execution_id}/log
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - Tenant
+            allowCredentials: false
+    warmup: *warmup
+    iamRoleStatementsName: get-execution-log-role
+    iamRoleStatements:
+      # Giving ListBucket permissions, so the lambda will know if the file exists
+      - Effect: Allow
+        Action:
+          - s3:ListBucket
+        Resource:
+          - arn:aws:s3:::jit-execution-logs-${self:custom.env_name}
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+        Resource:
+          - arn:aws:s3:::jit-execution-logs-${self:custom.env_name}/*
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/s3-bucket-all-access-iam-role}
+
+  log-orchestrator-events: # This lambda is about to be deleted
+    handler: log_orchestrator_events.handler
+    description: Logs orchestrator events
+    memorySize: 512
+    events:
+      - http:
+          authorizer:
+            arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-authorizer, 'default'}
+            type: request
+            # if 0 caching is disabled / max value is 3600 for caching results
+            resultTtlInSeconds: 0
+          method: post
+          path: /jit-event/{jit_event_id}/execution/{execution_id}/log
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - Authorization
+              - Tenant
+              - tenant
+            allowCredentials: false
+    warmup: *warmup
+
+  print-execution-logs-from-s3:
+    handler: print_execution_logs_from_s3.handler
+    memorySize: 512
+    timeout: 60  # An increased timeout because 30 was not enough for cases with huge logs
+    description: Printing the execution logs so they can be viewed on CloudWatch
+    events:
+      - s3:
+          bucket: jit-execution-logs-${self:custom.env_name}
+          event: s3:ObjectCreated:*
+          existing: true
+    iamRoleStatementsName: execution-service-print-execution-logs-from-s3-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+        Resource:
+          - arn:aws:s3:::jit-execution-logs-${self:custom.env_name}/*
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource:
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+      - Effect: Allow
+        Action:
+          - sqs:GetQueueUrl
+          - sqs:SendMessage
+        Resource:
+          - arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:SendInternalNotificationQueue
+
+  create-resources-for-tenant:
+    handler: create_resources_for_tenant.handler
+    memorySize: 512
+    description: Creates Resource records for a tenant, which limits the executions amount a tenant can run simultaneously
+    events:
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/tenants, 'default'}
+          pattern:
+            source:
+              - "tenant-service"
+            detail-type:
+              - "tenant-created"
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-create-resources-for-tenant
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Resources
+
+  resources-watchdog:
+    handler: resources_watchdog.watchdog
+    memorySize: 512
+    description: Find exceeded executions that haven't been cleaned up and push them to SQS queue.
+    events:
+      - schedule: cron(0/5 * * * ? *)
+    iamRoleStatementsName: execution-service-resources-watchdog-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource:
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Resources/*
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions/*
+      - Effect: Allow
+        Action:
+          - sqs:GetQueueUrl
+          - sqs:SendMessage
+        Resource:
+          - arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:WatchdogEventQueue.fifo
+
+  free-resources:
+    handler: resources_watchdog.free_resources_handler
+    timeout: 120
+    memorySize: 512
+    description: Receives SQS messages with resources to free and frees them.
+    environment:
+      GCP_PROJECT_ID: ${ssm:/${self:custom.env_name}/infra/gcp-batch/project-id, 'default'}
+      GCP_REGION: ${ssm:/${self:custom.env_name}/infra/gcp-batch/region, 'default'}
+    events:
+      - sqs:
+          batchSize: 10
+          functionResponseType: ReportBatchItemFailures
+          arn:
+            Fn::GetAtt:
+              - WatchdogEventQueue
+              - Arn
+    iamRoleStatementsName: execution-service-free-resources
+    iamRoleStatements:
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource:
+          # authentication-service
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/token/internal
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:UpdateItem
+        Resource:
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Resources
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+      - Effect: "Allow"
+        Resource: "*"
+        Action:
+          - batch:TerminateJob
+      - Effect: Allow
+        Action:
+          - sqs:GetQueueUrl
+          - sqs:SendMessage
+        Resource:
+          - arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:SendInternalNotificationQueue
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource:
+          - arn:aws:s3:::jit-gcp-job-logs-${self:custom.env_name}/*
+      - Effect: Allow
+        Action: ssm:GetParameter
+        Resource:
+          - arn:aws:ssm:#{AWS::Region}:#{AWS::AccountId}:parameter/*/infra/gcp-batch/free-resources-gcp-credentials
+
+  notify-free-resource-failed:
+    handler: resources_watchdog.notify_free_resource_failed
+    memorySize: 512
+    description: Receives SQS messages from DLQ and sends them to slack channel.
+    events:
+      - sqs:
+          batchSize: 10
+          functionResponseType: ReportBatchItemFailures
+          arn:
+            Fn::GetAtt:
+              - WatchdogDeadLetterQueue
+              - Arn
+    iamRoleStatementsName: execution-service-notify-free-resource-failed-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - sqs:GetQueueUrl
+          - sqs:SendMessage
+        Resource:
+          - arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:SendInternalNotificationQueue
+
+  delete-tenant-data:
+    handler: delete_tenant_data.handler
+    memorySize: 512
+    timeout: 90
+    description: removes all tenant data from db
+    events:
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/tenant-deletion, 'default'}
+          pattern:
+            source:
+              - 'tenant-service'
+              - 'backoffice-service'
+            detail-type:
+              - 'delete-tenant-data'
+    iamRoleStatementsName: execution-service-delete-tenant-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - sts:AssumeRole
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/iam-role/dynamodb-assumed-iam-role}
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+          - dynamodb:Query
+          - dynamodb:BatchWriteItem
+        Resource:
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Resources
+      - *listTenantDataBucket
+      - *deleteFromTenantDataBucket
+
+  fargate-batch-jobs-failures:
+    handler: handle_fargate_jobs_finished.handle_batch_jobs_failure
+    memorySize: 512
+    description: Listen to Batch (fargate) failed jobs and complete matching execution
+    events:
+      - eventBridge:
+          pattern:
+            source:
+              - "aws.batch"
+            detail-type:
+              - "Batch Job State Change"
+            detail:
+              status:
+                - "FAILED"
+              statusReason:
+                - anything-but: "Terminated by Watchdog"
+              jobQueue:
+                - arn:aws:batch:#{AWS::Region}:#{AWS::AccountId}:job-queue/fargate-tasks-queue
+    iamRoleStatementsName: execution-service-fargate-batch-jobs-failures-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+
+  fargate-jobs-finished:
+    handler: handle_fargate_jobs_finished.handle_ecs_jobs_completion
+    memorySize: 512
+    description: Listen to Fargate jobs completion - this is preferred because we have more info here that affects costs
+    events:
+      - eventBridge:
+          pattern:
+            source:
+              - "aws.ecs"
+            detail-type:
+              - "ECS Task State Change"
+            detail:
+              desiredStatus:
+                - "STOPPED"
+              lastStatus:
+                - "STOPPED"
+              clusterArn:
+                - prefix: "arn:aws:ecs:#{AWS::Region}:#{AWS::AccountId}:cluster/AWSBatch-fargate-batch-compute"
+              stopCode:
+                - anything-but:
+                    - TaskFailedToStart  # Failed to start - so no need to get it for cost calculation.
+    iamRoleStatementsName: execution-service-ecs-finished-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+      - Effect: Allow
+        Action: pricing:GetProducts
+        Resource: "*"
+      - Effect: Allow
+        Action: ecs:DescribeTaskDefinition
+        Resource: "*"
+
+  upload-control-output-files:
+    timeout: 30
+    memorySize: 512
+    handler: control_output_files.upload
+    description: Uploads control output files for execution
+    events:
+      - http:
+          <<: *userFacingHttp
+          method: post
+          path: /control-output-files
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-upload-control-output-files-role
+    iamRoleStatements:
+      - *assumeGeneralTenantIsolationRole
+
+  get-control-output-files-archive:
+    timeout: 30
+    memorySize: 512
+    handler: control_output_files.zipball
+    description: Returns a zip archive of all control output files for execution
+    events:
+      - http:
+          <<: *userFacingHttp
+          method: get
+          path: /{jit_event_id}/executions/{execution_id}/zipball/artifacts
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-get-control-output-files-archive-role
+    iamRoleStatements:
+      - *assumeGeneralTenantIsolationRole
+
+  handle-execution-failure:
+    handler: handle_execution_failure.handler
+    memorySize: 512
+    description: Use this lambda as an onFailure destination for any execution step that fails. The lambda will handle the failed execution.
+    iamRoleStatementsName: execution-service-handle-execution-failure
+    iamRoleStatements:
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+
+  cancel-executions:
+    handler: cancel_executions.handler
+    memorySize: 512
+    timeout: 300
+    description: This function cancels executions based on system events
+    events:
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/asset-events, 'default'}
+          pattern:
+            source:
+              - asset-service
+            detail-type:
+              - asset-not-covered
+      - eventBridge:
+          eventBus: ${ssm:/${self:custom.env_name}/infra/event-bus/plan-updates, 'default'}
+          pattern:
+            source:
+              - plan-service
+            detail-type:
+              - plan-items-is-active
+            detail:
+              is_active:
+                - false
+    iamRoleStatementsName: execution-service-cancel-executions
+    iamRoleStatements:
+      - *idempotencyPolicy
+      - Effect: Allow
+        Action: execute-api:Invoke
+        Resource:
+          # authentication-service
+          - arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/${opt:stage}/POST/token/internal
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/executions, 'default'}
+      - Effect: Allow
+        Action: dynamodb:Query
+        Resource: arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions/*
+
+  log-any-failure:
+    handler: log_any_failure.handler
+    memorySize: 256
+    description: Log in cloudwatch requests which warns us with some failure (currently used by an OIDC experiment)
+    events:
+      - http:
+          authorizer:
+            arn: ${ssm:/${self:custom.env_name}/infra/lambda/jwt-authorizer, 'default'}
+            type: request
+            resultTtlInSeconds: 0
+          method: post
+          path: /failure
+
+  retry-execution:
+    handler: retry_execution.handler
+    description: Retrieves the BaseExecutionIdentifiers model from execution.py, updates the relevant execution's status to RETRY in the Execution table, creates a TriggerExecutionEvent, and sends it to the trigger-execution lambda for rerun.
+    memorySize: 256
+    warmup: *warmup
+    iamRoleStatementsName: execution-service-retry-execution-role
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:UpdateItem
+        Resource:
+          - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/Executions
+      - Effect: Allow
+        Action: events:PutEvents
+        Resource:
+          - ${ssm:/${self:custom.env_name}/infra/event-bus/trigger-execution, 'default'}
+
+resources:
+  Resources:
+    UploadFindingsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service}-${self:custom.env_name}-upload-findings-bucket
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        LifecycleConfiguration:
+          Rules:
+            # Delete all the files that are older than 1 day
+            - Id: DeleteEverythingInADay
+              Status: Enabled
+              ExpirationInDays: 1
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        VersioningConfiguration:
+          Status: Enabled
+    ExecutionLogsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: jit-execution-logs-${self:custom.env_name}
+        AccessControl: Private
+        VersioningConfiguration:
+          Status: Enabled
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        LifecycleConfiguration:
+          Rules:
+            - Id: DeleteEverythingAfterAMonth
+              Status: Enabled
+              ExpirationInDays: 30
+              NoncurrentVersionExpiration:
+                NoncurrentDays: 30
+    SilentInvocationLogsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: jit-silent-invocation-logs-${self:custom.env_name}
+        AccessControl: Private
+        VersioningConfiguration:
+          Status: Enabled
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        LifecycleConfiguration:
+          Rules:
+            - Id: DeleteEverythingAfterAMonth
+              Status: Enabled
+              ExpirationInDays: 30
+              NoncurrentVersionExpiration:
+                NoncurrentDays: 30
+    SilentInvocationFindingsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: jit-silent-invocation-findings-${self:custom.env_name}
+        AccessControl: Private
+        VersioningConfiguration:
+          Status: Enabled
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        LifecycleConfiguration:
+          Rules:
+            - Id: DeleteEverythingAfterAMonth
+              Status: Enabled
+              ExpirationInDays: 30
+              NoncurrentVersionExpiration:
+                NoncurrentDays: 30
+
+    RunnerDispatchEventBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: jit-runner-dispatch-event-${self:custom.env_name}
+        AccessControl: Private
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        LifecycleConfiguration:
+          Rules:
+            # Delete all the files that are older than 1 day
+            - Id: DeleteEverythingInADay
+              Status: Enabled
+              ExpirationInDays: 1
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+    Executions:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Executions
+        BillingMode: PAY_PER_REQUEST
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+          - AttributeName: GSI2PK
+            AttributeType: S
+          - AttributeName: GSI2SK
+            AttributeType: S
+          - AttributeName: GSI3PK
+            AttributeType: S
+          - AttributeName: GSI3SK
+            AttributeType: S
+          - AttributeName: GSI4PK
+            AttributeType: S
+          - AttributeName: GSI4SK
+            AttributeType: S
+          - AttributeName: GSI5PK
+            AttributeType: S
+          - AttributeName: GSI5SK
+            AttributeType: S
+          - AttributeName: GSI6PK
+            AttributeType: S
+          - AttributeName: GSI6SK
+            AttributeType: S
+          - AttributeName: GSI7PK_TENANT_JIT_EVENT_ID
+            AttributeType: S
+          - AttributeName: GSI7SK_CREATED_AT
+            AttributeType: S
+          - AttributeName: GSI8PK_TENANT_ID_STATUS
+            AttributeType: S
+          - AttributeName: GSI8SK_ASSET_ID_CREATED_AT
+            AttributeType: S
+          - AttributeName: GSI9PK_TENANT_ID
+            AttributeType: S
+          - AttributeName: GSI9SK_JIT_EVENT_ID_JOB_NAME_CREATED_AT
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
+        GlobalSecondaryIndexes:
+          - IndexName: GSI2
+            KeySchema:
+              - AttributeName: GSI2PK
+                KeyType: HASH
+              - AttributeName: GSI2SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+          - IndexName: GSI3
+            KeySchema:
+              - AttributeName: GSI3PK
+                KeyType: HASH
+              - AttributeName: GSI3SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+          - IndexName: GSI4
+            KeySchema:
+              - AttributeName: GSI4PK
+                KeyType: HASH
+              - AttributeName: GSI4SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+          - IndexName: GSI5
+            KeySchema:
+              - AttributeName: GSI5PK
+                KeyType: HASH
+              - AttributeName: GSI5SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+          - IndexName: GSI6
+            KeySchema:
+              - AttributeName: GSI6PK
+                KeyType: HASH
+              - AttributeName: GSI6SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+          - IndexName: GSI7
+            KeySchema:
+              - AttributeName: GSI7PK_TENANT_JIT_EVENT_ID
+                KeyType: HASH
+              - AttributeName: GSI7SK_CREATED_AT
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+          - IndexName: GSI8
+            KeySchema:
+              - AttributeName: GSI8PK_TENANT_ID_STATUS
+                KeyType: HASH
+              - AttributeName: GSI8SK_ASSET_ID_CREATED_AT
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+          - IndexName: GSI9
+            KeySchema:
+              - AttributeName: GSI9PK_TENANT_ID
+                KeyType: HASH
+              - AttributeName: GSI9SK_JIT_EVENT_ID_JOB_NAME_CREATED_AT
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+        TimeToLiveSpecification:
+          AttributeName: ttl
+          Enabled: true
+    Resources:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Resources
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: PK
+            AttributeType: S
+          - AttributeName: SK
+            AttributeType: S
+          - AttributeName: GSI1PK
+            AttributeType: S
+          - AttributeName: GSI1SK
+            AttributeType: S
+          - AttributeName: GSI2PK
+            AttributeType: S
+          - AttributeName: GSI2SK
+            AttributeType: S
+        KeySchema:
+          - AttributeName: PK
+            KeyType: HASH
+          - AttributeName: SK
+            KeyType: RANGE
+        StreamSpecification:
+          StreamViewType: NEW_IMAGE
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: GSI1PK
+                KeyType: HASH
+              - AttributeName: GSI1SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+          - IndexName: GSI2
+            KeySchema:
+              - AttributeName: GSI2PK
+                KeyType: HASH
+              - AttributeName: GSI2SK
+                KeyType: RANGE
+            Projection:
+              ProjectionType: 'ALL'
+    WatchdogEventQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: "WatchdogEventQueue.fifo"
+        VisibilityTimeout: "45"
+        FifoQueue: "true"
+        ContentBasedDeduplication: "true"
+        RedrivePolicy:
+          deadLetterTargetArn:
+            Fn::GetAtt:
+              - "WatchdogDeadLetterQueue"
+              - "Arn"
+          maxReceiveCount: 10
+    WatchdogDeadLetterQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: "WatchdogDeadLetterQueue.fifo"
+        FifoQueue: "true"
+        MessageRetentionPeriod: "1209600" #14 days
+        ContentBasedDeduplication: "true"
+    ExecutionMetricsEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        Description: "EventRule"
+        State: "ENABLED"
+        EventBusName: ${ssm:/${self:custom.env_name}/infra/event-bus/execution-changes}
+        EventPattern:
+          account:
+            - Fn::Sub: ${AWS::AccountId}
+        Targets:
+          - Arn: ${ssm:/${self:custom.env_name}/infra/api_destination_arn/NewRelicLogs, ''}
+            RoleArn: ${ssm:/${self:custom.env_name}/infra/api_destination_role_arn/NewRelicLogs, ''}
+            Id: "NewRelicLogs"
+            InputTransformer:
+              InputPathsMap:
+                message: "$.detail"
+              InputTemplate: >
+                {
+                  "logtype": "execution_update",
+                  "message": <message>
+                }
+    ResourceMetricsEventRule:
+      Type: AWS::Events::Rule
+      Properties:
+        Description: "EventRule"
+        State: "ENABLED"
+        EventBusName: ${ssm:/${self:custom.env_name}/infra/event-bus/resource-changes}
+        EventPattern:
+          account:
+            - Fn::Sub: ${AWS::AccountId}
+        Targets:
+          - Arn: ${ssm:/${self:custom.env_name}/infra/api_destination_arn/NewRelicLogs, ''}
+            RoleArn: ${ssm:/${self:custom.env_name}/infra/api_destination_role_arn/NewRelicLogs, ''}
+            Id: "NewRelicLogs"
+            InputTransformer:
+              InputPathsMap:
+                message: "$.detail"
+              InputTemplate: >
+                {
+                  "logtype": "resource_update",
+                  "message": <message>
+                }
+
+    GCPJobLogsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: jit-gcp-job-logs-${self:custom.env_name}
+        AccessControl: Private
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        LifecycleConfiguration:
+          Rules:
+            - Id: DeleteEverythingAfterAMonth
+              Status: Enabled
+              ExpirationInDays: 30
+              NoncurrentVersionExpiration:
+                NoncurrentDays: 30
