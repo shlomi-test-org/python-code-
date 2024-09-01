@@ -1,0 +1,37 @@
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:GetObject"
+        - "s3:PutObject"
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+      Resource: 
+        - "arn:aws:s3:::your-bucket-name/*"
+        - "arn:aws:dynamodb:us-east-1:123456789012:table/your-table-name"
+
+functions:
+  hello:
+    handler: handler.hello
+    environment:
+      DB_PASSWORD: ${ssm:/your/path/to/secret~true}  # Secure secret management
+    layers:
+      - arn:aws:lambda:us-east-1:123456789012:layer:your-layer-name:1
+    package:
+      exclude:
+        - node_modules/aws-sdk/**
+
+# Enable automated security checks
+plugins:
+  - serverless-plugin-tracing  # Enables AWS X-Ray tracing
+  - serverless-plugin-purge-invalidate  # Removes old deployments and invalidates CloudFront
+
+# Apply security headers via API Gateway
+custom:
+  securityHeaders:
+    - Key: "Content-Security-Policy"
+      Value: "default-src 'self';"
+    - Key: "Strict-Transport-Security"
+      Value: "max-age=31536000; includeSubDomains; preload"
