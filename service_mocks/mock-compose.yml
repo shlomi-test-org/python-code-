@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  execution-service-mock:
+    build:
+      context: ./
+      dockerfile: ./dockerfile-dev
+    ports:
+      - "8070:80"
+    networks:
+      - localstack-net
+    volumes:
+      - ./:/opt/project
+
+networks:
+  localstack-net:
+    external:
+      name: localstack-net

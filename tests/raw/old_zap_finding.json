@@ -1,0 +1,1904 @@
+{
+    "tenant_id": "1b2bc442-b8a6-4ab8-a037-d536c2859094",
+    "vendor": "domain",
+    "app_and_installation_id": null,
+    "app_id": null,
+    "installation_id": null,
+    "full_repo_path": null,
+    "account_id": null,
+    "account_name": null,
+    "branch": null,
+    "commits": null,
+    "pull_request_number": null,
+    "workflow_suite_id": "d060dc3c-8db8-45a8-bffa-838025111eca",
+    "workflow_id": "c66718cd-f577-41b5-a24b-3bff50b8d45d",
+    "workflow_name": "api-security-detection",
+    "job_name": "api-security-detection",
+    "jit_event_id": "d060dc3c-8db8-45a8-bffa-838025111eca",
+    "jit_event_name": "pull_request_created",
+    "execution_id": "c66718cd-f577-41b5-a24b-3bff50b8d45d",
+    "user_vendor_id": null,
+    "user_vendor_name": null,
+    "callback_urls": {
+        "workflow": "https://api.jit.io/execution",
+        "execution": "https://api.jit.io/execution",
+        "logs": "https://api.jit.io/execution/jit-event/d060dc3c-8db8-45a8-bffa-838025111eca/execution/c66718cd-f577-41b5-a24b-3bff50b8d45d/log",
+        "findings": "https://api.jit.io/finding/asset/d9bb6d40-cfa3-42ce-aebd-2385b740ff81/new",
+        "ignores": "https://api.jit.io/finding/asset/d9bb6d40-cfa3-42ce-aebd-2385b740ff81/control/{control_name}/ignore/new",
+        "actions": null
+    },
+    "callback_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1MDc5ZTJjYS1kZWZhLTQzYjktYWM5ZC0wNDliNTRiMzY3ZGYiLCJpc3MiOiJhcGkuaml0LmlvIiwiaWF0IjoxNjYzNTAzMjg2LCJleHAiOjE2NjM1ODk2ODYsInRlbmFudF9pZCI6IjUwNzllMmNhLWRlZmEtNDNiOS1hYzlkLTA0OWI1NGIzNjdkZiJ9.JqoRDuZenj0BUvrmc7mrQfREAntGhgNoTtf6LUNi0ujqMxyWqolf2LPcxEeHFb1uBfeBFBw8fzwMp5tPlS4tjLEirFQucsqlaaqClqGpXfsmFky_4BYxwh57VhED8815s0jNfHT1Bu-zDi9S9UPP94yzExS44GAb35wq9d8cHFQnpF749Hsh4nBTfc_1EIYvPg335xziQ8dKjEDoparnimlcqj7NX8oiHBqQ4opLvDUZ_IcJNzrjcV0N2P-pyPDca8aJ_uekO5gIoCH_YB0Oa1qrRPOQKLHA2LVd--bPBeOZsBgSKtcTBf0fuySz5Rbj99DSo1Tq8770qacNqZsJv9HghQrjQ0CeFrPM0QDUrUy2gfDllAhcVYpD-X0MLpZslw5aDw3LNKDwKTBVXw7r8mnJM6fFc2oLDwobF7nwjRx4W-Q3Vaab7iXI1oTat68BRM1D7HuTXXgi3EHSvy8alekS3gZMg1UluwY7_27cwZMfjozbWLKjm3SnxLAheSwp",
+    "asset_type": "web",
+    "asset_id": "d9bb6d40-cfa3-42ce-aebd-2385b740ff81",
+    "inputs": {
+        "target_url": "https://platform.staging.jit.io",
+        "authentication_mode": "non-authenticated"
+    },
+    "use_execution_engine": true,
+    "control_timeout_seconds": 7200,
+    "feature_flags_api_key": "sdk-88ea8d47-57e6-4d83-9f32-b7eb24514dfd",
+    "job_runner": "jit",
+    "plan_slug": "jit-plan",
+    "plan_item_slug": "item-web-app-scanner",
+    "step_name": "api-security-detection",
+    "payload": {
+        "control_name": "Zap",
+        "created_at": "2022-09-18T12:25:14.177352",
+        "status": "PASS",
+        "findings": [
+            {
+                "test_name": "Content Security Policy (CSP) Header Not Set",
+                "test_id": "10038",
+                "issue_confidence": "HIGH",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+                "references": [
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy"
+                    },
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "http://www.w3.org/TR/CSP/",
+                        "url": "http://www.w3.org/TR/CSP/"
+                    },
+                    {
+                        "name": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html",
+                        "url": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html"
+                    },
+                    {
+                        "name": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/",
+                        "url": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/"
+                    },
+                    {
+                        "name": "http://caniuse.com/#feat=contentsecuritypolicy",
+                        "url": "http://caniuse.com/#feat=contentsecuritypolicy"
+                    },
+                    {
+                        "name": "http://content-security-policy.com/",
+                        "url": "http://content-security-policy.com/"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/logo192.png",
+                "location_text": "https://platform.staging.jit.io/logo192.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/logo192.png"
+                },
+                "fingerprint": "458ac9261f1fd8a01027e3d826147fd5e798bf0da58bcbd49260572195712817"
+            },
+            {
+                "test_name": "Content Security Policy (CSP) Header Not Set",
+                "test_id": "10038",
+                "issue_confidence": "HIGH",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+                "references": [
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy"
+                    },
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "http://www.w3.org/TR/CSP/",
+                        "url": "http://www.w3.org/TR/CSP/"
+                    },
+                    {
+                        "name": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html",
+                        "url": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html"
+                    },
+                    {
+                        "name": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/",
+                        "url": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/"
+                    },
+                    {
+                        "name": "http://caniuse.com/#feat=contentsecuritypolicy",
+                        "url": "http://caniuse.com/#feat=contentsecuritypolicy"
+                    },
+                    {
+                        "name": "http://content-security-policy.com/",
+                        "url": "http://content-security-policy.com/"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "65213dbe3cb157abe1d1a39178bbf4ae13e4e9cff1917c58808024937faadfa6"
+            },
+            {
+                "test_name": "Content Security Policy (CSP) Header Not Set",
+                "test_id": "10038",
+                "issue_confidence": "HIGH",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+                "references": [
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy"
+                    },
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "http://www.w3.org/TR/CSP/",
+                        "url": "http://www.w3.org/TR/CSP/"
+                    },
+                    {
+                        "name": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html",
+                        "url": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html"
+                    },
+                    {
+                        "name": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/",
+                        "url": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/"
+                    },
+                    {
+                        "name": "http://caniuse.com/#feat=contentsecuritypolicy",
+                        "url": "http://caniuse.com/#feat=contentsecuritypolicy"
+                    },
+                    {
+                        "name": "http://content-security-policy.com/",
+                        "url": "http://content-security-policy.com/"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "16574ecd90e9b7fa7065eb7221acb3739c3466278595103525f9c85dc6c9ffa8"
+            },
+            {
+                "test_name": "Content Security Policy (CSP) Header Not Set",
+                "test_id": "10038",
+                "issue_confidence": "HIGH",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+                "references": [
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy"
+                    },
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "http://www.w3.org/TR/CSP/",
+                        "url": "http://www.w3.org/TR/CSP/"
+                    },
+                    {
+                        "name": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html",
+                        "url": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html"
+                    },
+                    {
+                        "name": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/",
+                        "url": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/"
+                    },
+                    {
+                        "name": "http://caniuse.com/#feat=contentsecuritypolicy",
+                        "url": "http://caniuse.com/#feat=contentsecuritypolicy"
+                    },
+                    {
+                        "name": "http://content-security-policy.com/",
+                        "url": "http://content-security-policy.com/"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "ba392f962c8f9fb6fe0fd35226fdb7d4d41219eca7d7fa0a70870a8299b875d5"
+            },
+            {
+                "test_name": "Hidden File Found",
+                "test_id": "40035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>A sensitive file was identified as accessible or available. This may leak administrative, configuration, or credential information which can be leveraged by a malicious individual to further attack the system or conduct social engineering efforts.</p>",
+                "references": [
+                    {
+                        "name": "https://blog.hboeck.de/archives/892-Introducing-Snallygaster-a-Tool-to-Scan-for-Secrets-on-Web-Servers.html",
+                        "url": "https://blog.hboeck.de/archives/892-Introducing-Snallygaster-a-Tool-to-Scan-for-Secrets-on-Web-Servers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/.DS_Store",
+                "location_text": "https://platform.staging.jit.io/.DS_Store",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/.DS_Store"
+                },
+                "fingerprint": "9f65606b56376a39791534871242d37136bbe484ed43335c0ffd337046f118ae"
+            },
+            {
+                "test_name": "Missing Anti-clickjacking Header",
+                "test_id": "10020",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options to protect against 'ClickJacking' attacks.</p>",
+                "references": [
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/logo192.png",
+                "location_text": "https://platform.staging.jit.io/logo192.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/logo192.png"
+                },
+                "fingerprint": "a98513816c7eb0ba8bfb493f54c0e5a05dd7306d7855d3d40b5ca9616e46c602"
+            },
+            {
+                "test_name": "Missing Anti-clickjacking Header",
+                "test_id": "10020",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options to protect against 'ClickJacking' attacks.</p>",
+                "references": [
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "56c859aec2350413bb843b3f6a48f24c032f83f5f3d40452142335e1b39cc181"
+            },
+            {
+                "test_name": "Missing Anti-clickjacking Header",
+                "test_id": "10020",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options to protect against 'ClickJacking' attacks.</p>",
+                "references": [
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "66cbfec6a2351349ed95705ece5393e6dd15bc9dac78592ef7fd99a39a68111c"
+            },
+            {
+                "test_name": "Missing Anti-clickjacking Header",
+                "test_id": "10020",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "MEDIUM",
+                "issue_text": "<p>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options to protect against 'ClickJacking' attacks.</p>",
+                "references": [
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "4b5016059acfc6414c7d1d04aa5e990f23a279e437b9cef2734c49bce1d1dee4"
+            },
+            {
+                "test_name": "Cross-Domain JavaScript Source File Inclusion",
+                "test_id": "10017",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The page includes one or more script files from a third-party domain.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/logo192.png",
+                "location_text": "https://platform.staging.jit.io/logo192.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/logo192.png"
+                },
+                "fingerprint": "5dd159275a4bd485abdd3c7345cb0099af2acebdd34838da39ea0b588ab9e49e"
+            },
+            {
+                "test_name": "Cross-Domain JavaScript Source File Inclusion",
+                "test_id": "10017",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The page includes one or more script files from a third-party domain.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "7dd54d8eaa7423f8fd8ed14b31f01bfde752230500eaa7e06224e89132bb2980"
+            },
+            {
+                "test_name": "Cross-Domain JavaScript Source File Inclusion",
+                "test_id": "10017",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The page includes one or more script files from a third-party domain.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "c01be0b17ad1d4251e80d8b9c39ea48aa77bfc7c8d1d8130f9e0f24db3edfb18"
+            },
+            {
+                "test_name": "Cross-Domain JavaScript Source File Inclusion",
+                "test_id": "10017",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The page includes one or more script files from a third-party domain.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "b0fe3ff4131729878626faf7fea2ebf160949dc65d9b10e03101d5a5f35469ff"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "277abe80bd7b7cb13be2503eea4b37108de3b347716ad1758bf5bdae67330b57"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+                "location_text": "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/css/main.2c9a190d.css"
+                },
+                "fingerprint": "8dd0f95594017907568a61040097b3d6eee6cb97204f0f62eb51753140d8b4bb"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "location_text": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js"
+                },
+                "fingerprint": "4572d45e3863482eb42e12eba3f355a5164547a49cf437410a94308f3f5122f0"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/logo192.png",
+                "location_text": "https://platform.staging.jit.io/logo192.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/logo192.png"
+                },
+                "fingerprint": "fd9261120e7bbba62b79f736e6a1f50fa406a7d37632a06498e0032e5d602064"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2",
+                "location_text": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2"
+                },
+                "fingerprint": "23af65cbca4d0a42864c765fd389558c9287e09bb12287c690ca5d6bb648903f"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/jit-favicon.png",
+                "location_text": "https://platform.staging.jit.io/jit-favicon.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/jit-favicon.png"
+                },
+                "fingerprint": "b58d2556efb0c68f5f0a46527197726df1ab4a1a4809f8ebbbedd89dde30bb6f"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/manifest.json",
+                "location_text": "https://platform.staging.jit.io/manifest.json",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/manifest.json"
+                },
+                "fingerprint": "5e46291bacceea925f6917d78af9a580a4f9cfacb803640060498cd4433eaf9b"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/robots.txt",
+                "location_text": "https://platform.staging.jit.io/robots.txt",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/robots.txt"
+                },
+                "fingerprint": "bb70fe23f1ade228c5bd333a7e0b02e8c88a62b6db5ad47cee26949e90aa4f65"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "af56f5c2a6a4d149482c05120a214f8543002054b26e3c204a84f38d0d12a38d"
+            },
+            {
+                "test_name": "Server Leaks Version Information via \"Server\" HTTP Response Header Field",
+                "test_id": "10036",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The web/application server is leaking version information via the \"Server\" HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.</p>",
+                "references": [
+                    {
+                        "name": "http://httpd.apache.org/docs/current/mod/core.html#servertokens",
+                        "url": "http://httpd.apache.org/docs/current/mod/core.html#servertokens"
+                    },
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007",
+                        "url": "http://msdn.microsoft.com/en-us/library/ff648552.aspx#ht_urlscan_007"
+                    },
+                    {
+                        "name": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx",
+                        "url": "http://blogs.msdn.com/b/varunm/archive/2013/04/23/remove-unwanted-http-response-headers.aspx"
+                    },
+                    {
+                        "name": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html",
+                        "url": "http://www.troyhunt.com/2012/02/shhh-dont-let-your-response-headers.html"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "3864d538a531723ccf11fd1970c4f87dca7ce944f21ef3da6fade8c07686a6e8"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "615574a39ac758c91963c74c23c8c2195fe0f4746c45e3965756c37d74c52a51"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+                "location_text": "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/css/main.2c9a190d.css"
+                },
+                "fingerprint": "ded83327a70fcd4d131421eae455949c10a503506cec416d742483650c3c20bb"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "location_text": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js"
+                },
+                "fingerprint": "86a9b0c818f9d9e54389b31340017ed08bc9c31babe1bfbe3c65e72d36a1cf80"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/logo192.png",
+                "location_text": "https://platform.staging.jit.io/logo192.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/logo192.png"
+                },
+                "fingerprint": "32b87340602b24a470b47e32995294923849896fed3e90e997060841b4f07a41"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2",
+                "location_text": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2"
+                },
+                "fingerprint": "a920c4581c8e1748484ebc86a03e203618ad6f357060a2f172f73b7224f28b4b"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/jit-favicon.png",
+                "location_text": "https://platform.staging.jit.io/jit-favicon.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/jit-favicon.png"
+                },
+                "fingerprint": "726569ff2c80e02c4ddc14d68830c5e824014b7192ab7f0822793271207c9785"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/manifest.json",
+                "location_text": "https://platform.staging.jit.io/manifest.json",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/manifest.json"
+                },
+                "fingerprint": "36e3e835c0b7b9aaf182b46e03d65b376a7960746fab06230a7fe6c61f74d706"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/robots.txt",
+                "location_text": "https://platform.staging.jit.io/robots.txt",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/robots.txt"
+                },
+                "fingerprint": "240218873a4a305ff631236428b8ddbb9518c378dc77c2679d9769efc51edd86"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "26b7dcac074c576a38b25ec78c583966705bc8bf2413764b9e7d11261556b420"
+            },
+            {
+                "test_name": "Strict-Transport-Security Header Not Set",
+                "test_id": "10035",
+                "issue_confidence": "HIGH",
+                "issue_severity": "LOW",
+                "issue_text": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    },
+                    {
+                        "name": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security",
+                        "url": "http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"
+                    },
+                    {
+                        "name": "http://caniuse.com/stricttransportsecurity",
+                        "url": "http://caniuse.com/stricttransportsecurity"
+                    },
+                    {
+                        "name": "http://tools.ietf.org/html/rfc6797",
+                        "url": "http://tools.ietf.org/html/rfc6797"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "a4734d055b9544e975d8b4bb63592b0e92606f2cd57f26703885f421fa4cbdd7"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "c69cfe422374931310ebde4ff93d9920f0985e7513637ea08ecca5a3fa0bd48f"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+                "location_text": "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/css/main.2c9a190d.css"
+                },
+                "fingerprint": "e78c4b612504b867eb604c5ccd70e0e1792234d92f4b717122d1381d4e3cd7f8"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "location_text": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js"
+                },
+                "fingerprint": "d2d7a1bf39ef934b3b77e4dada3ffe22f58c1da4cb4faa0368bad732cb3211be"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/logo192.png",
+                "location_text": "https://platform.staging.jit.io/logo192.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/logo192.png"
+                },
+                "fingerprint": "4d710ed0d2000573e656a567d8d02a7c39c4868e981b35f7613f6c81b4191db4"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2",
+                "location_text": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2"
+                },
+                "fingerprint": "7fb3f70d3d5b93d1f246706b68fd8f763c170acc0e9f3450ee926638bf66667e"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/jit-favicon.png",
+                "location_text": "https://platform.staging.jit.io/jit-favicon.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/jit-favicon.png"
+                },
+                "fingerprint": "c976bf22f28b5479d14bb8a4db99c4018faffd406afa6ab177cbc0731b07e5bb"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/manifest.json",
+                "location_text": "https://platform.staging.jit.io/manifest.json",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/manifest.json"
+                },
+                "fingerprint": "b1a9909c12a08ba43412e8d814a7489405a973313362a2e0bfe60ca74864814f"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/robots.txt",
+                "location_text": "https://platform.staging.jit.io/robots.txt",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/robots.txt"
+                },
+                "fingerprint": "658015b7192468a61a8559c1d129f3ede0dfc1beb03ce7f4bbee7cdc9cde019a"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "d2f670e5248837069b1f267e29ad4cc50bdff7c4083b0ca2e1954f393fb087d3"
+            },
+            {
+                "test_name": "X-Content-Type-Options Header Missing",
+                "test_id": "10021",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+                "references": [
+                    {
+                        "name": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx",
+                        "url": "http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx"
+                    },
+                    {
+                        "name": "https://owasp.org/www-community/Security_Headers",
+                        "url": "https://owasp.org/www-community/Security_Headers"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "e0a4db292c22b5d14e86d5ee7f103fb497514046b2fad92b19e54f0bf1674c3a"
+            },
+            {
+                "test_name": "Modern Web Application",
+                "test_id": "10109",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "eeaebe7d2b21a1d9866beaf874191638ad6ce44e0a943edb8c63a7448f60f0ca"
+            },
+            {
+                "test_name": "Modern Web Application",
+                "test_id": "10109",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "location_text": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js"
+                },
+                "fingerprint": "5174a9aeda875871463809c17ac9f0456daab76f940e2dcd9b84d1cfab0e7be3"
+            },
+            {
+                "test_name": "Modern Web Application",
+                "test_id": "10109",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/logo192.png",
+                "location_text": "https://platform.staging.jit.io/logo192.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/logo192.png"
+                },
+                "fingerprint": "d9ce15a1141428ef0d87d4f9a48eb6fb0f25d10f34481b7ad64d49675d02ec33"
+            },
+            {
+                "test_name": "Modern Web Application",
+                "test_id": "10109",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "954e6b3953f4a9c98dd60ed1542b83df4032b10a44234a3bad304a8c703a8d4a"
+            },
+            {
+                "test_name": "Modern Web Application",
+                "test_id": "10109",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
+                "references": [],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "95cc4ac59c0ce159d126edf58697e48261bed52570e824f7ca8b19e80331ef55"
+            },
+            {
+                "test_name": "Re-examine Cache-control Directives",
+                "test_id": "10015",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching"
+                    },
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "f58d1a3cad9ecf98b6e54709db7a816fe98ed7947f8a3434e8bd64afe959602a"
+            },
+            {
+                "test_name": "Re-examine Cache-control Directives",
+                "test_id": "10015",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching"
+                    },
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/manifest.json",
+                "location_text": "https://platform.staging.jit.io/manifest.json",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/manifest.json"
+                },
+                "fingerprint": "b7ca19de4a4e8c7e54ce376d3cbe0e0461903233f4de0b40e93b2c7cdb07da1d"
+            },
+            {
+                "test_name": "Re-examine Cache-control Directives",
+                "test_id": "10015",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching"
+                    },
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/robots.txt",
+                "location_text": "https://platform.staging.jit.io/robots.txt",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/robots.txt"
+                },
+                "fingerprint": "b553a548cc01f6e58f497062bab948c0a877a0b1e3caa3c085c18e17e4f7b43c"
+            },
+            {
+                "test_name": "Re-examine Cache-control Directives",
+                "test_id": "10015",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching"
+                    },
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "dc706c89d2b5516397331308ced5456867b6221606758c532ab6cbc7648753cb"
+            },
+            {
+                "test_name": "Re-examine Cache-control Directives",
+                "test_id": "10015",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+                "references": [
+                    {
+                        "name": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching",
+                        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching"
+                    },
+                    {
+                        "name": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control",
+                        "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "19ed34e6ca616319a5c27c60c461b88a938df321f0956027f9d4f7a0bb13a4be"
+            },
+            {
+                "test_name": "Retrieved from Cache",
+                "test_id": "10050",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+                "references": [
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7234",
+                        "url": "https://tools.ietf.org/html/rfc7234"
+                    },
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7231",
+                        "url": "https://tools.ietf.org/html/rfc7231"
+                    },
+                    {
+                        "name": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)",
+                        "url": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/sitemap.xml",
+                "location_text": "https://platform.staging.jit.io/sitemap.xml",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/sitemap.xml"
+                },
+                "fingerprint": "a939354ea351948c9de1dc667627ac04d541b4e69ffc940305e181de8ff96389"
+            },
+            {
+                "test_name": "Retrieved from Cache",
+                "test_id": "10050",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+                "references": [
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7234",
+                        "url": "https://tools.ietf.org/html/rfc7234"
+                    },
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7231",
+                        "url": "https://tools.ietf.org/html/rfc7231"
+                    },
+                    {
+                        "name": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)",
+                        "url": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+                "location_text": "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/css/main.2c9a190d.css"
+                },
+                "fingerprint": "a1c9550388f02efc859e8247876a91bbad7081c701a7e27e5aaa2c9abc0ef4fb"
+            },
+            {
+                "test_name": "Retrieved from Cache",
+                "test_id": "10050",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+                "references": [
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7234",
+                        "url": "https://tools.ietf.org/html/rfc7234"
+                    },
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7231",
+                        "url": "https://tools.ietf.org/html/rfc7231"
+                    },
+                    {
+                        "name": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)",
+                        "url": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "location_text": "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/static/js/main.40c12ecb.js"
+                },
+                "fingerprint": "3b06885a092f61439b3d004b9567829d13de4fc8bf3feae9d03d5a0d7d4e70f8"
+            },
+            {
+                "test_name": "Retrieved from Cache",
+                "test_id": "10050",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+                "references": [
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7234",
+                        "url": "https://tools.ietf.org/html/rfc7234"
+                    },
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7231",
+                        "url": "https://tools.ietf.org/html/rfc7231"
+                    },
+                    {
+                        "name": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)",
+                        "url": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/logo192.png",
+                "location_text": "https://platform.staging.jit.io/logo192.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/logo192.png"
+                },
+                "fingerprint": "3e529bf5687e792df4e76b72768fa26f9ab0938ee646b38a3dfeb4efe0e8f6da"
+            },
+            {
+                "test_name": "Retrieved from Cache",
+                "test_id": "10050",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+                "references": [
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7234",
+                        "url": "https://tools.ietf.org/html/rfc7234"
+                    },
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7231",
+                        "url": "https://tools.ietf.org/html/rfc7231"
+                    },
+                    {
+                        "name": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)",
+                        "url": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/jit-favicon.png",
+                "location_text": "https://platform.staging.jit.io/jit-favicon.png",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/jit-favicon.png"
+                },
+                "fingerprint": "6b423759aa004a32d9ea54bfb5655c84e7de8a76e4e0ca9c67315964d0974701"
+            },
+            {
+                "test_name": "Retrieved from Cache",
+                "test_id": "10050",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+                "references": [
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7234",
+                        "url": "https://tools.ietf.org/html/rfc7234"
+                    },
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7231",
+                        "url": "https://tools.ietf.org/html/rfc7231"
+                    },
+                    {
+                        "name": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)",
+                        "url": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io",
+                "location_text": "https://platform.staging.jit.io",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io"
+                },
+                "fingerprint": "215c92d3be6dfd1d913afcbde777b4beb528905a71d5ac20d6596dd2831691b1"
+            },
+            {
+                "test_name": "Retrieved from Cache",
+                "test_id": "10050",
+                "issue_confidence": "MEDIUM",
+                "issue_severity": "LOW",
+                "issue_text": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+                "references": [
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7234",
+                        "url": "https://tools.ietf.org/html/rfc7234"
+                    },
+                    {
+                        "name": "https://tools.ietf.org/html/rfc7231",
+                        "url": "https://tools.ietf.org/html/rfc7231"
+                    },
+                    {
+                        "name": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)",
+                        "url": "http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)"
+                    }
+                ],
+                "authentication": false,
+                "scan_mode": "Web",
+                "location": "https://platform.staging.jit.io/",
+                "location_text": "https://platform.staging.jit.io/",
+                "snapshot_attributes": {
+                    "authentication": false,
+                    "scan_mode": "Web",
+                    "location": "https://platform.staging.jit.io/"
+                },
+                "fingerprint": "83b5979c38b744f5ce7338bc3cd64de264ede5a856460cd10ad55e2d52cb8a3f"
+            }
+        ],
+        "event_type": "control_results"
+    },
+    "snapshot_attributes": {
+        "authentication": [
+            false
+        ],
+        "scan_mode": [
+            "Web"
+        ],
+        "location": [
+            "https://platform.staging.jit.io/static/js",
+            "https://platform.staging.jit.io/sitemap.xml",
+            "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+            "https://platform.staging.jit.io/",
+            "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+            "https://platform.staging.jit.io/logo192.png",
+            "https://platform.staging.jit.io/static/css",
+            "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2",
+            "https://platform.staging.jit.io/jit-favicon.png",
+            "https://platform.staging.jit.io/manifest.json",
+            "https://platform.staging.jit.io/robots.txt",
+            "https://platform.staging.jit.io/.DS_Store",
+            "https://platform.staging.jit.io/static",
+            "https://platform.staging.jit.io",
+            "https://platform.staging.jit.io/static/media"
+        ]
+    }
+}

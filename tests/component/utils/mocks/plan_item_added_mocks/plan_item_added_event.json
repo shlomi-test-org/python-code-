@@ -1,0 +1,185 @@
+{
+  "prepare_for_execution_event": {
+    "jit_event": {
+      "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+      "jit_event_name": "item_activated",
+      "jit_event_id": "8b8e7236-2290-4c75-b1db-d44f2cf3e3ae",
+      "asset_id": null,
+      "workflows": null,
+      "activated_plan_slug": "jit-plan",
+      "activated_plan_item_slugs": [
+        "item-secret-detection"
+      ]
+    },
+    "trigger_filter_attributes": {
+      "plan_slugs": [
+        "jit-plan"
+      ],
+      "plan_item_slugs": [
+        "item-secret-detection"
+      ],
+      "workflow_slugs": [],
+      "job_names": [],
+      "asset_ids": [],
+      "asset_envs": [],
+      "triggers": [],
+      "create_trigger_event_from_jit_event": false
+    },
+    "asset": {
+      "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+      "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+      "asset_type": "repo",
+      "vendor": "github",
+      "owner": "liad-dev-org",
+      "asset_name": "new-test",
+      "is_active": true,
+      "is_covered": true,
+      "created_at": "2022-08-15T10:48:41.622654",
+      "modified_at": "2022-09-05T11:34:11.256000",
+      "aws_account_id": null,
+      "environment": null,
+      "target_url": null,
+      "excluded_paths": null,
+      "authentication_mode": null,
+      "auth_header_name": null,
+      "auth_header_value": null,
+      "login_page_url": null,
+      "username": null,
+      "username_css_selector": null,
+      "password": null,
+      "password_css_selector": null,
+      "api_domain": null,
+      "aws_jit_role_name": null,
+      "aws_jit_role_external_id": null,
+      "aws_regions_to_scan": null
+    },
+    "installations": [
+      {
+        "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+        "app_id": "161076",
+        "owner": "liad-dev-org",
+        "installation_id": "28265461",
+        "status": "connected",
+        "is_active": true,
+        "creator": "liad-dev-org",
+        "vendor": "github",
+        "name": "liad-dev-org",
+        "created_at": "2022-08-15T10:48:38.100798",
+        "modified_at": "2022-10-11T07:36:14.853000",
+        "installation_type": null,
+        "centralized_repo_asset_id": "fa139901-1be5-40a2-932b-78e45dcbe0c3",
+        "centralized_repo_asset": {
+          "asset_id": "fa139901-1be5-40a2-932b-78e45dcbe0c3",
+          "asset_name": "not-dot-jit",
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "shlomi-test-org",
+          "created_at": "2023-01-16T10:23:26.666000",
+          "modified_at": "2023-01-16T10:23:26.666000",
+          "is_active": true
+        },
+        "vendor_response": {
+          "canPreviewItem": true
+        }
+      }
+    ],
+    "filtered_jobs": [
+      {
+        "plan_item_slug": "item-secret-detection",
+        "workflow_slug": "workflow-secret-detection",
+        "workflow_name": "Secret Detection Workflow",
+        "job_name": "secret-detection",
+        "workflow_template": {
+          "slug": "workflow-secret-detection",
+          "name": "Secret Detection Workflow",
+          "type": "workflow",
+          "content": "name: Secret Detection Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\njobs:\n  secret-detection:\n    runner: github_actions\n    asset_type: repo\n    steps:\n      - name: Run Gitleaks\n        uses: ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest\n        with:\n          args: detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0\n          output_file: /tmp/report.json\n        tags:\n          security_tool: Gitleaks\n          links:\n            github: https://github.com/jitsecurity-controls/jit-secrets-detection-control\n            security_tool: https://github.com/zricethezav/gitleaks\n",
+          "parsed_content": {
+            "name": "Secret Detection Workflow",
+            "trigger": {
+              "true": [
+                "pull_request_created",
+                "pull_request_updated",
+                "merge_default_branch"
+              ]
+            },
+            "jobs": {
+              "secret-detection": {
+                "runner": "github_actions",
+                "asset_type": "repo",
+                "steps": [
+                  {
+                    "name": "Run Gitleaks",
+                    "with": {
+                      "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0",
+                      "output_file": "/tmp/report.json"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest",
+                    "tags": {
+                      "security_tool": "Gitleaks",
+                      "links": {
+                        "security_tool": "https://github.com/zricethezav/gitleaks",
+                        "github": "https://github.com/jitsecurity-controls/jit-secrets-detection-control"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo"
+          ]
+        },
+        "raw_job_template": {
+          "runner": "github_actions",
+          "asset_type": "repo",
+          "steps": [
+            {
+              "name": "Run Gitleaks",
+              "with": {
+                "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0",
+                "output_file": "/tmp/report.json"
+              },
+              "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest",
+              "tags": {
+                "security_tool": "Gitleaks",
+                "links": {
+                  "security_tool": "https://github.com/zricethezav/gitleaks",
+                  "github": "https://github.com/jitsecurity-controls/jit-secrets-detection-control"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "enriched_data": {
+      "mime_types": [],
+      "frameworks": [],
+      "languages": [
+        "python",
+        "go",
+        "java",
+        "scala",
+        "javascript"
+      ],
+      "package_managers": []
+    }
+  },
+  "enriched_data": {
+      "mime_types": [],
+      "frameworks": [],
+      "languages": [
+        "python",
+        "go",
+        "java",
+        "scala",
+        "javascript"
+      ],
+      "package_managers": []
+    }
+}

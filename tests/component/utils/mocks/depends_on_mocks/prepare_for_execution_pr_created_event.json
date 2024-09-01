@@ -1,0 +1,339 @@
+{
+    "jit_event":
+    {
+        "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+        "jit_event_name": "pull_request_created",
+        "jit_event_id": "d0c3f527-198d-4e41-8f1f-402820cf0791",
+        "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+        "workflows": null,
+        "app_id": "161076",
+        "installation_id": "28265461",
+        "original_repository": "new-test",
+        "vendor": "github",
+        "owner": "liad-dev-org",
+        "branch": "liadperetz-patch-121",
+        "pull_request_number": "122",
+        "pull_request_title": "Create main.js",
+        "centralized_repo_asset_id": null,
+        "centralized_repo_asset_name": null,
+        "commits":
+        {
+            "base_sha": "391ca13155e0b835879948104d6ea6a2afbcf948",
+            "head_sha": "9c089a84d77d945cb199741ecc959e2454afc009"
+        },
+        "user_vendor_id": "62614083",
+        "user_vendor_name": "liadperetz",
+        "languages":
+        [
+            "JS",
+            "any"
+        ],
+        "centralized_repo_files_location": "centralized_repo_files_location",
+        "ci_workflow_files_path": ["ci_workflow_files_path"],
+        "event_signature": "github-liad-dev-org-d2d70176-266d-4073-98b0-1a1d362ef61b-9c089a84d77d945cb199741ecc959e2454afc009-391ca13155e0b835879948104d6ea6a2afbcf948"
+    },
+    "trigger_filter_attributes":
+    {
+        "plan_slugs":
+        [],
+        "plan_item_slugs":
+        [],
+        "workflow_slugs":
+        [],
+        "job_names":
+        [],
+        "asset_ids":
+        [
+            "d2d70176-266d-4073-98b0-1a1d362ef61b"
+        ],
+        "asset_envs":
+        [],
+        "triggers":
+        [
+            "pull_request_created"
+        ],
+        "create_trigger_event_from_jit_event": true
+    },
+    "asset":
+    {
+        "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+        "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+        "asset_type": "repo",
+        "vendor": "github",
+        "owner": "liad-dev-org",
+        "asset_name": "new-test",
+        "is_active": true,
+        "is_covered": true,
+        "created_at": "2022-08-15T10:48:41.622654",
+        "modified_at": "2022-09-05T11:34:11.256000",
+        "external_id": null,
+        "environment": null,
+        "target_url": null,
+        "exclude_paths": null,
+        "authentication_mode": null,
+        "auth_header_name": null,
+        "auth_header_value": null,
+        "login_page_url": null,
+        "username": null,
+        "username_css_selector": null,
+        "password": null,
+        "password_css_selector": null,
+        "api_domain": null,
+        "aws_jit_role_name": null,
+        "aws_jit_role_external_id": null,
+        "aws_regions_to_scan": null,
+        "aws_account_id": null,
+        "aws_stack_arn": null,
+        "risk_score": 0,
+        "risk_status": null,
+        "status": null,
+        "status_details": null,
+        "is_branch_protected_by_jit": null
+    },
+    "installations":
+    [
+        {
+            "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+            "app_id": "161076",
+            "owner": "liad-dev-org",
+            "installation_id": "28265461",
+            "status": "connected",
+            "is_active": true,
+            "creator": "liad-dev-org",
+            "vendor": "github",
+            "name": "liad-dev-org",
+            "created_at": "2022-08-15T10:48:38.100798",
+            "modified_at": "2022-10-11T07:36:14.853000",
+            "installation_type": null,
+            "centralized_repo_asset_id": null,
+            "centralized_repo_asset": null,
+            "aws_regions_to_monitor": null,
+            "external_id": null,
+            "status_details": null,
+            "vendor_response":
+            {
+                "canPreviewItem": true
+            }
+        }
+    ],
+    "filtered_jobs":
+    [
+        {
+            "plan_item_slug": "item-code-vulnerability",
+            "workflow_slug": "workflow-sast",
+            "workflow_name": "SAST Workflow",
+            "type": "workflow",
+            "job_name": "static-code-analysis-python",
+            "workflow_template":
+            {
+                "slug": "workflow-sast",
+                "name": "SAST Workflow",
+                "type": "workflow",
+                "content": "name: SAST Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\n  depends_on:\n    - workflow-enrichment-code\njobs:\n  static-code-analysis-python:\n    runner: github_actions\n    asset_type: repo\n    tags:\n      languages:\n        - python\n    steps:\n      - name: Run Bandit\n        uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n        with:\n          args: -r /code -f json -q -lll -iii\n        tags:\n          security_tool: Bandit\n          links:\n            github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n            security_tool: https://github.com/PyCQA/bandit\n  static-code-analysis-js:\n    runner: github_actions\n    asset_type: repo\n    tags:\n      languages:\n        - javascript\n        - typescript\n        - JS\n        - TS\n    steps:\n      - name: Run semgrep\n        uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest\n        with:\n          args: --json --config=/semgrep-config.yml --metrics=off --severity=ERROR /code\n        tags:\n          security_tool: Semgrep\n          links:\n            github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n            security_tool: https://github.com/returntocorp/semgrep\n  static-code-analysis-go:\n    runner: github_actions\n    asset_type: repo\n    tags:\n      languages:\n        - go\n    steps:\n      - name: Run Go\n        uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:latest\n        with:\n          args: -fmt=json -severity=high /code/...\n        tags:\n          security_tool: Gosec\n          links:\n            github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n            security_tool: https://github.com/securego/gosec\n",
+                "parsed_content":
+                {
+                    "name": "SAST Workflow",
+                    "trigger":
+                    {
+                        "true":
+                        [
+                            "pull_request_created",
+                            "pull_request_updated",
+                            "merge_default_branch"
+                        ],
+                        "depends_on":
+                        [
+                            "workflow-enrichment-code"
+                        ]
+                    },
+                    "jobs":
+                    {
+                        "static-code-analysis-python":
+                        {
+                            "asset_type": "repo",
+                            "runner": "github_actions",
+                            "steps":
+                            [
+                                {
+                                    "name": "Run Bandit",
+                                    "with":
+                                    {
+                                        "args": "-r /code -f json -q -lll -iii"
+                                    },
+                                    "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                                    "tags":
+                                    {
+                                        "security_tool": "Bandit",
+                                        "links":
+                                        {
+                                            "security_tool": "https://github.com/PyCQA/bandit",
+                                            "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                                        }
+                                    }
+                                }
+                            ],
+                            "tags":
+                            {
+                                "languages":
+                                [
+                                    "python"
+                                ]
+                            }
+                        },
+                        "static-code-analysis-go":
+                        {
+                            "asset_type": "repo",
+                            "runner": "github_actions",
+                            "steps":
+                            [
+                                {
+                                    "name": "Run Go",
+                                    "with":
+                                    {
+                                        "args": "-fmt=json -severity=high /code/..."
+                                    },
+                                    "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:latest",
+                                    "tags":
+                                    {
+                                        "security_tool": "Gosec",
+                                        "links":
+                                        {
+                                            "security_tool": "https://github.com/securego/gosec",
+                                            "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                                        }
+                                    }
+                                }
+                            ],
+                            "tags":
+                            {
+                                "languages":
+                                [
+                                    "go"
+                                ]
+                            }
+                        },
+                        "static-code-analysis-js":
+                        {
+                            "asset_type": "repo",
+                            "runner": "github_actions",
+                            "steps":
+                            [
+                                {
+                                    "name": "Run semgrep",
+                                    "with":
+                                    {
+                                        "args": "--json --config=/semgrep-config.yml --metrics=off --severity=ERROR /code"
+                                    },
+                                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest",
+                                    "tags":
+                                    {
+                                        "security_tool": "Semgrep",
+                                        "links":
+                                        {
+                                            "security_tool": "https://github.com/returntocorp/semgrep",
+                                            "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                                        }
+                                    }
+                                }
+                            ],
+                            "tags":
+                            {
+                                "languages":
+                                [
+                                    "javascript",
+                                    "typescript",
+                                    "JS",
+                                    "TS"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "params": null,
+                "plan_item_template_slug": null,
+                "asset_types":
+                [
+                    "repo",
+                    "repo",
+                    "repo"
+                ]
+            },
+            "raw_job_template":
+            {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {"languages": ["python"]},
+                "steps":
+                [
+                    {
+                        "name": "Run Bandit",
+                        "with":
+                        {
+                            "args": "-r /code -f json -q -lll -iii"
+                        },
+                        "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                        "tags":
+                        {
+                            "security_tool": "Bandit",
+                            "links":
+                            {
+                                "security_tool": "https://github.com/PyCQA/bandit",
+                                "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                            }
+                        }
+                    }
+                ],
+                "tags":
+                {
+                    "languages":
+                    [
+                        "python"
+                    ]
+                }
+            }
+        }
+    ],
+    "should_enrich": true,
+    "depends_on_workflows_templates":
+    [
+        {
+            "slug": "workflow-enrichment-code",
+            "name": "Code Enrichment Workflow",
+            "type": "workflow",
+            "content": "name: Code Enrichment Workflow\njobs:\n  enrich:\n    runner: github_actions\n    asset_type: repo\n    steps:\n      - name: Run code controls execution enrichment for languages and frameworks detection\n        uses: ghcr.io/jitsecurity-controls/control-enrichment-slim:latest\n        with:\n          args: --path \\${WORK_DIR:-.}\n",
+            "depends_on":
+            [],
+            "parsed_content":
+            {
+                "name": "Code Enrichment Workflow",
+                "jobs":
+                {
+                    "enrich":
+                    {
+                        "runner": "github_actions",
+                        "asset_type": "repo",
+                        "steps":
+                        [
+                            {
+                                "name": "Run code controls execution enrichment for languages and frameworks detection",
+                                "with":
+                                {
+                                    "args": "--path \\${WORK_DIR:-.}"
+                                },
+                                "uses": "ghcr.io/jitsecurity-controls/control-enrichment-slim:latest"
+                            }
+                        ]
+                    }
+                }
+            },
+            "params": null,
+            "plan_item_template_slug": null,
+            "asset_types":
+            [
+                "repo"
+            ]
+        }
+    ],
+    "enriched_data":
+    {}
+}

@@ -1,0 +1,1603 @@
+{
+  "prepare_for_execution_event": {
+    "jit_event": {
+      "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+      "jit_event_name": "item_activated",
+      "jit_event_id": "84a704fe-6b2f-4a8a-a3ae-96c0e31bdc50",
+      "asset_id": null,
+      "workflows": null,
+      "activated_plan_slug": "jit-plan",
+      "activated_plan_item_slugs": [
+        "item-code-vulnerability"
+      ]
+    },
+    "trigger_filter_attributes": {
+      "plan_slugs": [
+        "jit-plan"
+      ],
+      "plan_item_slugs": [
+        "item-code-vulnerability"
+      ],
+      "workflow_slugs": [],
+      "job_names": [],
+      "asset_ids": [],
+      "asset_envs": [],
+      "triggers": [
+        "item_activated"
+      ],
+      "create_trigger_event_from_jit_event": false
+    },
+    "asset": {
+      "aws_account_id": null,
+      "aws_stack_arn": null,
+      "aws_jit_role_name": null,
+      "aws_regions_to_scan": null,
+      "aws_jit_role_external_id": null,
+      "target_url": null,
+      "exclude_paths": null,
+      "authentication_mode": null,
+      "auth_header_name": null,
+      "auth_header_value": null,
+      "login_page_url": null,
+      "username": null,
+      "username_css_selector": null,
+      "password": null,
+      "password_css_selector": null,
+      "api_domain": null,
+      "external_id": "577240030",
+      "asset_id": "c3c3004e-6619-4cca-925a-a8edea378faf",
+      "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+      "asset_type": "repo",
+      "vendor": "github",
+      "owner": "shlomi-test-org",
+      "asset_name": "ethereumjs-monorepo",
+      "risk_status": null,
+      "risk_score": 0,
+      "is_active": true,
+      "is_covered": true,
+      "created_at": "2022-12-12T09:48:25.509331",
+      "modified_at": "2023-03-13T07:10:23.399480",
+      "environment": null,
+      "is_branch_protected_by_jit": false,
+      "status": null,
+      "status_details": null
+    },
+    "installations": [
+      {
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "app_id": "161076",
+        "owner": "shlomi-test-org",
+        "installation_id": "33985869",
+        "is_active": true,
+        "creator": "shlomi-test-org",
+        "vendor": "github",
+        "name": "shlomi-test-org",
+        "created_at": "2023-02-08T12:34:37.864980",
+        "modified_at": "2023-02-08T12:34:37.864980",
+        "status": "connected",
+        "status_details": null,
+        "installation_type": null,
+        "vendor_response": {
+          "canPreviewItem": true,
+          "repository_selection": "selected"
+        },
+        "external_id": null,
+        "aws_regions_to_monitor": null,
+        "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+        "centralized_repo_asset": {
+          "aws_account_id": null,
+          "aws_stack_arn": null,
+          "aws_jit_role_name": null,
+          "aws_regions_to_scan": null,
+          "target_url": null,
+          "exclude_paths": null,
+          "authentication_mode": null,
+          "auth_header_name": null,
+          "auth_header_value": null,
+          "login_page_url": null,
+          "username": null,
+          "username_css_selector": null,
+          "password": null,
+          "password_css_selector": null,
+          "api_domain": null,
+          "external_id": "568439579",
+          "asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "shlomi-test-org",
+          "asset_name": ".jit",
+          "risk_status": null,
+          "risk_score": 0,
+          "is_active": true,
+          "is_covered": true,
+          "created_at": "2022-11-20T14:41:49.229143",
+          "modified_at": "2023-02-08T12:34:42.325014",
+          "environment": null,
+          "is_branch_protected_by_jit": false,
+          "status": null,
+          "status_details": null
+        }
+      },
+      {
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "app_id": "jit-aws",
+        "owner": "748560276420",
+        "installation_id": "748560276420",
+        "is_active": true,
+        "creator": "748560276420",
+        "vendor": "aws",
+        "name": "748560276420",
+        "created_at": "2023-02-21T15:42:00.133464",
+        "modified_at": "2023-02-21T15:42:00.133464",
+        "status": "connected",
+        "status_details": null,
+        "installation_type": "aws_account",
+        "vendor_response": null,
+        "external_id": "rmcCp1TbXILI2N2VH7E2G3DSo73iqD0DEFMAL9zw53c",
+        "aws_regions_to_monitor": [
+          "us-east-1"
+        ],
+        "centralized_repo_asset_id": null,
+        "centralized_repo_asset": null
+      }
+    ],
+    "filtered_jobs": [
+      {
+        "plan_item_slug": "item-code-vulnerability",
+        "workflow_slug": "workflow-sast",
+        "workflow_name": "SAST Workflow",
+        "job_name": "static-code-analysis-go",
+        "workflow_template": {
+          "slug": "workflow-sast",
+          "name": "SAST Workflow",
+          "type": "workflow",
+          "default": true,
+          "content": "jobs:\n  static-code-analysis-go:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - go\n    runner: github_actions\n    steps:\n    - name: Run Go\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n          security_tool: https://github.com/securego/gosec\n        security_tool: Gosec\n      uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:main\n      with:\n        args: -fmt=json -severity=high \\${WORK_DIR:-.}/...\n    tags:\n      languages:\n      - go\n  static-code-analysis-java:\n    asset_type: repo\n    if:\n      languages:\n      - java\n    runner: github_actions\n    steps:\n    - name: Run semgrep java\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - java\n  static-code-analysis-js:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - javascript\n      - typescript\n    runner: github_actions\n    steps:\n    - name: Run semgrep javascript and typescript\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - javascript\n      - typescript\n      - JS\n      - TS\n  static-code-analysis-python:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - python\n    runner:\n      setup:\n        checkout: false\n        mount: false\n      type: github_actions\n    steps:\n    - name: Run Bandit\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n          security_tool: https://github.com/PyCQA/bandit\n        security_tool: Bandit\n      uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n      with:\n        args: -r \\${WORK_DIR:-.} -f json -q -lll -iii\n    tags:\n      languages:\n      - python\n  static-code-analysis-scala:\n    asset_type: repo\n    if:\n      languages:\n      - scala\n    runner: github_actions\n    steps:\n    - name: Run semgrep scala\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - scala\nname: SAST Workflow\ntrigger:\n  true:\n  - item_activated\n  - resource_added\n  - pull_request_created\n  - pull_request_updated\n  - merge_default_branch\n  depends_on:\n  - workflow-enrichment-code\n",
+          "depends_on": [
+            "workflow-enrichment-code"
+          ],
+          "parsed_content": {
+            "name": "SAST Workflow",
+            "jobs": {
+              "static-code-analysis-scala": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "scala"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep scala",
+                    "with": {
+                      "args": "--json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "scala"
+                  ]
+                }
+              },
+              "static-code-analysis-go": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "go"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Go",
+                    "with": {
+                      "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:main",
+                    "tags": {
+                      "security_tool": "Gosec",
+                      "links": {
+                        "security_tool": "https://github.com/securego/gosec",
+                        "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "go"
+                  ]
+                }
+              },
+              "static-code-analysis-python": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": {
+                  "type": "github_actions",
+                  "setup": {
+                    "checkout": false,
+                    "mount": false
+                  }
+                },
+                "if": {
+                  "languages": [
+                    "python"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Bandit",
+                    "with": {
+                      "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                    "tags": {
+                      "security_tool": "Bandit",
+                      "links": {
+                        "security_tool": "https://github.com/PyCQA/bandit",
+                        "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "python"
+                  ]
+                }
+              },
+              "static-code-analysis-java": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "java"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep java",
+                    "with": {
+                      "args": "--json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "java"
+                  ]
+                }
+              },
+              "static-code-analysis-js": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "javascript",
+                    "typescript"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep javascript and typescript",
+                    "with": {
+                      "args": "--json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "javascript",
+                    "typescript",
+                    "JS",
+                    "TS"
+                  ]
+                }
+              }
+            },
+            "trigger": {
+              "true": [
+                "item_activated",
+                "resource_added",
+                "pull_request_created",
+                "pull_request_updated",
+                "merge_default_branch"
+              ],
+              "depends_on": [
+                "workflow-enrichment-code"
+              ]
+            }
+          },
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo"
+          ]
+        },
+        "raw_job_template": {
+          "asset_type": "repo",
+          "default": true,
+          "runner": "github_actions",
+          "if": {
+            "languages": [
+              "go"
+            ]
+          },
+          "steps": [
+            {
+              "name": "Run Go",
+              "with": {
+                "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+              },
+              "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:main",
+              "tags": {
+                "security_tool": "Gosec",
+                "links": {
+                  "security_tool": "https://github.com/securego/gosec",
+                  "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                }
+              }
+            }
+          ],
+          "tags": {
+            "languages": [
+              "go"
+            ]
+          }
+        },
+        "depends_on_slugs": [
+          "workflow-enrichment-code"
+        ]
+      },
+      {
+        "plan_item_slug": "item-code-vulnerability",
+        "workflow_slug": "workflow-sast",
+        "workflow_name": "SAST Workflow",
+        "job_name": "static-code-analysis-js",
+        "workflow_template": {
+          "slug": "workflow-sast",
+          "name": "SAST Workflow",
+          "type": "workflow",
+          "default": true,
+          "content": "jobs:\n  static-code-analysis-go:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - go\n    runner: github_actions\n    steps:\n    - name: Run Go\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n          security_tool: https://github.com/securego/gosec\n        security_tool: Gosec\n      uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:main\n      with:\n        args: -fmt=json -severity=high \\${WORK_DIR:-.}/...\n    tags:\n      languages:\n      - go\n  static-code-analysis-java:\n    asset_type: repo\n    if:\n      languages:\n      - java\n    runner: github_actions\n    steps:\n    - name: Run semgrep java\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - java\n  static-code-analysis-js:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - javascript\n      - typescript\n    runner: github_actions\n    steps:\n    - name: Run semgrep javascript and typescript\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - javascript\n      - typescript\n      - JS\n      - TS\n  static-code-analysis-python:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - python\n    runner:\n      setup:\n        checkout: false\n        mount: false\n      type: github_actions\n    steps:\n    - name: Run Bandit\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n          security_tool: https://github.com/PyCQA/bandit\n        security_tool: Bandit\n      uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n      with:\n        args: -r \\${WORK_DIR:-.} -f json -q -lll -iii\n    tags:\n      languages:\n      - python\n  static-code-analysis-scala:\n    asset_type: repo\n    if:\n      languages:\n      - scala\n    runner: github_actions\n    steps:\n    - name: Run semgrep scala\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - scala\nname: SAST Workflow\ntrigger:\n  true:\n  - item_activated\n  - resource_added\n  - pull_request_created\n  - pull_request_updated\n  - merge_default_branch\n  depends_on:\n  - workflow-enrichment-code\n",
+          "depends_on": [
+            "workflow-enrichment-code"
+          ],
+          "parsed_content": {
+            "name": "SAST Workflow",
+            "jobs": {
+              "static-code-analysis-scala": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "scala"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep scala",
+                    "with": {
+                      "args": "--json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "scala"
+                  ]
+                }
+              },
+              "static-code-analysis-go": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "go"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Go",
+                    "with": {
+                      "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:main",
+                    "tags": {
+                      "security_tool": "Gosec",
+                      "links": {
+                        "security_tool": "https://github.com/securego/gosec",
+                        "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "go"
+                  ]
+                }
+              },
+              "static-code-analysis-python": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": {
+                  "type": "github_actions",
+                  "setup": {
+                    "checkout": false,
+                    "mount": false
+                  }
+                },
+                "if": {
+                  "languages": [
+                    "python"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Bandit",
+                    "with": {
+                      "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                    "tags": {
+                      "security_tool": "Bandit",
+                      "links": {
+                        "security_tool": "https://github.com/PyCQA/bandit",
+                        "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "python"
+                  ]
+                }
+              },
+              "static-code-analysis-java": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "java"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep java",
+                    "with": {
+                      "args": "--json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "java"
+                  ]
+                }
+              },
+              "static-code-analysis-js": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "javascript",
+                    "typescript"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep javascript and typescript",
+                    "with": {
+                      "args": "--json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "javascript",
+                    "typescript",
+                    "JS",
+                    "TS"
+                  ]
+                }
+              }
+            },
+            "trigger": {
+              "true": [
+                "item_activated",
+                "resource_added",
+                "pull_request_created",
+                "pull_request_updated",
+                "merge_default_branch"
+              ],
+              "depends_on": [
+                "workflow-enrichment-code"
+              ]
+            }
+          },
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo"
+          ]
+        },
+        "raw_job_template": {
+          "asset_type": "repo",
+          "default": true,
+          "runner": "github_actions",
+          "if": {
+            "languages": [
+              "javascript",
+              "typescript"
+            ]
+          },
+          "steps": [
+            {
+              "name": "Run semgrep javascript and typescript",
+              "with": {
+                "args": "--json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+              },
+              "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+              "tags": {
+                "security_tool": "Semgrep",
+                "links": {
+                  "security_tool": "https://github.com/returntocorp/semgrep",
+                  "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                }
+              }
+            }
+          ],
+          "tags": {
+            "languages": [
+              "javascript",
+              "typescript",
+              "JS",
+              "TS"
+            ]
+          }
+        },
+        "depends_on_slugs": [
+          "workflow-enrichment-code"
+        ]
+      },
+      {
+        "plan_item_slug": "item-code-vulnerability",
+        "workflow_slug": "workflow-sast",
+        "workflow_name": "SAST Workflow",
+        "job_name": "static-code-analysis-java",
+        "workflow_template": {
+          "slug": "workflow-sast",
+          "name": "SAST Workflow",
+          "type": "workflow",
+          "default": true,
+          "content": "jobs:\n  static-code-analysis-go:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - go\n    runner: github_actions\n    steps:\n    - name: Run Go\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n          security_tool: https://github.com/securego/gosec\n        security_tool: Gosec\n      uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:main\n      with:\n        args: -fmt=json -severity=high \\${WORK_DIR:-.}/...\n    tags:\n      languages:\n      - go\n  static-code-analysis-java:\n    asset_type: repo\n    if:\n      languages:\n      - java\n    runner: github_actions\n    steps:\n    - name: Run semgrep java\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - java\n  static-code-analysis-js:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - javascript\n      - typescript\n    runner: github_actions\n    steps:\n    - name: Run semgrep javascript and typescript\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - javascript\n      - typescript\n      - JS\n      - TS\n  static-code-analysis-python:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - python\n    runner:\n      setup:\n        checkout: false\n        mount: false\n      type: github_actions\n    steps:\n    - name: Run Bandit\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n          security_tool: https://github.com/PyCQA/bandit\n        security_tool: Bandit\n      uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n      with:\n        args: -r \\${WORK_DIR:-.} -f json -q -lll -iii\n    tags:\n      languages:\n      - python\n  static-code-analysis-scala:\n    asset_type: repo\n    if:\n      languages:\n      - scala\n    runner: github_actions\n    steps:\n    - name: Run semgrep scala\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - scala\nname: SAST Workflow\ntrigger:\n  true:\n  - item_activated\n  - resource_added\n  - pull_request_created\n  - pull_request_updated\n  - merge_default_branch\n  depends_on:\n  - workflow-enrichment-code\n",
+          "depends_on": [
+            "workflow-enrichment-code"
+          ],
+          "parsed_content": {
+            "name": "SAST Workflow",
+            "jobs": {
+              "static-code-analysis-scala": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "scala"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep scala",
+                    "with": {
+                      "args": "--json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "scala"
+                  ]
+                }
+              },
+              "static-code-analysis-go": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "go"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Go",
+                    "with": {
+                      "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:main",
+                    "tags": {
+                      "security_tool": "Gosec",
+                      "links": {
+                        "security_tool": "https://github.com/securego/gosec",
+                        "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "go"
+                  ]
+                }
+              },
+              "static-code-analysis-python": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": {
+                  "type": "github_actions",
+                  "setup": {
+                    "checkout": false,
+                    "mount": false
+                  }
+                },
+                "if": {
+                  "languages": [
+                    "python"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Bandit",
+                    "with": {
+                      "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                    "tags": {
+                      "security_tool": "Bandit",
+                      "links": {
+                        "security_tool": "https://github.com/PyCQA/bandit",
+                        "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "python"
+                  ]
+                }
+              },
+              "static-code-analysis-java": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "java"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep java",
+                    "with": {
+                      "args": "--json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "java"
+                  ]
+                }
+              },
+              "static-code-analysis-js": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "javascript",
+                    "typescript"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep javascript and typescript",
+                    "with": {
+                      "args": "--json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "javascript",
+                    "typescript",
+                    "JS",
+                    "TS"
+                  ]
+                }
+              }
+            },
+            "trigger": {
+              "true": [
+                "item_activated",
+                "resource_added",
+                "pull_request_created",
+                "pull_request_updated",
+                "merge_default_branch"
+              ],
+              "depends_on": [
+                "workflow-enrichment-code"
+              ]
+            }
+          },
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo"
+          ]
+        },
+        "raw_job_template": {
+          "asset_type": "repo",
+          "runner": "github_actions",
+          "if": {
+            "languages": [
+              "java"
+            ]
+          },
+          "steps": [
+            {
+              "name": "Run semgrep java",
+              "with": {
+                "args": "--json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+              },
+              "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+              "tags": {
+                "security_tool": "Semgrep",
+                "links": {
+                  "security_tool": "https://github.com/returntocorp/semgrep",
+                  "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                }
+              }
+            }
+          ],
+          "tags": {
+            "languages": [
+              "java"
+            ]
+          }
+        },
+        "depends_on_slugs": [
+          "workflow-enrichment-code"
+        ]
+      },
+      {
+        "plan_item_slug": "item-code-vulnerability",
+        "workflow_slug": "workflow-sast",
+        "workflow_name": "SAST Workflow",
+        "job_name": "static-code-analysis-scala",
+        "workflow_template": {
+          "slug": "workflow-sast",
+          "name": "SAST Workflow",
+          "type": "workflow",
+          "default": true,
+          "content": "jobs:\n  static-code-analysis-go:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - go\n    runner: github_actions\n    steps:\n    - name: Run Go\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n          security_tool: https://github.com/securego/gosec\n        security_tool: Gosec\n      uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:main\n      with:\n        args: -fmt=json -severity=high \\${WORK_DIR:-.}/...\n    tags:\n      languages:\n      - go\n  static-code-analysis-java:\n    asset_type: repo\n    if:\n      languages:\n      - java\n    runner: github_actions\n    steps:\n    - name: Run semgrep java\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - java\n  static-code-analysis-js:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - javascript\n      - typescript\n    runner: github_actions\n    steps:\n    - name: Run semgrep javascript and typescript\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - javascript\n      - typescript\n      - JS\n      - TS\n  static-code-analysis-python:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - python\n    runner:\n      setup:\n        checkout: false\n        mount: false\n      type: github_actions\n    steps:\n    - name: Run Bandit\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n          security_tool: https://github.com/PyCQA/bandit\n        security_tool: Bandit\n      uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n      with:\n        args: -r \\${WORK_DIR:-.} -f json -q -lll -iii\n    tags:\n      languages:\n      - python\n  static-code-analysis-scala:\n    asset_type: repo\n    if:\n      languages:\n      - scala\n    runner: github_actions\n    steps:\n    - name: Run semgrep scala\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - scala\nname: SAST Workflow\ntrigger:\n  true:\n  - item_activated\n  - resource_added\n  - pull_request_created\n  - pull_request_updated\n  - merge_default_branch\n  depends_on:\n  - workflow-enrichment-code\n",
+          "depends_on": [
+            "workflow-enrichment-code"
+          ],
+          "parsed_content": {
+            "name": "SAST Workflow",
+            "jobs": {
+              "static-code-analysis-scala": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "scala"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep scala",
+                    "with": {
+                      "args": "--json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "scala"
+                  ]
+                }
+              },
+              "static-code-analysis-go": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "go"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Go",
+                    "with": {
+                      "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:main",
+                    "tags": {
+                      "security_tool": "Gosec",
+                      "links": {
+                        "security_tool": "https://github.com/securego/gosec",
+                        "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "go"
+                  ]
+                }
+              },
+              "static-code-analysis-python": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": {
+                  "type": "github_actions",
+                  "setup": {
+                    "checkout": false,
+                    "mount": false
+                  }
+                },
+                "if": {
+                  "languages": [
+                    "python"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Bandit",
+                    "with": {
+                      "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                    "tags": {
+                      "security_tool": "Bandit",
+                      "links": {
+                        "security_tool": "https://github.com/PyCQA/bandit",
+                        "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "python"
+                  ]
+                }
+              },
+              "static-code-analysis-java": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "java"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep java",
+                    "with": {
+                      "args": "--json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "java"
+                  ]
+                }
+              },
+              "static-code-analysis-js": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "javascript",
+                    "typescript"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep javascript and typescript",
+                    "with": {
+                      "args": "--json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "javascript",
+                    "typescript",
+                    "JS",
+                    "TS"
+                  ]
+                }
+              }
+            },
+            "trigger": {
+              "true": [
+                "item_activated",
+                "resource_added",
+                "pull_request_created",
+                "pull_request_updated",
+                "merge_default_branch"
+              ],
+              "depends_on": [
+                "workflow-enrichment-code"
+              ]
+            }
+          },
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo"
+          ]
+        },
+        "raw_job_template": {
+          "asset_type": "repo",
+          "runner": "github_actions",
+          "if": {
+            "languages": [
+              "scala"
+            ]
+          },
+          "steps": [
+            {
+              "name": "Run semgrep scala",
+              "with": {
+                "args": "--json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+              },
+              "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+              "tags": {
+                "security_tool": "Semgrep",
+                "links": {
+                  "security_tool": "https://github.com/returntocorp/semgrep",
+                  "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                }
+              }
+            }
+          ],
+          "tags": {
+            "languages": [
+              "scala"
+            ]
+          }
+        },
+        "depends_on_slugs": [
+          "workflow-enrichment-code"
+        ]
+      },
+      {
+        "plan_item_slug": "item-code-vulnerability",
+        "workflow_slug": "workflow-sast",
+        "workflow_name": "SAST Workflow",
+        "job_name": "static-code-analysis-python",
+        "workflow_template": {
+          "slug": "workflow-sast",
+          "name": "SAST Workflow",
+          "type": "workflow",
+          "default": true,
+          "content": "jobs:\n  static-code-analysis-go:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - go\n    runner: github_actions\n    steps:\n    - name: Run Go\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n          security_tool: https://github.com/securego/gosec\n        security_tool: Gosec\n      uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:main\n      with:\n        args: -fmt=json -severity=high \\${WORK_DIR:-.}/...\n    tags:\n      languages:\n      - go\n  static-code-analysis-java:\n    asset_type: repo\n    if:\n      languages:\n      - java\n    runner: github_actions\n    steps:\n    - name: Run semgrep java\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - java\n  static-code-analysis-js:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - javascript\n      - typescript\n    runner: github_actions\n    steps:\n    - name: Run semgrep javascript and typescript\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - javascript\n      - typescript\n      - JS\n      - TS\n  static-code-analysis-python:\n    asset_type: repo\n    default: true\n    if:\n      languages:\n      - python\n    runner:\n      setup:\n        checkout: false\n        mount: false\n      type: github_actions\n    steps:\n    - name: Run Bandit\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n          security_tool: https://github.com/PyCQA/bandit\n        security_tool: Bandit\n      uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n      with:\n        args: -r \\${WORK_DIR:-.} -f json -q -lll -iii\n    tags:\n      languages:\n      - python\n  static-code-analysis-scala:\n    asset_type: repo\n    if:\n      languages:\n      - scala\n    runner: github_actions\n    steps:\n    - name: Run semgrep scala\n      tags:\n        links:\n          github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n          security_tool: https://github.com/returntocorp/semgrep\n        security_tool: Semgrep\n      uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:main\n      with:\n        args: --json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR\n          \\${WORK_DIR:-.}\n    tags:\n      languages:\n      - scala\nname: SAST Workflow\ntrigger:\n  true:\n  - item_activated\n  - resource_added\n  - pull_request_created\n  - pull_request_updated\n  - merge_default_branch\n  depends_on:\n  - workflow-enrichment-code\n",
+          "depends_on": [
+            "workflow-enrichment-code"
+          ],
+          "parsed_content": {
+            "name": "SAST Workflow",
+            "jobs": {
+              "static-code-analysis-scala": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "scala"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep scala",
+                    "with": {
+                      "args": "--json --config=/semgrep-scala-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "scala"
+                  ]
+                }
+              },
+              "static-code-analysis-go": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "go"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Go",
+                    "with": {
+                      "args": "-fmt=json -severity=high \\${WORK_DIR:-.}/..."
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-gosec-alpine:main",
+                    "tags": {
+                      "security_tool": "Gosec",
+                      "links": {
+                        "security_tool": "https://github.com/securego/gosec",
+                        "github": "https://github.com/jitsecurity-controls/jit-golang-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "go"
+                  ]
+                }
+              },
+              "static-code-analysis-python": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": {
+                  "type": "github_actions",
+                  "setup": {
+                    "checkout": false,
+                    "mount": false
+                  }
+                },
+                "if": {
+                  "languages": [
+                    "python"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run Bandit",
+                    "with": {
+                      "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+                    "tags": {
+                      "security_tool": "Bandit",
+                      "links": {
+                        "security_tool": "https://github.com/PyCQA/bandit",
+                        "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "python"
+                  ]
+                }
+              },
+              "static-code-analysis-java": {
+                "asset_type": "repo",
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "java"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep java",
+                    "with": {
+                      "args": "--json --config=/semgrep-java-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "java"
+                  ]
+                }
+              },
+              "static-code-analysis-js": {
+                "asset_type": "repo",
+                "default": true,
+                "runner": "github_actions",
+                "if": {
+                  "languages": [
+                    "javascript",
+                    "typescript"
+                  ]
+                },
+                "steps": [
+                  {
+                    "name": "Run semgrep javascript and typescript",
+                    "with": {
+                      "args": "--json --config=/semgrep-ts-config.yml --metrics=off --severity=ERROR \\${WORK_DIR:-.}"
+                    },
+                    "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:main",
+                    "tags": {
+                      "security_tool": "Semgrep",
+                      "links": {
+                        "security_tool": "https://github.com/returntocorp/semgrep",
+                        "github": "https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control"
+                      }
+                    }
+                  }
+                ],
+                "tags": {
+                  "languages": [
+                    "javascript",
+                    "typescript",
+                    "JS",
+                    "TS"
+                  ]
+                }
+              }
+            },
+            "trigger": {
+              "true": [
+                "item_activated",
+                "resource_added",
+                "pull_request_created",
+                "pull_request_updated",
+                "merge_default_branch"
+              ],
+              "depends_on": [
+                "workflow-enrichment-code"
+              ]
+            }
+          },
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo",
+            "repo"
+          ]
+        },
+        "raw_job_template": {
+          "asset_type": "repo",
+          "default": true,
+          "runner": {
+            "type": "github_actions",
+            "setup": {
+              "checkout": false,
+              "mount": false
+            }
+          },
+          "if": {
+            "languages": [
+              "python"
+            ]
+          },
+          "steps": [
+            {
+              "name": "Run Bandit",
+              "with": {
+                "args": "-r \\${WORK_DIR:-.} -f json -q -lll -iii"
+              },
+              "uses": "ghcr.io/jitsecurity-controls/control-bandit-slim:latest",
+              "tags": {
+                "security_tool": "Bandit",
+                "links": {
+                  "security_tool": "https://github.com/PyCQA/bandit",
+                  "github": "https://github.com/jitsecurity-controls/jit-python-code-scanning-control"
+                }
+              }
+            }
+          ],
+          "tags": {
+            "languages": [
+              "python"
+            ]
+          }
+        },
+        "depends_on_slugs": [
+          "workflow-enrichment-code"
+        ]
+      }
+    ],
+    "should_enrich": true,
+    "depends_on_workflows_templates": [
+      {
+        "slug": "workflow-enrichment-code",
+        "name": "Code Enrichment Workflow",
+        "depends_on": [],
+        "content": "jobs:\n  enrich:\n    asset_type: repo\n    default: true\n    runner: github_actions\n    steps:\n    - name: Run code enrichment\n      uses: ghcr.io/jitsecurity-controls/control-enrichment-slim:main\n      with:\n        args: --path \\${WORK_DIR:-.}\nname: Code Enrichment Workflow",
+        "parsed_content": {
+          "name": "Code Enrichment Workflow",
+          "jobs": {
+            "enrich": {
+              "asset_type": "repo",
+              "default": true,
+              "runner": "github_actions",
+              "steps": [
+                {
+                  "name": "Run code enrichment",
+                  "with": {
+                    "args": "--path \\${WORK_DIR:-.}"
+                  },
+                  "uses": "ghcr.io/jitsecurity-controls/control-enrichment-slim:main"
+                }
+              ]
+            }
+          }
+        },
+        "params": null,
+        "plan_item_template_slug": null,
+        "asset_types": [
+          "repo"
+        ]
+      }
+    ],
+    "enriched_data": {
+      "mime_types": [],
+      "frameworks": [],
+      "languages": [
+        "python",
+        "go",
+        "java",
+        "scala",
+        "javascript"
+      ],
+      "package_managers": []
+    }
+  },
+  "enriched_data": {
+      "mime_types": [],
+      "frameworks": [],
+      "languages": [
+        "python",
+        "go",
+        "java",
+        "scala",
+        "javascript"
+      ],
+      "package_managers": []
+    },
+  "trigger_enrich_execution": {
+    "jit_event": {
+      "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+      "jit_event_name": "item_activated",
+      "jit_event_id": "84a704fe-6b2f-4a8a-a3ae-96c0e31bdc50",
+      "asset_id": "c3c3004e-6619-4cca-925a-a8edea378faf",
+      "workflows": null,
+      "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+      "centralized_repo_asset_name": ".jit",
+      "centralized_repo_files_location": "",
+      "ci_workflow_files_path": [
+        ".github/workflows/security.yml"
+      ],
+      "app_id": "161076",
+      "installation_id": "33985869",
+      "original_repository": "ethereumjs-monorepo",
+      "vendor": "github",
+      "owner": "shlomi-test-org",
+      "branch": null,
+      "pull_request_number": null,
+      "pull_request_title": null,
+      "commits": {
+        "base_sha": null,
+        "head_sha": ""
+      },
+      "user_vendor_id": null,
+      "user_vendor_name": null,
+      "languages": [
+        "python",
+        "docker",
+        "js_deps",
+        "JS",
+        "TS",
+        "go",
+        "go_deps",
+        "terraform",
+        "java",
+        "bash",
+        "serverless",
+        "php_deps"
+      ],
+      "event_signature": "github-shlomi-test-org-c3c3004e-6619-4cca-925a-a8edea378faf--None"
+    },
+    "job_name": "enrich",
+    "steps": [
+      {
+        "name": "Run code enrichment",
+        "uses": "ghcr.io/jitsecurity-controls/control-enrichment-slim:main",
+        "params": {
+          "args": "--path \\${WORK_DIR:-.}"
+        }
+      }
+    ],
+    "context": {
+      "jit_event": {
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "jit_event_name": "item_activated",
+        "jit_event_id": "84a704fe-6b2f-4a8a-a3ae-96c0e31bdc50",
+        "asset_id": null,
+        "workflows": null,
+        "activated_plan_slug": "jit-plan",
+        "activated_plan_item_slugs": [
+          "item-code-vulnerability"
+        ]
+      },
+      "asset": {
+        "aws_account_id": null,
+        "aws_stack_arn": null,
+        "aws_jit_role_name": null,
+        "aws_regions_to_scan": null,
+        "aws_jit_role_external_id": null,
+        "target_url": null,
+        "exclude_paths": null,
+        "authentication_mode": null,
+        "auth_header_name": null,
+        "auth_header_value": null,
+        "login_page_url": null,
+        "username": null,
+        "username_css_selector": null,
+        "password": null,
+        "password_css_selector": null,
+        "api_domain": null,
+        "external_id": "577240030",
+        "asset_id": "c3c3004e-6619-4cca-925a-a8edea378faf",
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "asset_type": "repo",
+        "vendor": "github",
+        "owner": "shlomi-test-org",
+        "asset_name": "ethereumjs-monorepo",
+        "risk_status": null,
+        "risk_score": 0,
+        "is_active": true,
+        "is_covered": true,
+        "created_at": "2022-12-12T09:48:25.509331",
+        "modified_at": "2023-03-13T07:10:23.399480",
+        "environment": null,
+        "is_branch_protected_by_jit": false,
+        "status": null,
+        "status_details": null
+      },
+      "installation": {
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "app_id": "161076",
+        "owner": "shlomi-test-org",
+        "installation_id": "33985869",
+        "is_active": true,
+        "creator": "shlomi-test-org",
+        "vendor": "github",
+        "name": "shlomi-test-org",
+        "created_at": "2023-02-08T12:34:37.864980",
+        "modified_at": "2023-02-08T12:34:37.864980",
+        "status": "connected",
+        "status_details": null,
+        "installation_type": null,
+        "vendor_response": {
+          "canPreviewItem": true,
+          "repository_selection": "selected"
+        },
+        "external_id": null,
+        "aws_regions_to_monitor": null,
+        "centralized_repo_asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+        "centralized_repo_asset": {
+          "aws_account_id": null,
+          "aws_stack_arn": null,
+          "aws_jit_role_name": null,
+          "aws_regions_to_scan": null,
+          "target_url": null,
+          "exclude_paths": null,
+          "authentication_mode": null,
+          "auth_header_name": null,
+          "auth_header_value": null,
+          "login_page_url": null,
+          "username": null,
+          "username_css_selector": null,
+          "password": null,
+          "password_css_selector": null,
+          "api_domain": null,
+          "external_id": "568439579",
+          "asset_id": "1a19b50a-20ef-4e33-afa1-8d9ac96ca36e",
+          "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "shlomi-test-org",
+          "asset_name": ".jit",
+          "risk_status": null,
+          "risk_score": 0,
+          "is_active": true,
+          "is_covered": true,
+          "created_at": "2022-11-20T14:41:49.229143",
+          "modified_at": "2023-02-08T12:34:42.325014",
+          "environment": null,
+          "is_branch_protected_by_jit": false,
+          "status": null,
+          "status_details": null
+        }
+      },
+      "secrets": {},
+      "config": {},
+      "job": {
+        "runner": {
+          "type": "github_actions",
+          "setup": null
+        },
+        "job_name": "enrich",
+        "condition": null,
+        "steps": [
+          {
+            "name": "Run code enrichment",
+            "uses": "ghcr.io/jitsecurity-controls/control-enrichment-slim:main",
+            "params": {
+              "args": "--path \\${WORK_DIR:-.}"
+            }
+          }
+        ]
+      },
+      "centralized": {
+        "centralized_repo_files_location": "",
+        "ci_workflow_files_path": [
+          ".github/workflows/security.yml"
+        ]
+      }
+    },
+    "plan_slug": "jit-plan",
+    "plan_item_slug": "DEPENDS_ON_PLAN_ITEM_SLUG",
+    "workflow_slug": "workflow-enrichment-code",
+    "created_at": "2023-03-16T15:47:31.727851",
+    "job_runner": "github_actions",
+    "inputs": {},
+    "source_asset_id": null
+  }
+}

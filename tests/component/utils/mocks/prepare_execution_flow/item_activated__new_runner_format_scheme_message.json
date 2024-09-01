@@ -1,0 +1,67 @@
+{
+  "jit_event_name": "item_activated",
+  "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+  "trigger_schemes": [
+    {
+      "event_execution_scheme": {
+        "workflow_trigger_schemes": {
+          "workflow-sast": {
+            "asset_trigger_schemes": {
+              "c3c3004e-6619-4cca-925a-a8edea378faf": {
+                "asset_id": "c3c3004e-6619-4cca-925a-a8edea378faf",
+                "asset_name": "ethereumjs-monorepo",
+                "asset_type": "repo",
+                "environment": null,
+                "installation_id": "33985869",
+                "job_trigger_schemes": {
+                  "static-code-analysis-go": {
+                    "job_name": "static-code-analysis-go",
+                    "runner": "github_actions",
+                    "security_tool": "Gosec"
+                  },
+                  "static-code-analysis-java": {
+                    "job_name": "static-code-analysis-java",
+                    "runner": "github_actions",
+                    "security_tool": "Semgrep"
+                  },
+                  "static-code-analysis-js": {
+                    "job_name": "static-code-analysis-js",
+                    "runner": "github_actions",
+                    "security_tool": "Semgrep"
+                  },
+                  "static-code-analysis-python": {
+                    "job_name": "static-code-analysis-python",
+                    "runner": "github_actions",
+                    "security_tool": "Bandit"
+                  },
+                  "static-code-analysis-scala": {
+                    "job_name": "static-code-analysis-scala",
+                    "runner": "github_actions",
+                    "security_tool": "Semgrep"
+                  }
+                },
+                "owner": "shlomi-test-org",
+                "vendor": "github"
+              }
+            },
+            "plan_item_slug": "item-code-vulnerability",
+            "workflow_name": "SAST Workflow",
+            "workflow_slug": "workflow-sast"
+          }
+        }
+      },
+      "jit_event": {
+        "activated_plan_item_slugs": [
+          "item-code-vulnerability"
+        ],
+        "activated_plan_slug": "jit-plan",
+        "asset_id": null,
+        "jit_event_id": "84a704fe-6b2f-4a8a-a3ae-96c0e31bdc50",
+        "jit_event_name": "item_activated",
+        "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+        "workflows": null
+      },
+      "source_asset": null
+    }
+  ]
+}

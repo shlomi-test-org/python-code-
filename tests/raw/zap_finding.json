@@ -1,0 +1,311 @@
+{
+  "tenant_id": "1b2bc442-b8a6-4ab8-a037-d536c2859094",
+  "vendor": "domain",
+  "app_and_installation_id": null,
+  "app_id": null,
+  "installation_id": null,
+  "full_repo_path": null,
+  "account_id": null,
+  "account_name": null,
+  "branch": null,
+  "commits": null,
+  "pull_request_number": null,
+  "workflow_suite_id": "8ddc8ce1-9636-4457-9f4b-c0055278e6fa",
+  "workflow_id": "5c5d3bf8-59da-4a7d-a20c-eda720676f29",
+  "workflow_name": "api-security-detection",
+  "job_name": "api-security-detection",
+  "jit_event_id": "8ddc8ce1-9636-4457-9f4b-c0055278e6fa",
+  "jit_event_name": "resource_added",
+  "execution_id": "5c5d3bf8-59da-4a7d-a20c-eda720676f29",
+  "user_vendor_id": null,
+  "user_vendor_name": null,
+  "callback_urls": {
+    "workflow": "https://api.jit.io/execution",
+    "execution": "https://api.jit.io/execution",
+    "logs": "https://api.jit.io/execution/jit-event/8ddc8ce1-9636-4457-9f4b-c0055278e6fa/execution/5c5d3bf8-59da-4a7d-a20c-eda720676f29/log",
+    "findings": "https://api.jit.io/finding/asset/bba671c3-bb7e-49a7-8c3d-87d97ec0b7fc/new",
+    "ignores": "https://api.jit.io/finding/asset/bba671c3-bb7e-49a7-8c3d-87d97ec0b7fc/control/{control_name}/ignore/new",
+    "actions": null
+  },
+  "callback_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1MDc5ZTJjYS1kZWZhLTQzYjktYWM5ZC0wNDliNTRiMzY3ZGYiLCJpc3MiOiJhcGkuaml0LmlvIiwiaWF0IjoxNjYzNTAzMjg2LCJleHAiOjE2NjM1ODk2ODYsInRlbmFudF9pZCI6IjUwNzllMmNhLWRlZmEtNDNiOS1hYzlkLTA0OWI1NGIzNjdkZiJ9.JqoRDuZenj0BUvrmc7mrQfREAntGhgNoTtf6LUNi0ujqMxyWqolf2LPcxEeHFb1uBfeBFBw8fzwMp5tPlS4tjLEirFQucsqlaaqClqGpXfsmFky_4BYxwh57VhED8815s0jNfHT1Bu-zDi9S9UPP94yzExS44GAb35wq9d8cHFQnpF749Hsh4nBTfc_1EIYvPg335xziQ8dKjEDoparnimlcqj7NX8oiHBqQ4opLvDUZ_IcJNzrjcV0N2P-pyPDca8aJ_uekO5gIoCH_YB0Oa1qrRPOQKLHA2LVd--bPBeOZsBgSKtcTBf0fuySz5Rbj99DSo1Tq8770qacNqZsJv9HghQrjQ0CeFrPM0QDUrUy2gfDllAhcVYpD-X0MLpZslw5aDw3LNKDwKTBVXw7r8mnJM6fFc2oLDwobF7nwjRx4W-Q3Vaab7iXI1oTat68BRM1D7HuTXXgi3EHSvy8alekS3gZMg1UluwY7_27cwZMfjozbWLKjm3SnxLAheSwp",
+  "asset_type": "web",
+  "asset_id": "bba671c3-bb7e-49a7-8c3d-87d97ec0b7fc",
+  "inputs": {
+    "target_url": "https://platform.staging.jit.io",
+    "authentication_mode": "non-authenticated"
+  },
+  "use_execution_engine": true,
+  "control_timeout_seconds": 7200,
+  "feature_flags_api_key": "sdk-88ea8d47-57e6-4d83-9f32-b7eb24514dfd",
+  "job_runner": "jit",
+  "plan_slug": "jit-plan",
+  "plan_item_slug": "item-web-app-scanner",
+  "step_name": "api-security-detection",
+  "payload": {
+    "control_name": "Zap",
+    "created_at": "2023-01-20T11:17:48.356174",
+    "status": "PASS",
+    "vulnerability_type": "secret",
+    "plan_layer": "code",
+    "workflow_slug": "api-security-detection",
+    "findings": [
+      {
+        "vulnerability_type": "secret",
+        "plan_layer": "code",
+        "workflow_slug": "api-security-detection",
+        "test_name": "Content Security Policy (CSP) Header Not Set",
+        "test_id": "10038",
+        "issue_confidence": "HIGH",
+        "issue_severity": "MEDIUM",
+        "issue_text": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+        "references": [
+          {
+            "name": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy"
+          },
+          {
+            "name": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"
+          },
+          {
+            "name": "http://www.w3.org/TR/CSP/",
+            "url": "http://www.w3.org/TR/CSP/"
+          },
+          {
+            "name": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html",
+            "url": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html"
+          },
+          {
+            "name": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/",
+            "url": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/"
+          },
+          {
+            "name": "http://caniuse.com/#feat=contentsecuritypolicy",
+            "url": "http://caniuse.com/#feat=contentsecuritypolicy"
+          },
+          {
+            "name": "http://content-security-policy.com/",
+            "url": "http://content-security-policy.com/"
+          }
+        ],
+        "authentication": false,
+        "scan_mode": "Web",
+        "location": "https://platform.staging.jit.io/logo192.png",
+        "location_text": "https://platform.staging.jit.io/logo192.png",
+        "snapshot_attributes": {
+          "authentication": false,
+          "scan_mode": "Web",
+          "location": "https://platform.staging.jit.io/logo192.png"
+        },
+        "fingerprint": "458ac9261f1fd8a01027e3d826147fd5e798bf0da58bcbd49260572195712817",
+        "pluginid": "10038",
+        "alertRef": "10038",
+        "alert": "Content Security Policy (CSP) Header Not Set",
+        "name": "Content Security Policy (CSP) Header Not Set",
+        "riskcode": "2",
+        "confidence": "3",
+        "riskdesc": "Medium (High)",
+        "desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+        "uri": "https://platform.staging.jit.io",
+        "path": "woot",
+        "target_url": "woot",
+        "method": "GET",
+        "param": "",
+        "attack": "",
+        "evidence": "",
+        "request_header": "GET https://platform.staging.jit.io HTTP/1.1\r\nHost: platform.staging.jit.io\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0\r\nPragma: no-cache\r\nCache-Control: no-cache\r\n\r\n",
+        "request_body": "",
+        "response_header": "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 818\r\nConnection: keep-alive\r\nLast-Modified: Thu, 29 Sep 2022 12:54:26 GMT\r\nServer: AmazonS3\r\nDate: Thu, 29 Sep 2022 13:33:05 GMT\r\nETag: \"b60001ff96bba56dcfbdfe1ecdfee141\"\r\nVary: Accept-Encoding\r\nX-Cache: RefreshHit from cloudfront\r\nVia: 1.1 a0dfc1e576cc19daa2f4d5ec699792f4.cloudfront.net (CloudFront)\r\nX-Amz-Cf-Pop: TLV50-C1\r\nX-Amz-Cf-Id: FrxBLcaF9oiZ_5WF57gdl-pMXh2sYl9R37LtngW3_QCSIXhemLN2Vg==\r\n\r\n",
+        "response_body": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"/jit-favicon.png\" rel=\"icon\"/><meta content=\"width=device-width,initial-scale=1\" name=\"viewport\"/><meta content=\"#000000\" name=\"theme-color\"/><meta name=\"robots\" content=\"noindex\"/><link href=\"/logo192.png\" rel=\"apple-touch-icon\"/><link href=\"/manifest.json\" rel=\"manifest\"/><title>Jit Security</title><script defer=\"defer\" src=\"/static/js/main.c4cf7684.js\"></script><link href=\"/static/css/main.22dffc7f.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script>var beamer_config={product_id:\"VKDfjZbS47135\",selector:\".beamerTrigger\",button:!1}</script><script type=\"text/javascript\" src=\"https://app.getbeamer.com/js/beamer-embed.js\" defer=\"defer\"></script></body></html>",
+        "count": "5",
+        "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header, to achieve optimal browser support: \"Content-Security-Policy\" for Chrome 25+, Firefox 23+ and Safari 7+, \"X-Content-Security-Policy\" for Firefox 4.0+ and Internet Explorer 10+, and \"X-WebKit-CSP\" for Chrome 14+ and Safari 6+.</p>",
+        "otherinfo": "",
+        "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p>",
+        "cweid": "693",
+        "wascid": "15",
+        "sourceid": "1",
+        "tags": {}
+      },
+      {
+        "vulnerability_type": "secret",
+        "plan_layer": "code",
+        "workflow_slug": "api-security-detection",
+        "test_name": "Content Security Policy (CSP) Header Not Set",
+        "test_id": "10038",
+        "issue_confidence": "HIGH",
+        "issue_severity": "MEDIUM",
+        "issue_text": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+        "references": [
+          {
+            "name": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy"
+          },
+          {
+            "name": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"
+          },
+          {
+            "name": "http://www.w3.org/TR/CSP/",
+            "url": "http://www.w3.org/TR/CSP/"
+          },
+          {
+            "name": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html",
+            "url": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html"
+          },
+          {
+            "name": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/",
+            "url": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/"
+          },
+          {
+            "name": "http://caniuse.com/#feat=contentsecuritypolicy",
+            "url": "http://caniuse.com/#feat=contentsecuritypolicy"
+          },
+          {
+            "name": "http://content-security-policy.com/",
+            "url": "http://content-security-policy.com/"
+          }
+        ],
+        "authentication": false,
+        "scan_mode": "Web",
+        "location": "https://platform.staging.jit.io",
+        "location_text": "https://platform.staging.jit.io",
+        "snapshot_attributes": {
+          "authentication": false,
+          "scan_mode": "Web",
+          "location": "https://platform.staging.jit.io"
+        },
+        "fingerprint": "65213dbe3cb157abe1d1a39178bbf4ae13e4e9cff1917c58808024937faadfa6",
+        "pluginid": "10038",
+        "alertRef": "10038",
+        "alert": "Content Security Policy (CSP) Header Not Set",
+        "name": "Content Security Policy (CSP) Header Not Set",
+        "riskcode": "2",
+        "confidence": "3",
+        "riskdesc": "Medium (High)",
+        "desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+        "uri": "https://platform.staging.jit.io",
+        "path": "woot",
+        "target_url": "woot",
+        "method": "GET",
+        "param": "",
+        "attack": "",
+        "evidence": "",
+        "request_header": "GET https://platform.staging.jit.io HTTP/1.1\r\nHost: platform.staging.jit.io\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0\r\nPragma: no-cache\r\nCache-Control: no-cache\r\n\r\n",
+        "request_body": "",
+        "response_header": "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 818\r\nConnection: keep-alive\r\nLast-Modified: Thu, 29 Sep 2022 12:54:26 GMT\r\nServer: AmazonS3\r\nDate: Thu, 29 Sep 2022 13:33:05 GMT\r\nETag: \"b60001ff96bba56dcfbdfe1ecdfee141\"\r\nVary: Accept-Encoding\r\nX-Cache: RefreshHit from cloudfront\r\nVia: 1.1 a0dfc1e576cc19daa2f4d5ec699792f4.cloudfront.net (CloudFront)\r\nX-Amz-Cf-Pop: TLV50-C1\r\nX-Amz-Cf-Id: FrxBLcaF9oiZ_5WF57gdl-pMXh2sYl9R37LtngW3_QCSIXhemLN2Vg==\r\n\r\n",
+        "response_body": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"/jit-favicon.png\" rel=\"icon\"/><meta content=\"width=device-width,initial-scale=1\" name=\"viewport\"/><meta content=\"#000000\" name=\"theme-color\"/><meta name=\"robots\" content=\"noindex\"/><link href=\"/logo192.png\" rel=\"apple-touch-icon\"/><link href=\"/manifest.json\" rel=\"manifest\"/><title>Jit Security</title><script defer=\"defer\" src=\"/static/js/main.c4cf7684.js\"></script><link href=\"/static/css/main.22dffc7f.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script>var beamer_config={product_id:\"VKDfjZbS47135\",selector:\".beamerTrigger\",button:!1}</script><script type=\"text/javascript\" src=\"https://app.getbeamer.com/js/beamer-embed.js\" defer=\"defer\"></script></body></html>",
+        "count": "5",
+        "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header, to achieve optimal browser support: \"Content-Security-Policy\" for Chrome 25+, Firefox 23+ and Safari 7+, \"X-Content-Security-Policy\" for Firefox 4.0+ and Internet Explorer 10+, and \"X-WebKit-CSP\" for Chrome 14+ and Safari 6+.</p>",
+        "otherinfo": "",
+        "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p>",
+        "cweid": "693",
+        "wascid": "15",
+        "sourceid": "1",
+        "tags": {}
+      },
+      {
+        "vulnerability_type": "secret",
+        "plan_layer": "code",
+        "workflow_slug": "api-security-detection",
+        "test_name": "Content Security Policy (CSP) Header Not Set",
+        "test_id": "10038",
+        "issue_confidence": "HIGH",
+        "issue_severity": "MEDIUM",
+        "issue_text": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+        "references": [
+          {
+            "name": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy",
+            "url": "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy"
+          },
+          {
+            "name": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html",
+            "url": "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"
+          },
+          {
+            "name": "http://www.w3.org/TR/CSP/",
+            "url": "http://www.w3.org/TR/CSP/"
+          },
+          {
+            "name": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html",
+            "url": "http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html"
+          },
+          {
+            "name": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/",
+            "url": "http://www.html5rocks.com/en/tutorials/security/content-security-policy/"
+          },
+          {
+            "name": "http://caniuse.com/#feat=contentsecuritypolicy",
+            "url": "http://caniuse.com/#feat=contentsecuritypolicy"
+          },
+          {
+            "name": "http://content-security-policy.com/",
+            "url": "http://content-security-policy.com/"
+          }
+        ],
+        "authentication": false,
+        "scan_mode": "Web",
+        "location": "https://platform.staging.jit.io/sitemap.xml",
+        "location_text": "https://platform.staging.jit.io/sitemap.xml",
+        "snapshot_attributes": {
+          "authentication": false,
+          "scan_mode": "Web",
+          "location": "https://platform.staging.jit.io/sitemap.xml"
+        },
+        "fingerprint": "16574ecd90e9b7fa7065eb7221acb3739c3466278595103525f9c85dc6c9ffa8",
+        "pluginid": "10038",
+        "alertRef": "10038",
+        "alert": "Content Security Policy (CSP) Header Not Set",
+        "name": "Content Security Policy (CSP) Header Not Set",
+        "riskcode": "2",
+        "confidence": "3",
+        "riskdesc": "Medium (High)",
+        "desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+        "uri": "https://platform.staging.jit.io",
+        "path": "woot",
+        "target_url": "woot",
+        "method": "GET",
+        "param": "",
+        "attack": "",
+        "evidence": "",
+        "request_header": "GET https://platform.staging.jit.io HTTP/1.1\r\nHost: platform.staging.jit.io\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:100.0) Gecko/20100101 Firefox/100.0\r\nPragma: no-cache\r\nCache-Control: no-cache\r\n\r\n",
+        "request_body": "",
+        "response_header": "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 818\r\nConnection: keep-alive\r\nLast-Modified: Thu, 29 Sep 2022 12:54:26 GMT\r\nServer: AmazonS3\r\nDate: Thu, 29 Sep 2022 13:33:05 GMT\r\nETag: \"b60001ff96bba56dcfbdfe1ecdfee141\"\r\nVary: Accept-Encoding\r\nX-Cache: RefreshHit from cloudfront\r\nVia: 1.1 a0dfc1e576cc19daa2f4d5ec699792f4.cloudfront.net (CloudFront)\r\nX-Amz-Cf-Pop: TLV50-C1\r\nX-Amz-Cf-Id: FrxBLcaF9oiZ_5WF57gdl-pMXh2sYl9R37LtngW3_QCSIXhemLN2Vg==\r\n\r\n",
+        "response_body": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"/jit-favicon.png\" rel=\"icon\"/><meta content=\"width=device-width,initial-scale=1\" name=\"viewport\"/><meta content=\"#000000\" name=\"theme-color\"/><meta name=\"robots\" content=\"noindex\"/><link href=\"/logo192.png\" rel=\"apple-touch-icon\"/><link href=\"/manifest.json\" rel=\"manifest\"/><title>Jit Security</title><script defer=\"defer\" src=\"/static/js/main.c4cf7684.js\"></script><link href=\"/static/css/main.22dffc7f.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script>var beamer_config={product_id:\"VKDfjZbS47135\",selector:\".beamerTrigger\",button:!1}</script><script type=\"text/javascript\" src=\"https://app.getbeamer.com/js/beamer-embed.js\" defer=\"defer\"></script></body></html>",
+        "count": "5",
+        "solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header, to achieve optimal browser support: \"Content-Security-Policy\" for Chrome 25+, Firefox 23+ and Safari 7+, \"X-Content-Security-Policy\" for Firefox 4.0+ and Internet Explorer 10+, and \"X-WebKit-CSP\" for Chrome 14+ and Safari 6+.</p>",
+        "otherinfo": "",
+        "reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p>",
+        "cweid": "693",
+        "wascid": "15",
+        "sourceid": "1",
+        "tags": {}
+      }
+    ],
+    "event_type": "control_results"
+  },
+  "snapshot_attributes": {
+    "authentication": [
+      false
+    ],
+    "scan_mode": [
+      "Web"
+    ],
+    "location": [
+      "https://platform.staging.jit.io/static/js",
+      "https://platform.staging.jit.io/sitemap.xml",
+      "https://platform.staging.jit.io/static/css/main.2c9a190d.css",
+      "https://platform.staging.jit.io/",
+      "https://platform.staging.jit.io/static/js/main.40c12ecb.js",
+      "https://platform.staging.jit.io/logo192.png",
+      "https://platform.staging.jit.io/static/css",
+      "https://platform.staging.jit.io/static/media/inter-latin-400-normal.c96fe5ff771f9e7b53ab.woff2",
+      "https://platform.staging.jit.io/jit-favicon.png",
+      "https://platform.staging.jit.io/manifest.json",
+      "https://platform.staging.jit.io/robots.txt",
+      "https://platform.staging.jit.io/.DS_Store",
+      "https://platform.staging.jit.io/static",
+      "https://platform.staging.jit.io",
+      "https://platform.staging.jit.io/static/media"
+    ]
+  }
+}

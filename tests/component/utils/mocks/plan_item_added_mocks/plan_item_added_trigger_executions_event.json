@@ -1,0 +1,178 @@
+{
+  "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+  "jit_event_name": "item_activated",
+  "executions": [
+    {
+      "job_name": "secret-detection",
+      "steps": [
+        {
+          "name": "Run Gitleaks",
+          "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest",
+          "params": {
+            "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0",
+            "output_file": "/tmp/report.json"
+          }
+        }],
+      "context": {
+        "auth": null,
+        "jit_event": {
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "jit_event_name": "item_activated",
+          "jit_event_id": "8b8e7236-2290-4c75-b1db-d44f2cf3e3ae",
+          "asset_id": null,
+          "workflows": null,
+          "activated_plan_slug": "jit-plan",
+          "activated_plan_item_slugs": [
+            "item-secret-detection"]
+        },
+        "asset": {
+          "aws_account_id": null,
+          "aws_stack_arn": null,
+          "aws_jit_role_name": null,
+          "aws_regions_to_scan": null,
+          "aws_jit_role_external_id": null,
+          "account_id": null,
+          "target_url": null,
+          "exclude_paths": null,
+          "authentication_mode": null,
+          "auth_header_name": null,
+          "auth_header_value": null,
+          "login_page_url": null,
+          "username": null,
+          "username_css_selector": null,
+          "password": null,
+          "password_ref": null,
+          "password_css_selector": null,
+          "api_domain": null,
+          "external_id": null,
+          "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "liad-dev-org",
+          "asset_name": "new-test",
+          "risk_status": null,
+          "risk_score": 0,
+          "is_active": true,
+          "is_covered": true,
+          "modified_at": "2022-09-05T11:34:11.256000",
+          "environment": null,
+          "is_branch_protected_by_jit": null,
+          "status": null,
+          "status_details": null,
+          "tags": []
+        },
+        "installation": {
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "app_id": "161076",
+          "owner": "liad-dev-org",
+          "installation_id": "28265461",
+          "is_active": true,
+          "creator": "liad-dev-org",
+          "vendor": "github",
+          "name": "liad-dev-org",
+          "modified_at": "2022-10-11T07:36:14.853000",
+          "status": "connected",
+          "status_details": null,
+          "installation_type": null,
+          "vendor_response": {
+            "canPreviewItem": true
+          },
+          "vendor_attributes": null,
+          "external_id": null,
+          "aws_regions_to_monitor": null,
+          "integration_version": null,
+          "centralized_repo_asset_id": "fa139901-1be5-40a2-932b-78e45dcbe0c3",
+          "centralized_repo_asset": {
+            "account_id": null,
+            "aws_account_id": null,
+            "aws_stack_arn": null,
+            "aws_jit_role_name": null,
+            "aws_regions_to_scan": null,
+            "target_url": null,
+            "exclude_paths": null,
+            "authentication_mode": null,
+            "auth_header_name": null,
+            "auth_header_value": null,
+            "login_page_url": null,
+            "username": null,
+            "username_css_selector": null,
+            "password": null,
+            "password_ref": null,
+            "password_css_selector": null,
+            "api_domain": null,
+            "external_id": null,
+            "asset_id": "fa139901-1be5-40a2-932b-78e45dcbe0c3",
+            "tenant_id": "46db21b6-fb2a-4c5d-9148-37d2248a7c20",
+            "asset_type": "repo",
+            "vendor": "github",
+            "owner": "shlomi-test-org",
+            "asset_name": "not-dot-jit",
+            "risk_status": null,
+            "risk_score": 0,
+            "is_active": true,
+            "is_covered": true,
+            "modified_at": "2023-01-16T10:23:26.666000",
+            "environment": null,
+            "is_branch_protected_by_jit": null,
+            "status": null,
+            "status_details": null,
+            "tags": []
+          }
+        },
+        "config": {
+          "applications": [
+            {
+              "api_domain": "domain",
+              "application_name": "new-test",
+              "password": "${{jit_secrets.secret}}",
+              "type": "repo"
+            }]
+        },
+        "job": {
+          "runner": {
+            "type": "github_actions",
+            "setup": null
+          },
+          "job_name": "secret-detection",
+          "condition": null,
+          "steps": [
+            {
+              "name": "Run Gitleaks",
+              "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest",
+              "params": {
+                "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0",
+                "output_file": "/tmp/report.json"
+              }
+            }]
+        },
+        "centralized": {
+          "centralized_repo_files_location": "centralized_repo_files_location",
+          "ci_workflow_files_path": [
+            "ci_workflow_files_path"]
+        },
+        "workflow": {
+          "slug": "workflow-secret-detection",
+          "name": "Secret Detection Workflow",
+          "type": "workflow",
+          "default": null,
+          "content": "name: Secret Detection Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\njobs:\n  secret-detection:\n    runner: github_actions\n    asset_type: repo\n    steps:\n      - name: Run Gitleaks\n        uses: ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest\n        with:\n          args: detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0\n          output_file: /tmp/report.json\n        tags:\n          security_tool: Gitleaks\n          links:\n            github: https://github.com/jitsecurity-controls/jit-secrets-detection-control\n            security_tool: https://github.com/zricethezav/gitleaks\n",
+          "depends_on": [
+          ],
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo"]
+        }
+      },
+      "plan_slug": "jit-plan",
+      "plan_item_slug": "item-secret-detection",
+      "affected_plan_items": ["item-aws-ftr-secret-detection", "item-secret-detection"],
+      "workflow_slug": "workflow-secret-detection",
+      "control_type": "detection",
+      "job_runner": "github_actions",
+      "inputs": {
+      },
+      "source_asset_id": null
+    }]
+}

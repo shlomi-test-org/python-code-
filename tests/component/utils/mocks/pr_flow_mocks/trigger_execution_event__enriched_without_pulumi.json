@@ -1,0 +1,338 @@
+{
+  "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+  "jit_event_name": "pull_request_created",
+  "executions": [
+    {
+      "job_name": "static-code-analysis-js",
+      "steps": [
+        {
+          "name": "Run semgrep",
+          "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest",
+          "params": {
+            "args": "--json --config=/semgrep-config.yml --metrics=off --severity=ERROR /code"
+          }
+        }],
+      "context": {
+        "auth": null,
+        "jit_event": {
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "jit_event_name": "pull_request_created",
+          "jit_event_id": "d0c3f527-198d-4e41-8f1f-402820cf0791",
+          "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+          "workflows": null,
+          "centralized_repo_asset_id": "fa139901-1be5-40a2-932b-78e45dcbe0c3",
+          "centralized_repo_asset_name": "not-dot-jit",
+          "centralized_repo_files_location": "centralized_repo_files_location",
+          "ci_workflow_files_path": [
+            "ci_workflow_files_path"],
+          "app_id": "161076",
+          "installation_id": "28265461",
+          "original_repository": "new-test",
+          "vendor": "github",
+          "owner": "liad-dev-org",
+          "branch": "liadperetz-patch-121",
+          "pull_request_number": "122",
+          "pull_request_title": "Create main.js",
+          "commits": {
+            "base_sha": "391ca13155e0b835879948104d6ea6a2afbcf948",
+            "head_sha": "9c089a84d77d945cb199741ecc959e2454afc009"
+          },
+          "user_vendor_id": "62614083",
+          "user_vendor_name": "liadperetz",
+          "languages": [
+            "JS",
+            "any"],
+          "event_signature": "github-liad-dev-org-d2d70176-266d-4073-98b0-1a1d362ef61b-9c089a84d77d945cb199741ecc959e2454afc009-391ca13155e0b835879948104d6ea6a2afbcf948"
+        },
+        "asset": {
+          "aws_account_id": null,
+          "aws_stack_arn": null,
+          "aws_jit_role_name": null,
+          "aws_regions_to_scan": null,
+          "aws_jit_role_external_id": null,
+          "account_id": null,
+          "target_url": null,
+          "exclude_paths": null,
+          "authentication_mode": null,
+          "auth_header_name": null,
+          "auth_header_value": null,
+          "login_page_url": null,
+          "username": null,
+          "username_css_selector": null,
+          "password": null,
+          "password_ref": null,
+          "password_css_selector": null,
+          "api_domain": null,
+          "external_id": null,
+          "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "liad-dev-org",
+          "asset_name": "new-test",
+          "risk_status": null,
+          "risk_score": 0,
+          "is_active": true,
+          "is_covered": true,
+          "modified_at": "2022-09-05T11:34:11.256000",
+          "environment": null,
+          "is_branch_protected_by_jit": null,
+          "status": null,
+          "status_details": null,
+          "tags": []
+        },
+        "installation": {
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "app_id": "161076",
+          "owner": "liad-dev-org",
+          "installation_id": "28265461",
+          "is_active": true,
+          "creator": "liad-dev-org",
+          "vendor": "github",
+          "name": "liad-dev-org",
+          "modified_at": "2022-10-11T07:36:14.853000",
+          "status": "connected",
+          "status_details": null,
+          "installation_type": null,
+          "vendor_response": {
+            "canPreviewItem": true
+          },
+          "vendor_attributes": null,
+          "external_id": null,
+          "aws_regions_to_monitor": null,
+          "integration_version": null,
+          "centralized_repo_asset_id": null,
+          "centralized_repo_asset": null
+        },
+        "config": {
+          "applications": [
+            {
+              "api_domain": "domain",
+              "application_name": "new-test",
+              "password": "${{jit_secrets.secret}}",
+              "type": "repo"
+            }]
+        },
+        "job": {
+          "runner": {
+            "type": "github_actions",
+            "setup": {
+              "timeout_minutes": 10,
+              "account_id": null,
+              "assume_role": null,
+              "auth_type": null,
+              "checkout": null,
+              "mount": null
+            }
+          },
+          "job_name": "static-code-analysis-js",
+          "condition": {
+            "languages": [
+              "JS"]
+          },
+          "steps": [
+            {
+              "name": "Run semgrep",
+              "uses": "ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest",
+              "params": {
+                "args": "--json --config=/semgrep-config.yml --metrics=off --severity=ERROR /code"
+              }
+            }]
+        },
+        "centralized": {
+          "centralized_repo_files_location": "centralized_repo_files_location",
+          "ci_workflow_files_path": [
+            "ci_workflow_files_path"]
+        },
+        "workflow": {
+          "slug": "workflow-sast",
+          "name": "SAST Workflow",
+          "type": "workflow",
+          "default": null,
+          "content": "name: SAST Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\njobs:\n  static-code-analysis-python:\n    runner:\n      setup:\n        timeout_minutes: 10\n      type: github_actions\n    asset_type: repo\n    tags:\n      languages:\n        - python\n    steps:\n      - name: Run Bandit\n        uses: ghcr.io/jitsecurity-controls/control-bandit-slim:latest\n        with:\n          args: -r /code -f json -q -lll -iii\n        tags:\n          security_tool: Bandit\n          links:\n            github: https://github.com/jitsecurity-controls/jit-python-code-scanning-control\n            security_tool: https://github.com/PyCQA/bandit\n  static-code-analysis-js:\n    runner:\n      setup:\n        timeout_minutes: 10\n      type: github_actions\n    asset_type: repo\n    tags:\n      languages:\n        - javascript\n        - typescript\n        - JS\n        - TS\n    steps:\n      - name: Run semgrep\n        uses: ghcr.io/jitsecurity-controls/control-semgrep-alpine:latest\n        with:\n          args: --json --config=/semgrep-config.yml --metrics=off --severity=ERROR /code\n        tags:\n          security_tool: Semgrep\n          links:\n            github: https://github.com/jitsecurity-controls/jit-semgrep-code-scanning-control\n            security_tool: https://github.com/returntocorp/semgrep\n  static-code-analysis-go:\n    runner:\n      setup:\n        timeout_minutes: 10\n      type: github_actions\n    asset_type: repo\n    tags:\n      languages:\n        - go\n    steps:\n      - name: Run Go\n        uses: ghcr.io/jitsecurity-controls/control-gosec-alpine:latest\n        with:\n          args: -fmt=json -severity=high /code/...\n        tags:\n          security_tool: Gosec\n          links:\n            github: https://github.com/jitsecurity-controls/jit-golang-code-scanning-control\n            security_tool: https://github.com/securego/gosec\n",
+          "depends_on": [
+          ],
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo",
+            "repo",
+            "repo"]
+        }
+      },
+      "plan_slug": "jit-plan",
+      "plan_item_slug": "item-code-vulnerability",
+      "affected_plan_items": ["item-code-vulnerability"],
+      "workflow_slug": "workflow-sast",
+      "control_type": "detection",
+      "job_runner": "github_actions",
+      "inputs": {
+      },
+      "source_asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b"
+    },
+    {
+      "job_name": "secret-detection",
+      "steps": [
+        {
+          "name": "Run Gitleaks",
+          "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest",
+          "params": {
+            "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0",
+            "output_file": "/tmp/report.json"
+          }
+        }],
+      "context": {
+        "auth": null,
+        "jit_event": {
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "jit_event_name": "pull_request_created",
+          "jit_event_id": "d0c3f527-198d-4e41-8f1f-402820cf0791",
+          "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+          "workflows": null,
+          "centralized_repo_asset_id": "fa139901-1be5-40a2-932b-78e45dcbe0c3",
+          "centralized_repo_asset_name": "not-dot-jit",
+          "centralized_repo_files_location": "centralized_repo_files_location",
+          "ci_workflow_files_path": [
+            "ci_workflow_files_path"],
+          "app_id": "161076",
+          "installation_id": "28265461",
+          "original_repository": "new-test",
+          "vendor": "github",
+          "owner": "liad-dev-org",
+          "branch": "liadperetz-patch-121",
+          "pull_request_number": "122",
+          "pull_request_title": "Create main.js",
+          "commits": {
+            "base_sha": "391ca13155e0b835879948104d6ea6a2afbcf948",
+            "head_sha": "9c089a84d77d945cb199741ecc959e2454afc009"
+          },
+          "user_vendor_id": "62614083",
+          "user_vendor_name": "liadperetz",
+          "languages": [
+            "JS",
+            "any"],
+          "event_signature": "github-liad-dev-org-d2d70176-266d-4073-98b0-1a1d362ef61b-9c089a84d77d945cb199741ecc959e2454afc009-391ca13155e0b835879948104d6ea6a2afbcf948"
+        },
+        "asset": {
+          "aws_account_id": null,
+          "aws_stack_arn": null,
+          "aws_jit_role_name": null,
+          "aws_regions_to_scan": null,
+          "aws_jit_role_external_id": null,
+          "account_id": null,
+          "target_url": null,
+          "exclude_paths": null,
+          "authentication_mode": null,
+          "auth_header_name": null,
+          "auth_header_value": null,
+          "login_page_url": null,
+          "username": null,
+          "username_css_selector": null,
+          "password": null,
+          "password_ref": null,
+          "password_css_selector": null,
+          "api_domain": null,
+          "external_id": null,
+          "asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b",
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "asset_type": "repo",
+          "vendor": "github",
+          "owner": "liad-dev-org",
+          "asset_name": "new-test",
+          "risk_status": null,
+          "risk_score": 0,
+          "is_active": true,
+          "is_covered": true,
+          "modified_at": "2022-09-05T11:34:11.256000",
+          "environment": null,
+          "is_branch_protected_by_jit": null,
+          "status": null,
+          "status_details": null,
+          "tags": []
+        },
+        "installation": {
+          "tenant_id": "8db8bfeb-5f60-4c09-8001-07522a39fdeb",
+          "app_id": "161076",
+          "owner": "liad-dev-org",
+          "installation_id": "28265461",
+          "is_active": true,
+          "creator": "liad-dev-org",
+          "vendor": "github",
+          "name": "liad-dev-org",
+          "modified_at": "2022-10-11T07:36:14.853000",
+          "status": "connected",
+          "status_details": null,
+          "installation_type": null,
+          "vendor_response": {
+            "canPreviewItem": true
+          },
+          "vendor_attributes": null,
+          "external_id": null,
+          "aws_regions_to_monitor": null,
+          "integration_version": null,
+          "centralized_repo_asset_id": null,
+          "centralized_repo_asset": null
+        },
+        "config": {
+          "applications": [
+            {
+              "api_domain": "domain",
+              "application_name": "new-test",
+              "password": "${{jit_secrets.secret}}",
+              "type": "repo"
+            }]
+        },
+        "job": {
+          "runner": {
+            "type": "github_actions",
+            "setup": {
+              "timeout_minutes": 10,
+              "account_id": null,
+              "assume_role": null,
+              "auth_type": null,
+              "checkout": null,
+              "mount": null
+            }
+          },
+          "job_name": "secret-detection",
+          "condition": null,
+          "steps": [
+            {
+              "name": "Run Gitleaks",
+              "uses": "ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest",
+              "params": {
+                "args": "detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0",
+                "output_file": "/tmp/report.json"
+              }
+            }]
+        },
+        "centralized": {
+          "centralized_repo_files_location": "centralized_repo_files_location",
+          "ci_workflow_files_path": [
+            "ci_workflow_files_path"]
+        },
+        "workflow": {
+          "slug": "workflow-secret-detection",
+          "name": "Secret Detection Workflow",
+          "type": "workflow",
+          "default": null,
+          "content": "name: Secret Detection Workflow\ntrigger:\n  on:\n    - pull_request_created\n    - pull_request_updated\n    - merge_default_branch\njobs:\n  secret-detection:\n    runner:\n      setup:\n        timeout_minutes: 10\n      type: github_actions\n    asset_type: repo\n    steps:\n      - name: Run Gitleaks\n        uses: ghcr.io/jitsecurity-controls/control-gitleaks-alpine:latest\n        with:\n          args: detect --config \\$GITLEAKS_CONFIG_FILE_PATH --source /code -v --report-format json --report-path /tmp/report.json --redact --no-git --exit-code 0\n          output_file: /tmp/report.json\n        tags:\n          security_tool: Gitleaks\n          links:\n            github: https://github.com/jitsecurity-controls/jit-secrets-detection-control\n            security_tool: https://github.com/zricethezav/gitleaks\n",
+          "depends_on": [
+          ],
+          "params": null,
+          "plan_item_template_slug": null,
+          "asset_types": [
+            "repo"]
+        }
+      },
+      "plan_slug": "jit-plan",
+      "plan_item_slug": "item-secret-detection",
+      "affected_plan_items": ["item-aws-ftr-secret-detection", "item-secret-detection"],
+      "workflow_slug": "workflow-secret-detection",
+      "control_type": "detection",
+      "job_runner": "github_actions",
+      "inputs": {
+      },
+      "source_asset_id": "d2d70176-266d-4073-98b0-1a1d362ef61b"
+    }]
+}

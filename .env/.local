@@ -1,0 +1,18 @@
+DEPLOYMENT_STAGE=local
+API_HOST=api.jit-dev.io
+AWS_REGION_NAME=us-east-1
+AWS_REGION=us-east-1
+AWS_ACCOUNT_ID=123456789012
+S3_EXECUTION_LOGS_BUCKET_NAME=jit-execution-logs-dev
+AWS_ACCESS_KEY_ID=dummy
+AWS_SECRET_ACCESS_KEY=dummy  # pragma: allowlist secret
+AWS_SESSION_TOKEN=dummy
+LOG_LEVEL=DEBUG
+API_HOST=api.dummy.jit.io
+GCP_PROJECT_ID=jit-test-project
+GCP_REGION=us-central1
+DISPATCH_GCP_CREDENTIALS={}
+GCP_KMS_KEY_NAME=projects/jit-test-project/locations/us-central1/keyRings/controls-gcp-runner-key-ring/cryptoKeys/controls-gcp-runner-crypto-key
+GCP_BATCH_JOB_SERVICE_ACCOUNT_EMAIL=control-batch-job-sa@jit-test-project.iam.gserviceaccount.com
+
+AWS_CUSTOM_ENDPOINT=http://localhost:4566
