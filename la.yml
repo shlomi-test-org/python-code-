@@ -1,0 +1,8 @@
+this:
+  is: yml
+  file:
+    - that
+    - should
+    - triger:
+      - file
+      - content: enrichment
