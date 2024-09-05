@@ -1,1 +1,23 @@
-a: b
+runtime: yaml
+resources:
+  static-site:
+    type: gcp:storage:Bucket
+    properties:
+      cors:
+        - maxAgeSeconds: 3600
+          methods:
+            - GET
+            - HEAD
+            - PUT
+            - POST
+            - DELETE
+          origins:
+            - http://image-store.com
+          responseHeaders:
+            - '*'
+      forceDestroy: true
+      location: EU
+      uniformBucketLevelAccess: true
+      website:
+        mainPageSuffix: index.html
+        notFoundPage: 404.html
