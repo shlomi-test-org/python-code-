@@ -1,4 +1,4 @@
-runtime: yaml 
+runtime: yaml
 resources:
   static-site:
     type: gcp:storage:Bucket
