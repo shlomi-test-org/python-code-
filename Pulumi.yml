@@ -1,4 +1,4 @@
-runtime: yaml
+runtime: yaml 
 resources:
   basic-dynamodb-table:
     type: aws:dynamodb:Table
