@@ -57,4 +57,3 @@ self.logs += os.popen(f"git remote add origin {self.repo_instance.ssh_url}").rea
 
 
 
-
