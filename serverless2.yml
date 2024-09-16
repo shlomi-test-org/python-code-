@@ -1,28 +1,54 @@
-provider:
-  name: aws
-  runtime: nodejs14.x
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "s3:*"  # Overly permissive action, should be more specific
-      Resource: 
-        - "*"    # Overly permissive resource, should be more specific
-
-functions:
-  hello:
-    handler: handler.hello
-    environment:
-      DB_PASSWORD: "mySuperSecretPassword"  # Hard-coded sensitive data
-    layers:
-      - arn:aws:lambda:us-east-1:123456789012:layer:your-layer-name:1
-    tracing: false  # Disabling X-Ray tracing (should be enabled for better monitoring)
-
+runtime: yaml
 resources:
-  Resources:
-    MyBucket:
-      Type: "AWS::S3::Bucket"
-      Properties:
-        BucketName: "my-plain-bucket"
-        PublicAccessBlockConfiguration:
-          BlockPublicAcls: false  # Public ACLs should be blocked
-          BlockPublicPolicy: false # Public policies should be blocked
+  basic-dynamodb-table:
+    type: aws:dynamodb:Table
+    properties:
+      attributes:
+        - name: UserId
+          type: S
+        - name: GameTitle
+          type: S
+        - name: TopScore
+          type: N
+      billingMode: PROVISIONED
+      globalSecondaryIndexes:
+        - hashKey: GameTitle
+          name: GameTitleIndex
+          nonKeyAttributes:
+            - UserId
+          projectionType: INCLUDE
+          rangeKey: TopScore
+          readCapacity: 10
+          writeCapacity: 10
+      hashKey: UserId
+      rangeKey: GameTitle
+      readCapacity: 20
+      tags:
+        Environment: production
+        Name: dynamodb-table-1
+      ttl:
+        attributeName: TimeToExist
+        enabled: false
+      writeCapacity: 20
+
+  static-site:
+    type: gcp:storage:Bucket
+    properties:
+      cors:
+        - maxAgeSeconds: 3600
+          methods:
+            - GET
+            - HEAD
+            - PUT
+            - POST
+            - DELETE
+          origins:
+            - http://image-store.com
+          responseHeaders:
+            - '*'
+      forceDestroy: true
+      location: EU
+      uniformBucketLevelAccess: true
+      website:
+        mainPageSuffix: index.html
+        notFoundPage: 404.html
