@@ -7,6 +7,7 @@ provider:
         - "s3:*"  # Overly permissive action, should be more specific
       Resource: 
         - "*"    # Overly permissive resource, should be more specific
+        
 
 functions:
   hello:
