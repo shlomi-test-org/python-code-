@@ -4,7 +4,8 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
-        - "s3:*"  # Overly permissive action, should be more specific
+        - "s3:*"  # Overly permissive action, shou
+        ld be more specific
       Resource: 
         - "*"    # Overly permissive resource, should be more specific
 
