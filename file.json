@@ -1,0 +1,32 @@
+  7,125 changes: 0 additions & 7,125 deletions7,125  
+file.json
+Viewed
+Original file line number	Original file line	Diff line number	Diff line change
+@@ -1,7125 +0,0 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "BadRequest": {
+        "title": "ValidateCentralizedRepoResponse",
+        "type": "object",
+        "properties": {
+          "is_valid": {
+            "title": "Is Valid",
+            "type": "boolean"
+          },
+          "error": {
+            "title": "ValidateCentralizedRepoResponseErrors",
+            "description": "An enumeration.",
+            "enum": [
+              "Installation does not exist",
+              "Repo is not valid, it has branch protection enabled",
+              "Failed getting default branch protection rules"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "is_valid"
+        ]
+      },
