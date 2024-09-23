@@ -4,7 +4,8 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
-        - "s3:*"  # Overly permissive action, should be more specific
+        - "s3:*"  # Overly permissive action, shou
+        ld be more specific
       Resource: 
         - "*"    # Overly permissive resource, should be more specific
 
@@ -12,6 +13,7 @@ functions:
   hello:
     handler: handler.hello
     environment:
+    
       DB_PASSWORD: "mySuperSecretPassword"  # Hard-coded sensitive data
     layers:
       - arn:aws:lambda:us-east-1:123456789012:layer:your-layer-name:1
