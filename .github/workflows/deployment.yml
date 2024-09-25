@@ -32,6 +32,8 @@ jobs:
             - Initial release of version ${{ github.event.inputs.version }}
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   tag-as-latest:
     needs: [ create-a-new-version-tag ]
