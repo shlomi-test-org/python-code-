@@ -21,6 +21,18 @@ jobs:
           git tag ${{ github.event.inputs.version }}
           git push origin ${{ github.event.inputs.version }}
 
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: Release ${{ github.event.inputs.version }}
+          body: |
+            ## Changelog
+            - Initial release of version ${{ github.event.inputs.version }}
+          draft: false
+          prerelease: false
+
   tag-as-latest:
     needs: [ create-a-new-version-tag ]
     runs-on: ubuntu-latest
