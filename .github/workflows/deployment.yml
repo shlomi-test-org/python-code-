@@ -11,6 +11,10 @@ on:
         description: 'Token with write permissions to this project is needed in order to run this workflow'
         required: true
         type: string
+
+permissions:
+  contents: write
+
 jobs:
   create-a-new-version-tag:
     runs-on: ubuntu-latest
