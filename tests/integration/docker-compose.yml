@@ -1,0 +1,26 @@
+# A compose file that sets up the services needed for local integration test run.
+# In the following link it's possible to see how the CI sets up this container services:
+# https://github.com/jitsecurity-controls/centralized-workflows/blob/main/.github/workflows/integration-tests.yml#L18
+
+version: '3'
+
+services:
+  s3-mock:
+    container_name: s3-mock
+    image: docker.io/adobe/s3mock:2.11.0
+    ports:
+      - "9090:9090"
+  execution-service:
+    container_name: execution-service
+    image: ghcr.io/jitsecurity/execution-service-mock:latest
+    ports:
+      - "8081:80"
+  finding-service:
+    container_name: finding-service
+    image: ghcr.io/jitsecurity/finding-service:latest
+    ports:
+      - "8082:80"
+
+networks:
+  default:
+    name: github_network_local  # We use github_network_** name to simulate a GitHub Action environment
