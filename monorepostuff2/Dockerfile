@@ -1,5 +1,10 @@
 FROM python:3.9-alpine
 
+RUN addgroup --system <group>
+RUN adduser --system <user> --ingroup <group>
+USER <user>:<group>
+
+
 RUN apk add --no-cache git
 
 RUN pip install --no-cache-dir Flask==1.1.0
