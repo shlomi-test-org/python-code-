@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "example_bucket" {
   bucket        = "my-tf-test-bucket"
-  acl           = "public-read-write"
+  acl           = "private"
   force_destroy = true
 }
 
