@@ -1,0 +1,32 @@
+name: Snyk Container Scan
+
+on:
+  pull_request:
+    branches: [ main, aaa ]
+
+jobs:
+  snyk-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Build Docker image
+        run: docker build -t my-app:${{ github.sha }} .
+      
+      - name: Run Snyk to check Docker image for vulnerabilities
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: my-app:${{ github.sha }}
+          args: --file=Dockerfile
+          
+      # Optional: Fail if any vulnerabilities are found
+      - name: Run Snyk to check Docker image for vulnerabilities and fail on found issues
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: my-app:${{ github.sha }}
+          args: --file=Dockerfile --severity-threshold=high
+        continue-on-error: true  # Set to false if you want to fail the workflow on vulnerabilities
